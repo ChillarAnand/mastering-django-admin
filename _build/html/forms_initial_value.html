@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Dynamic Initial Values In Forms &mdash; django-tips  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Django Tips documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> django-tips
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Dynamic Initial Values In Forms</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">django-tips</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>1. Dynamic Initial Values In Forms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/forms_initial_value.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dynamic-initial-values-in-forms">
+<h1>1. Dynamic Initial Values In Forms<a class="headerlink" href="#dynamic-initial-values-in-forms" title="Permalink to this headline">¶</a></h1>
+<p>Django form fields accept initial argument. So You can set a default value for a field.</p>
+<p>In [1]: from django import forms</p>
+<dl class="docutils">
+<dt>In [2]: class SampleForm(forms.Form):</dt>
+<dd>…:     name = forms.CharField(max_length=10, initial=’avil page’)
+…:</dd>
+</dl>
+<p>In [3]: f = SampleForm()</p>
+<p>In [4]: f.as_p()
+Out[4]: u’&lt;p&gt;Name: &lt;input maxlength=”10” name=”name” type=”text” value=”avil page” /&gt;&lt;/p&gt;’</p>
+<p>Sometimes it is required to override init method in forms and set field initial arguments.</p>
+<p>In [11]: from django import forms</p>
+<dl class="docutils">
+<dt>In [12]: class AdvancedForm(forms.Form):</dt>
+<dd>….:
+….:    def __init__(self, <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs):
+….:        super().__init__(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs)
+….:        self.fields[‘name’].initial =  ‘override’
+….:
+….:        name=forms.CharField(max_length=10)
+….:</dd>
+</dl>
+<p>In [13]: f2 = AdvancedForm()</p>
+<p>In [14]: f2.as_p()
+Out[14]: ‘&lt;p&gt;Name: &lt;input maxlength=”10” name=”name” type=”text” value=”override” /&gt;&lt;/p&gt;’</p>
+<p>Now let’s pass some initial data to form and see what happens.</p>
+<p>In [11]: from django import forms</p>
+<dl class="docutils">
+<dt>In [12]: class AdvancedForm(forms.Form):</dt>
+<dd>….:
+….:    def __init__(self, <a href="#id9"><span class="problematic" id="id10">*</span></a>args, <a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs):
+….:        super().__init__(<a href="#id13"><span class="problematic" id="id14">*</span></a>args, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs)
+….:        self.fields[‘name’].initial = ‘override’  # don’t try this at home
+….:
+….:        name=forms.CharField(max_length=10)
+….:</dd>
+</dl>
+<p>In [19]: f3 = AdvancedForm(initial={‘name’: ‘precedence’})</p>
+<p>In [20]: f3.as_p()
+Out[20]: ‘&lt;p&gt;Name: &lt;input maxlength=”10” name=”name” type=”text” value=”precedence” /&gt;&lt;/p&gt;’
+If You look at the value of input field, it’s is NOT the overrided. It still has form initial value!</p>
+<p>If You look into source code of django forms to find what is happening, You will find this.</p>
+<dl class="docutils">
+<dt>data = self.field.bound_data(</dt>
+<dd>self.data,
+self.form.initial.get(self.name, self.field.initial)  # precedence matters!!!!</dd>
+</dl>
+<p>)
+So form’s initial value has precedence over fields initial values.</p>
+<p>So You have to override form’s initial value instead of fields’s initial value to make it work as expected.</p>
+<p>In [21]: from django import forms</p>
+<dl class="docutils">
+<dt>In [22]: class AdvancedForm(forms.Form):</dt>
+<dd>….:
+….:    def __init__(self, <a href="#id17"><span class="problematic" id="id18">*</span></a>args, <a href="#id19"><span class="problematic" id="id20">**</span></a>kwargs):
+….:        super().__init__(<a href="#id21"><span class="problematic" id="id22">*</span></a>args, <a href="#id23"><span class="problematic" id="id24">**</span></a>kwargs)
+….:        self.initial[‘name’] = ‘override’  # aha!!!!
+….:
+….:        name=forms.CharField(max_length=10)
+….:</dd>
+</dl>
+<p>In [23]: f4 = AdvancedForm(initial={‘name’: ‘precedence’})</p>
+<p>In [24]: f4.as_p()
+Out[24]: ‘&lt;p&gt;Name: &lt;input maxlength=”10” name=”name” type=”text” value=”override” /&gt;&lt;/p&gt;’
+Read official docs about django forms.</p>
+<p>Read more articles about Python!</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Django Tips documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ChillarAnand
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
