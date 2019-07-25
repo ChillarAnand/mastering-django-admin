@@ -4,21 +4,27 @@
    contain the root `toctree` directive.
 
 Welcome to Django Tips Book!
-=======================================
+==============================
 
+
+Admin
+------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
    :numbered:
 
    forms_initial_value
 
 
+Forms
+-------
 
-.. automodule::
-    :autosummary:
+.. toctree::
+   :maxdepth: 2
+   :numbered:
 
+   forms_initial_value
 
 
 
