@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Automatically Register All Models In Admin &mdash; django-tips  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Dynamic Initial Values In Forms" href="forms_initial_value.html" />
+    <link rel="prev" title="Welcome to Django Tips Book!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> django-tips
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Automatically Register All Models In Admin</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">django-tips</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Automatically Register All Models In Admin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/admin_auto_register_models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automatically-register-all-models-in-admin">
+<h1>Automatically Register All Models In Admin<a class="headerlink" href="#automatically-register-all-models-in-admin" title="Permalink to this headline">¶</a></h1>
+<p>Inbuilt admin interface is one the most powerful &amp; popular feature of Django. Once we create the models, we need to register them with admin, so that it can read metadata and populate interface for it.</p>
+<p>If the django project has too many models or if it has a legacy database, then adding all those models to admin becomes a tedious task. To automate this process, we can programatically fetch all the models in the project and register them with admin.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span>
+
+
+<span class="n">models</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This works well if we are just auto registering all the models. However if we register some models with admin using custom admin classes and they try to auto register all models in admin.py files in our apps, there will be conflicts as Django doesn’t allow registering the same model twice.</p>
+<p>So, we need to make sure this piece of code runs after all admin.py files are loaded and it should ignore models which are already registered. We can safely hook this code in appconfig.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span><span class="p">,</span> <span class="n">AppConfig</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+
+<span class="k">class</span> <span class="nc">CustomApp</span><span class="p">(</span><span class="n">AppConfig</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span>
+
+    <span class="k">def</span> <span class="nf">ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">admin</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">AlreadyRegistered</span><span class="p">:</span>
+                <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Now all models will get registed automatically. If we go to a model page in admin, it will just show 1 column like this.</p>
+<p>This is not informative for the users who want to see the data. We can create a ListAdminMixin, which will populate list_display with all the fields in the model. We can create a new admin class which will subclass ListAdminMixin &amp; ModelAdmin. We can use this admin class when we are registering the model so that all the fields in the model will show up in the admin.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span><span class="p">,</span> <span class="n">AppConfig</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+
+<span class="k">class</span> <span class="nc">ListAdminMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">admin_site</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_display</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">fields</span> <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ListAdminMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">admin_site</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">CustomApp</span><span class="p">(</span><span class="n">AppConfig</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span>
+
+    <span class="k">def</span> <span class="nf">ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+            <span class="n">admin_class</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;AdminClass&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">ListAdminMixin</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">),</span> <span class="p">{})</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">admin_class</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">admin</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">AlreadyRegistered</span><span class="p">:</span>
+                <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Now whenever we create a new model or add a new field to an existing model, it will get reflected in the admin automatically.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="forms_initial_value.html" class="btn btn-neutral float-right" title="1. Dynamic Initial Values In Forms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Django Tips Book!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ChillarAnand
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

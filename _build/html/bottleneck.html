@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Finding High-impact Performance Bottlenecks &mdash; django-tips  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> django-tips
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">django-tips</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Finding High-impact Performance Bottlenecks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/bottleneck.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="finding-high-impact-performance-bottlenecks">
+<h1>Finding High-impact Performance Bottlenecks<a class="headerlink" href="#finding-high-impact-performance-bottlenecks" title="Permalink to this headline">¶</a></h1>
+<p>When optimizing performance of web application, a common mistake is to start with optimizing the slowest page(or API). In addition to considering response time, we should also consider the traffic it is receving to priorotize the order of optimization.</p>
+<p>In this article we will profile a django webapp, find high-impact performance bottlenecks and then start optimization them to yield better performance.</p>
+<p>Profiling
+django-silk is an open source profiling tool which intercepts and stores HTTP requests data. Install it with pip.</p>
+<p>pip install django-silk
+Add silk to installed apps and include silk middleware in django settings.</p>
+<dl class="docutils">
+<dt>MIDDLEWARE = [</dt>
+<dd>…
+‘silk.middleware.SilkyMiddleware’,
+…</dd>
+</dl>
+<p>]</p>
+<dl class="docutils">
+<dt>INSTALLED_APPS = (</dt>
+<dd>…
+‘silk’</dd>
+</dl>
+<p>)
+Run migrations so that Silk can create required database tables to store profile data.</p>
+<p>$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py collectstatic
+Include silk urls in root urlconf to view the profile data.</p>
+<p>urlpatterns += [url(r’^silk/’, include(‘silk.urls’, namespace=’silk’))]
+On silk requests page(<a class="reference external" href="http://host/silk/requests/">http://host/silk/requests/</a>), we can see all requests and sort them by overall time or time spent in database.</p>
+<p>High Impact Bottlenecks
+Silk creates silk_request table which contains information about the requests processed by django.</p>
+<p>$ pgcli</p>
+<p>library&gt; d silk_request;</p>
+<p>…
+We can group these requests data by path, calculate number of requests, average time taken and impact factor of each path. Since we are considering response time and traffic, impact factor will be product of average response time and number of requests for that path.</p>
+<dl class="docutils">
+<dt>library&gt; SELECT</dt>
+<dd><blockquote class="first">
+<div>s.*, round((s.avg_time * s.count)/max(s.avg_time*s.count) over ()::NUMERIC,2) as impact</div></blockquote>
+<dl class="docutils">
+<dt>FROM</dt>
+<dd>(select path, round(avg(time_taken)::numeric,2) as avg_time, count(path) as count from silk_request group by PATH)
+s</dd>
+</dl>
+<p class="last">ORDER BY impact DESC;</p>
+</dd>
+</dl>
+<p>…
+We can see /point/book/book/ has highest impact even though it is neighter most visited nor slowest view. Optimizing this view first yields in overall better performance of webapp.</p>
+<p>Conclusion
+In this article, we learnt how to profile django webapp and identify bottlenecks to improve performance. In the next article, we wil learn how to optimize these bottlenecks by taking an in-depth look at them.</p>
+<p>apm django django-tips-tricks python
+Previous post Next post</p>
+<blockquote>
+<div>Written by</div></blockquote>
+<p>Chillar Anand
+Musings about programming, careers &amp; life.
+Comments</p>
+<p>Contents © 2019 Chillar Anand - Powered by Nikola</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ChillarAnand
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

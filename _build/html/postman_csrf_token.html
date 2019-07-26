@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to Django Tips Book! &mdash; django-tips  documentation</title>
+  <title>Automatically Set CSRF Token in Postman &mdash; django-tips  documentation</title>
   
 
   
@@ -34,8 +34,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Automatically Register All Models In Admin" href="admin_auto_register_models.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -49,7 +48,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> django-tips
+            <a href="index.html" class="icon icon-home"> django-tips
           
 
           
@@ -80,7 +79,10 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
 </ul>
 
             
@@ -95,7 +97,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">django-tips</a>
+          <a href="index.html">django-tips</a>
         
       </nav>
 
@@ -124,15 +126,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Welcome to Django Tips Book!</li>
+      <li>Automatically Set CSRF Token in Postman</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/postman_csrf_token.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -145,24 +147,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-django-tips-book">
-<h1>Welcome to Django Tips Book!<a class="headerlink" href="#welcome-to-django-tips-book" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="admin">
-<h2>Admin<a class="headerlink" href="#admin" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
-</ul>
+  <div class="section" id="automatically-set-csrf-token-in-postman">
+<h1>Automatically Set CSRF Token in Postman<a class="headerlink" href="#automatically-set-csrf-token-in-postman" title="Permalink to this headline">¶</a></h1>
+<p>Django has inbuilt CSRF protection mechanism for requests via unsafe methods to prevent Cross Site Request Forgeries. When CSRF protection is enabled on AJAX POST methods, X-CSRFToken header should be sent in the request.</p>
+<p>Postman is one of the widely used tool for testing APIs. In this article, we will see how to set csrf token and update it automatically in Postman.</p>
+<p>CSRF Token In Postman
+Django sets csrftoken cookie on login. After logging in, we can see the csrf token from cookies in the Postman.</p>
+<p>We can grab this token and set it in headers manually.</p>
+<p>But this token has to be manually changed when it expires. This process becomes tedious to do it on an expiration basis.</p>
+<p>Instead, we can use Postman scripting feature to extract token from cookie and set it to an environment variable. In Test section of postman, add these lines.</p>
+<p>var xsrfCookie = postman.getResponseCookie(“csrftoken”);
+postman.setEnvironmentVariable(‘csrftoken’, xsrfCookie.value);
+This extracts csrf token and sets it to an evironment variable called csrftoken in the current environment.</p>
+<p>Now in our requests, we can use this variable to set the header.</p>
+<p>When the token expires, we just need to login again and csrf token gets updated automatically.</p>
+<p>Conclusion
+In this article we have seen how to set and renew csrftoken automatically in Postman. We can follow similar techniques on other API clients like CURL or httpie to set csrf token.</p>
+<p>api django django-tips-tricks python
+Previous post Next post</p>
+<blockquote>
+<div>Written by</div></blockquote>
+<p>Chillar Anand
+Musings about programming, careers &amp; life.
+Comments</p>
+<p>Contents © 2019 Chillar Anand - Powered by Nikola</p>
 </div>
 
 
@@ -170,13 +178,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="admin_auto_register_models.html" class="btn btn-neutral float-right" title="Automatically Register All Models In Admin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-    </div>
   
 
   <hr/>

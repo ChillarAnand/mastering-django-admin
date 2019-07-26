@@ -12,19 +12,9 @@ Admin
 
 .. toctree::
    :maxdepth: 2
-   :numbered:
 
-   forms_initial_value
+   admin_auto_register_models
 
-
-Forms
--------
-
-.. toctree::
-   :maxdepth: 2
-   :numbered:
-
-   forms_initial_value
 
 
 
