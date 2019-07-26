@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; django-tips  documentation</title>
+  <title>Hyperlink Foreignkey Fields In Admin &mdash; django-tips  documentation</title>
   
 
   
@@ -25,7 +25,6 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/searchtools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -35,7 +34,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +61,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -80,7 +79,10 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="forms_initial_value.html">1. Dynamic Initial Values In Forms</a></li>
 </ul>
 
             
@@ -126,12 +128,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+      <li>Hyperlink Foreignkey Fields In Admin</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="_sources/admin_hyperlink_foreignkey.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -143,19 +147,56 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="hyperlink-foreignkey-fields-in-admin">
+<h1>Hyperlink Foreignkey Fields In Admin<a class="headerlink" href="#hyperlink-foreignkey-fields-in-admin" title="Permalink to this headline">¶</a></h1>
+<p>Consider Book model which has Author as foreignkey.</p>
+<p>from django.db import models</p>
+<dl class="docutils">
+<dt>class Author(models.Model):</dt>
+<dd>name = models.CharField(max_length=100)</dd>
+<dt>class Book(models.Model):</dt>
+<dd>title = models.CharField(max_length=100)
+author = models.ForeignKey(Author)</dd>
+</dl>
+<p>We can register these models with admin interface as follows.</p>
+<p>from django.contrib import admin</p>
+<p>from .models import Author, Book</p>
+<dl class="docutils">
+<dt>class BookAdmin(admin.ModelAdmin):</dt>
+<dd>list_display = (‘name’, ‘author’, )</dd>
+</dl>
+<p>admin.site.register(Author)
+admin.site.register(Book, BookAdmin)
+Once they are registed, admin page shows Book model like this.</p>
+<p>While browsing books, we can see name and author. Here, name field is liked to change view of book. But author field is shown as plain text. If we have to modify author name, we have to go back to authors admin page, search for relevant author and then change name.</p>
+<p>This becomes tedious if we spend lot of time in admin for tasks like this. Instead, if author field is hyperlinked to its change view, we can directly go to that page.</p>
+<p>Django provides an option to access admin views by its URL reversing system. For example, we can get change view of author model in book app using reverse(“admin:book_author_change”, args=id). Now we can use this url to hyperlink author field in book admin.</p>
+<p>from django.contrib import admin
+from django.utils.safestring import mark_safe</p>
+<dl class="docutils">
+<dt>class BookAdmin(admin.ModelAdmin):</dt>
+<dd><p class="first">list_display = (‘name’, ‘author_link’, )</p>
+<dl class="docutils">
+<dt>def author_link(self, book):</dt>
+<dd>url = reverse(“admin:book_author_change”, args=[book.author.id])
+link = ‘&lt;a href=”%s”&gt;%s&lt;/a&gt;’ % (url, book.author.name)
+return mark_safe(link)</dd>
+</dl>
+<p class="last">author_link.short_description = ‘Author’</p>
+</dd>
+</dl>
+<p>Now in the book admin view, author field will be hyperlinked to its change view and we can visit just by clicking it.</p>
+<p>Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity.</p>
+<p>django django-tips-tricks python
+Previous post Next post</p>
+<blockquote>
+<div>Written by</div></blockquote>
+<p>Chillar Anand
+Musings about programming, careers &amp; life.
+Comments</p>
+<p>Contents © 2019 Chillar Anand - Powered by Nikola</p>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
            
@@ -193,14 +234,7 @@
   
   
     
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>
