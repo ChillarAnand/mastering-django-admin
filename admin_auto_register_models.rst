@@ -44,6 +44,10 @@ So, we need to make sure this piece of code runs after all admin.py files are lo
 Now all models will get registed automatically. If we go to a model page in admin, it will just show 1 column like this.
 
 
+.. image:: _images/django-admin-auto.png
+   :align: center
+
+
 This is not informative for the users who want to see the data. We can create a ListAdminMixin, which will populate list_display with all the fields in the model. We can create a new admin class which will subclass ListAdminMixin & ModelAdmin. We can use this admin class when we are registering the model so that all the fields in the model will show up in the admin.
 
 
@@ -73,3 +77,7 @@ This is not informative for the users who want to see the data. We can create a 
 
 
 Now whenever we create a new model or add a new field to an existing model, it will get reflected in the admin automatically.
+
+
+.. image:: _images/django-admin-auto-2.png
+   :align: center
