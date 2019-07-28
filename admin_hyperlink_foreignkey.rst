@@ -37,7 +37,7 @@ Once they are registed, admin page shows Book model like this.
 
 
 .. image:: _images/django-admin-fk-link-1.png
-   :alt: alternate text
+   :alt: hyperlink foreign key fields django
    :align: center
 
 
