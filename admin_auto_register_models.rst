@@ -6,6 +6,7 @@ Inbuilt admin interface is one the most powerful & popular feature of Django. On
 
 If the django project has too many models or if it has a legacy database, then adding all those models to admin becomes a tedious task. To automate this process, we can programatically fetch all the models in the project and register them with admin.
 
+
 .. code-block:: python
 
     from django.apps import apps

@@ -15,6 +15,7 @@ Admin
 
    admin_auto_register_models
 
+   admin_hyperlink_foreignkey
 
 
 
