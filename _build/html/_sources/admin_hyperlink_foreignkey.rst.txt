@@ -69,4 +69,4 @@ Django provides an option to access admin views by its URL reversing system. For
 Now in the book admin view, author field will be hyperlinked to its change view and we can visit just by clicking it.
 
 
-Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity.
+Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity of users in admin.
