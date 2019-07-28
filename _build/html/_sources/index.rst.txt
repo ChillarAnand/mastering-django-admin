@@ -16,13 +16,3 @@ Admin
    admin_auto_register_models
 
    admin_hyperlink_foreignkey
-
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
