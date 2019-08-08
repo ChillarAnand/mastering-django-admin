@@ -1,7 +1,6 @@
 Automatically Register All Models In Admin
 -------------------------------------------
 
-
 Inbuilt admin interface is one the most powerful & popular feature of Django. Once we create the models, we need to register them with admin, so that it can read metadata and populate interface for it.
 
 If the django project has too many models or if it has a legacy database, then adding all those models to admin becomes a tedious task. To automate this process, we can programatically fetch all the models in the project and register them with admin.

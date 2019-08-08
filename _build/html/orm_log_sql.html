@@ -81,6 +81,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_custom_admin_actions.html">Custom admin actions for individual and bulk objects</a></li>
 </ul>
 
             
@@ -161,7 +162,7 @@ Out[42]: SELECT “auth_user”.”id”,</p>
 <blockquote>
 <div><blockquote>
 <div><blockquote>
-<div><p>“auth_user”.”password”,
+<div>“auth_user”.”password”,
 “auth_user”.”last_login”,
 “auth_user”.”is_superuser”,
 “auth_user”.”username”,
@@ -170,8 +171,7 @@ Out[42]: SELECT “auth_user”.”id”,</p>
 “auth_user”.”email”,
 “auth_user”.”is_staff”,
 “auth_user”.”is_active”,
-“auth_user”.”date_joined”</p>
-</div></blockquote>
+“auth_user”.”date_joined”</div></blockquote>
 <p>FROM “auth_user”</p>
 </div></blockquote>
 <p>WHERE “auth_user”.”is_staff” = true
@@ -198,13 +198,14 @@ This package provides additional settings to customize output.</p>
 Instead of using any 3rd party package, we can use django.db.backends logger to print all the SQL queries.</p>
 <p>Add django.db.backends to loggers list and set log level and handlers.</p>
 <blockquote>
-<div><dl>
-<dt>‘loggers’: {</dt><dd><dl class="simple">
-<dt>‘django.db.backends’: {</dt><dd><p>‘level’: ‘DEBUG’,
-‘handlers’: [‘console’, ],</p>
-</dd>
+<div><dl class="docutils">
+<dt>‘loggers’: {</dt>
+<dd><dl class="first docutils">
+<dt>‘django.db.backends’: {</dt>
+<dd>‘level’: ‘DEBUG’,
+‘handlers’: [‘console’, ],</dd>
 </dl>
-<p>},</p>
+<p class="last">},</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -215,8 +216,7 @@ These are few ways to log all SQL queries to console. We can also write a custom
 <p>django django-tips-tricks python
 Previous post Next post</p>
 <blockquote>
-<div><p>Written by</p>
-</div></blockquote>
+<div>Written by</div></blockquote>
 <p>Chillar Anand
 Musings about programming, careers &amp; life.
 Comments</p>

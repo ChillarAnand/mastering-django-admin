@@ -81,6 +81,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_custom_admin_actions.html">Custom admin actions for individual and bulk objects</a></li>
 </ul>
 
             
@@ -153,17 +154,17 @@
 django-silk is an open source profiling tool which intercepts and stores HTTP requests data. Install it with pip.</p>
 <p>pip install django-silk
 Add silk to installed apps and include silk middleware in django settings.</p>
-<dl class="simple">
-<dt>MIDDLEWARE = [</dt><dd><p>…
+<dl class="docutils">
+<dt>MIDDLEWARE = [</dt>
+<dd>…
 ‘silk.middleware.SilkyMiddleware’,
-…</p>
-</dd>
+…</dd>
 </dl>
 <p>]</p>
-<dl class="simple">
-<dt>INSTALLED_APPS = (</dt><dd><p>…
-‘silk’</p>
-</dd>
+<dl class="docutils">
+<dt>INSTALLED_APPS = (</dt>
+<dd>…
+‘silk’</dd>
 </dl>
 <p>)
 Run migrations so that Silk can create required database tables to store profile data.</p>
@@ -179,16 +180,16 @@ Silk creates silk_request table which contains information about the requests pr
 <p>library&gt; d silk_request;</p>
 <p>…
 We can group these requests data by path, calculate number of requests, average time taken and impact factor of each path. Since we are considering response time and traffic, impact factor will be product of average response time and number of requests for that path.</p>
-<dl>
-<dt>library&gt; SELECT</dt><dd><blockquote>
-<div><p>s.*, round((s.avg_time * s.count)/max(s.avg_time*s.count) over ()::NUMERIC,2) as impact</p>
-</div></blockquote>
-<dl class="simple">
-<dt>FROM</dt><dd><p>(select path, round(avg(time_taken)::numeric,2) as avg_time, count(path) as count from silk_request group by PATH)
-s</p>
-</dd>
+<dl class="docutils">
+<dt>library&gt; SELECT</dt>
+<dd><blockquote class="first">
+<div>s.*, round((s.avg_time * s.count)/max(s.avg_time*s.count) over ()::NUMERIC,2) as impact</div></blockquote>
+<dl class="docutils">
+<dt>FROM</dt>
+<dd>(select path, round(avg(time_taken)::numeric,2) as avg_time, count(path) as count from silk_request group by PATH)
+s</dd>
 </dl>
-<p>ORDER BY impact DESC;</p>
+<p class="last">ORDER BY impact DESC;</p>
 </dd>
 </dl>
 <p>…
@@ -198,8 +199,7 @@ In this article, we learnt how to profile django webapp and identify bottlenecks
 <p>apm django django-tips-tricks python
 Previous post Next post</p>
 <blockquote>
-<div><p>Written by</p>
-</div></blockquote>
+<div>Written by</div></blockquote>
 <p>Chillar Anand
 Musings about programming, careers &amp; life.
 Comments</p>
