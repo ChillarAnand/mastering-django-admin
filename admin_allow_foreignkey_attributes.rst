@@ -1,0 +1,21 @@
+Retrieve foreign key fields in admin list display
+---------------------------------------------------
+
+Django admin provides list_display option to specify which fields to be displayed on the list page of admin.
+
+
+.. code-block:: python
+
+   from django.contrib import admin
+
+   from book.models import BestSeller
+
+
+   class BestSellerAdmin(RelatedFieldAdmin):
+       list_display = ('book', 'author')
+
+       def author(self, obj):
+           return obj.author
+       author.description = 'Author'
+
+   admin.site.register(Bestseller, BestsellerAdmin)

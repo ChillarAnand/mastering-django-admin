@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Custom admin actions for individual and bulk items &mdash; django-tips  documentation</title>
+  <title>Custom admin actions for individual and bulk objects &mdash; django-tips  documentation</title>
   
 
   
@@ -82,7 +82,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom admin actions for individual and bulk items</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom admin actions for individual and bulk objects</a></li>
 </ul>
 
             
@@ -128,7 +128,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Custom admin actions for individual and bulk items</li>
+      <li>Custom admin actions for individual and bulk objects</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,20 +147,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="custom-admin-actions-for-individual-and-bulk-items">
-<h1>Custom admin actions for individual and bulk items<a class="headerlink" href="#custom-admin-actions-for-individual-and-bulk-items" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="custom-admin-actions-for-individual-and-bulk-objects">
+<h1>Custom admin actions for individual and bulk objects<a class="headerlink" href="#custom-admin-actions-for-individual-and-bulk-objects" title="Permalink to this headline">¶</a></h1>
 <p>In the earlier chapters, we have re-registered django auth user model using a proxy model.</p>
 <p>Django provides admin actions which work on a queryset level. For example, we can select a bunch of users and delete them.</p>
 <p>We can also write custom admin actions to perform other operations. For example, we can write a custom admin action to activate selected users.</p>
 <p>These custom admin actions are efficient when we are taking an action on bulk items. For taking a specific action on single item, using custom actions will be inefficient.</p>
 <p>For example, to delete a single user, we need to follow these steps.</p>
 <blockquote>
-<div><p>First, we have to select that user record.
+<div>First, we have to select that user record.
 Next, we have to click on the action dropdown
 Next, we have to select delete action
 Next, we have to click Go button.
-In the next page we have to confirm that we have to delete.</p>
-</div></blockquote>
+In the next page we have to confirm that we have to delete.</div></blockquote>
 <p>Just to delete a single record, we have to perform 5 clicks. That’s too many clicks for a single action.</p>
 <p>To simplify the process, we can have delete button at row level. This can be achieved by writing a function which will insert delete button for every record.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>

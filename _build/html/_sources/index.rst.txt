@@ -18,3 +18,5 @@ Admin
    admin_hyperlink_foreignkey
 
    admin_custom_admin_actions
+
+   admin_allow_foreignkey_attributes

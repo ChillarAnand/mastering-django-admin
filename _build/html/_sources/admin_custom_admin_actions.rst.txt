@@ -1,4 +1,4 @@
-Custom admin actions for individual and bulk items
+Custom admin actions for individual and bulk objects
 ----------------------------------------------------
 
 
