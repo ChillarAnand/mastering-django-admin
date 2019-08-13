@@ -1,5 +1,5 @@
-Hyperlink Foreignkey Fields To Its Change View In Admin
-------------------------------------------------------
+Hyperlink Foreignkeys To Its Change View In Admin
+---------------------------------------------------
 
 Consider Book model which has Author as foreignkey.
 

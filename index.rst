@@ -20,8 +20,6 @@ Welcome to Django Tips Book!
 
    admin_list_display_foreignkey.rst
 
-   misc_auto_csrftoken.rst
-
    misc_bottlenecks.rst
 
    misc_deployment.rst
