@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Custom admin actions for individual and bulk objects &mdash; django-tips  documentation</title>
+  <title>Custom admin actions for individual &amp; bulk objects &mdash; django-tips  documentation</title>
   
 
   
@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Retrieve foreign key fields in admin list display" href="admin_allow_foreignkey_attributes.html" />
     <link rel="prev" title="Hyperlink Foreignkey Fields To Its Change View In Admin" href="admin_hyperlink_foreignkey.html" /> 
 </head>
 
@@ -82,7 +83,8 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom admin actions for individual and bulk objects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom admin actions for individual &amp; bulk objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_allow_foreignkey_attributes.html">Retrieve foreign key fields in admin list display</a></li>
 </ul>
 
             
@@ -128,7 +130,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Custom admin actions for individual and bulk objects</li>
+      <li>Custom admin actions for individual &amp; bulk objects</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,8 +149,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="custom-admin-actions-for-individual-and-bulk-objects">
-<h1>Custom admin actions for individual and bulk objects<a class="headerlink" href="#custom-admin-actions-for-individual-and-bulk-objects" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="custom-admin-actions-for-individual-bulk-objects">
+<h1>Custom admin actions for individual &amp; bulk objects<a class="headerlink" href="#custom-admin-actions-for-individual-bulk-objects" title="Permalink to this headline">¶</a></h1>
 <p>In the earlier chapters, we have re-registered django auth user model using a proxy model.</p>
 <p>Django provides admin actions which work on a queryset level. For example, we can select a bunch of users and delete them.</p>
 <p>We can also write custom admin actions to perform other operations. For example, we can write a custom admin action to activate selected users.</p>
@@ -196,6 +198,8 @@ In the next page we have to confirm that we have to delete.</div></blockquote>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="admin_allow_foreignkey_attributes.html" class="btn btn-neutral float-right" title="Retrieve foreign key fields in admin list display" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="admin_hyperlink_foreignkey.html" class="btn btn-neutral float-left" title="Hyperlink Foreignkey Fields To Its Change View In Admin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
