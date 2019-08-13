@@ -111,7 +111,7 @@ htmlhelp_basename = 'django-tipsdoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    # 'papersize': 'letterpaper',
+    'papersize': 'a5paper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
