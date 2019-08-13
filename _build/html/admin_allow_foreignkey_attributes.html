@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Custom admin actions for individual and bulk objects" href="admin_custom_admin_actions.html" /> 
+    <link rel="prev" title="Custom admin actions for individual &amp; bulk objects" href="admin_custom_admin_actions.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,7 +82,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin_custom_admin_actions.html">Custom admin actions for individual and bulk objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_custom_admin_actions.html">Custom admin actions for individual &amp; bulk objects</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Retrieve foreign key fields in admin list display</a></li>
 </ul>
 
@@ -150,15 +150,59 @@
             
   <div class="section" id="retrieve-foreign-key-fields-in-admin-list-display">
 <h1>Retrieve foreign key fields in admin list display<a class="headerlink" href="#retrieve-foreign-key-fields-in-admin-list-display" title="Permalink to this headline">¶</a></h1>
-<p>Django admin provides list_display option to specify which fields to be displayed on the list page of admin.</p>
+<p>Django admin has <cite>ModelAdmin</cite> class which provides admin options and functionality for the models in admin interface. It has options like <cite>list_display</cite>, <cite>list_filter</cite>, <cite>search_fields</cite> to specify fields for those options.</p>
+<p><cite>search_fields</cite>, <cite>list_filter</cite> and other options allow to include a ForeignKey or manytomanyfield with lookup API follow notation. For example, to search by book name in Bestselleradmin, we can specify <cite>book__name</cite> in search fields.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
 
+<span class="kn">from</span> <span class="nn">book.models</span> <span class="kn">import</span> <span class="n">BestSeller</span>
+
+
 <span class="k">class</span> <span class="nc">BestSellerAdmin</span><span class="p">(</span><span class="n">RelatedFieldAdmin</span><span class="p">):</span>
-    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;book&#39;</span><span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;book__author&#39;</span><span class="p">,</span> <span class="s1">&#39;book__name&#39;</span><span class="p">)</span>
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;rank&#39;</span><span class="p">)</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Bestseller</span><span class="p">,</span> <span class="n">BestsellerAdmin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However Django doesn’t allow the same follow notation in <cite>list_display</cite>. To include foreignkey field or manytomany field in the list display, we have to write a custom method and add this method in list display.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+<span class="kn">from</span> <span class="nn">book.models</span> <span class="kn">import</span> <span class="n">BestSeller</span>
+
+
+<span class="k">class</span> <span class="nc">BestSellerAdmin</span><span class="p">(</span><span class="n">RelatedFieldAdmin</span><span class="p">):</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">author</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">book</span><span class="o">.</span><span class="n">author</span>
     <span class="n">author</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;Author&#39;</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Bestseller</span><span class="p">,</span> <span class="n">BestsellerAdmin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This way of adding foreignkeys becomes tedious when there are lots of models with foreignkey fields.</p>
+<p>We can write a custom admin class to dynamically set the methods as attributes whilst using the follow notation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_related_field</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">admin_order_field</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">short_description</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">related_names</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dynamic_attribute</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">related_name</span> <span class="ow">in</span> <span class="n">related_names</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">related_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="n">dynamic_attribute</span><span class="o">.</span><span class="n">admin_order_field</span> <span class="o">=</span> <span class="n">admin_order_field</span> <span class="ow">or</span> <span class="n">name</span>
+    <span class="n">dynamic_attribute</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="n">short_description</span> <span class="ow">or</span> <span class="n">related_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dynamic_attribute</span>
+
+
+<span class="k">class</span> <span class="nc">RelatedFieldAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;__&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">get_related_field</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+
+        <span class="c1"># not dynamic lookup, default behaviour</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -172,7 +216,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="admin_custom_admin_actions.html" class="btn btn-neutral float-left" title="Custom admin actions for individual and bulk objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="admin_custom_admin_actions.html" class="btn btn-neutral float-left" title="Custom admin actions for individual &amp; bulk objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
