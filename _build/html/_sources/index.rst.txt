@@ -15,8 +15,28 @@ Admin
 
    admin_auto_register_models
 
-   admin_hyperlink_foreignkey
-
    admin_custom_admin_actions
 
-   admin_allow_foreignkey_attributes
+   admin_hyperlink_foreignkey
+
+   admin_list_display_foreignkey.rst
+
+   misc_auto_csrftoken.rst
+
+   misc_bottlenecks.rst
+
+   misc_deployment.rst
+
+   misc_gotcha_initial.rst
+
+   misc_management_commands.rst
+
+   misc_postman_csrf_token.rst
+
+   misc_profiling.rst
+
+   misc_shell_aliases.rst
+
+   orm_log_sql.rst
+
+   orm_optimizations.rst

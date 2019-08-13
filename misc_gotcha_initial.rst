@@ -91,3 +91,12 @@ So You have to override form's initial value instead of fields's initial value t
 
     In [24]: f4.as_p()
     Out[24]: '<p>Name: <input maxlength="10" name="name" type="text" value="override" /></p>'
+
+
+
+Management command
+intial value
+
+
+models initial value
+dict={}
