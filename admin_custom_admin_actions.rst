@@ -54,6 +54,4 @@ We can also have buttons with custom actions. For example, we can add a button w
 .. code-block:: python
 
 
-
-
 In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.
