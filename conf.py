@@ -108,6 +108,9 @@ htmlhelp_basename = 'django-tipsdoc'
 
 # -- Options for LaTeX output ------------------------------------------------
 
+PREAMBLE = open('preamble.tex').read()
+
+
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
@@ -119,7 +122,7 @@ latex_elements = {
 
     # Additional stuff for the LaTeX preamble.
     #
-    # 'preamble': '',
+    'preamble': PREAMBLE,
 
     # Latex figure (float) alignment
     #
