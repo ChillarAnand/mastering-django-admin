@@ -1,0 +1,15 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}Automatically Register All Models In Admin}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Custom admin actions for individual \& bulk objects}{5}{chapter.2}
+\contentsline {chapter}{\numberline {3}Hyperlink Foreignkeys To Its Change View In Admin}{7}{chapter.3}
+\contentsline {chapter}{\numberline {4}Allow ForeignKey Fields In Admin List Display}{11}{chapter.4}
+\contentsline {chapter}{\numberline {5}Finding High-impact Performance Bottlenecks}{15}{chapter.5}
+\contentsline {chapter}{\numberline {6}Dynamic Initial Values In Forms}{19}{chapter.6}
+\contentsline {chapter}{\numberline {7}Management commands}{23}{chapter.7}
+\contentsline {chapter}{\numberline {8}Automatically Set CSRF Token in Postman}{25}{chapter.8}
+\contentsline {chapter}{\numberline {9}Profiling slowest parts of dango}{27}{chapter.9}
+\contentsline {chapter}{\numberline {10}Useful Shell Aliases For Python/Django Developers}{29}{chapter.10}
+\contentsline {chapter}{\numberline {11}Log SQL Queries To Console}{31}{chapter.11}
+\contentsline {section}{\numberline {11.1}Using debug-toolbar}{31}{section.11.1}
+\contentsline {section}{\numberline {11.2}Using django-extensions}{31}{section.11.2}
+\contentsline {chapter}{\numberline {12}ORM Optimizations}{35}{chapter.12}

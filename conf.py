@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'django-tips'
+project = 'Django Tips'
 copyright = '2019, ChillarAnand'
 author = 'ChillarAnand'
 
@@ -130,7 +130,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'django-tips.tex', 'django-tips Documentation',
+    (master_doc, 'django-tips.tex', 'Django Tips',
      'ChillarAnand', 'manual'),
 ]
 
