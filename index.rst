@@ -12,6 +12,8 @@ Welcome to Django Tips Book!
 .. toctree::
    :maxdepth: 2
 
+   preface.rst
+
    admin_auto_register_models
 
    admin_custom_admin_actions
@@ -32,8 +34,8 @@ Welcome to Django Tips Book!
 
    misc_profiling.rst
 
-   misc_shell_aliases.rst
-
    orm_log_sql.rst
 
    orm_optimizations.rst
+
+   appendix.rst

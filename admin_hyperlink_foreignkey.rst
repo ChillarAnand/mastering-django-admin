@@ -70,3 +70,8 @@ Now in the book admin view, author field will be hyperlinked to its change view 
 
 
 Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity of users in admin.
+
+
+Custom hyper links
+
+https://docs.djangoproject.com/en/dev/ref/models/instances/#get-absolute-url

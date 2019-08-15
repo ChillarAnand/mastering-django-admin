@@ -114,11 +114,12 @@ PREAMBLE = open('preamble.tex').read()
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    'papersize': 'a5paper',
+    # 'papersize': 'a5paper',
+    # 'papersize': 'b5paper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
-    'pointsize': '10pt',
+    'pointsize': '11pt',
 
     # Additional stuff for the LaTeX preamble.
     #
@@ -130,6 +131,12 @@ latex_elements = {
 
     # sphinx setup
     # 'sphinxsetup': 'vmargin=0.5in hmargin=1.0in',
+
+    # custom options
+    # 'passoptionstopackages': r'\PassOptionsToPackage[paperwidth=7.5in, paperheight=8.5in]{geometry}',
+    # 'passoptionstopackages': r'\usepackage[paperwidth=7.0in, paperheight=9.2in]{geometry}',
+    'passoptionstopackages': r'\usepackage[paperwidth=7.0in, paperheight=9.2in, bindingoffset=0.2in,left=1in,right=1in,top=1in,bottom=0.75in,footskip=.25in]{geometry}',
+
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -146,7 +153,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'django-tips', 'django-tips Documentation',
+    (master_doc, 'django-tips', 'django-tips book',
      [author], 1)
 ]
 

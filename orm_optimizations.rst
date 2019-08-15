@@ -1,9 +1,20 @@
-ORM Optimizations
-===================
+ORM Gotchas
+==============
 
 
 N+1 Queries
 
+
+Caching
+-------
+
+
+Eager evaluation
+------------------
+
+
+Lazy evaluation
+-----------------
 
 book.author.id
 book.author_id
