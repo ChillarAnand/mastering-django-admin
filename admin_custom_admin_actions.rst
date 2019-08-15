@@ -1,7 +1,6 @@
 Custom admin actions for individual & bulk objects
 ----------------------------------------------------
 
-
 In the earlier chapters, we have re-registered django auth user model using a proxy model.
 
 Django provides admin actions which work on a queryset level. For example, we can select a bunch of users and delete them.
@@ -16,9 +15,13 @@ These custom admin actions are efficient when we are taking an action on bulk it
 For example, to delete a single user, we need to follow these steps.
 
     First, we have to select that user record.
+
     Next, we have to click on the action dropdown
+
     Next, we have to select delete action
+
     Next, we have to click Go button.
+
     In the next page we have to confirm that we have to delete.
 
 Just to delete a single record, we have to perform 5 clicks. That's too many clicks for a single action.
@@ -46,6 +49,7 @@ To simplify the process, we can have delete button at row level. This can be ach
     admin.site.register(models.Book)
 
 Now we have an admin with delete button for the records.
+
 
 To delete an object, just click on delete button and then confirm to delete it. Now, we are deleting objects with just 2 clicks.
 

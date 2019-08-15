@@ -118,7 +118,7 @@ latex_elements = {
 
     # The font size ('10pt', '11pt' or '12pt').
     #
-    # 'pointsize': '10pt',
+    'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
     #
@@ -127,6 +127,9 @@ latex_elements = {
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
+
+    # sphinx setup
+    # 'sphinxsetup': 'vmargin=0.5in hmargin=1.0in',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

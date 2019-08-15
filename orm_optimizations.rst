@@ -18,6 +18,7 @@ qs.exist()
 bulk operations
 
 bulk update wont call save or signals
+ Runpython wont call these
 
 
 get only what you need
