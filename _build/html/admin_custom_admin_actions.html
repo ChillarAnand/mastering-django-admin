@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Custom admin actions for individual &amp; bulk objects &mdash; django-tips  documentation</title>
+  <title>Custom Admin Actions For Querysets &amp; Individual Objects &mdash; Django Tips  documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Hyperlink Foreignkey Fields To Its Change View In Admin" href="admin_hyperlink_foreignkey.html" />
+    <link rel="next" title="Hyperlink Foreignkeys To Its Change View In Admin" href="admin_hyperlink_foreignkey.html" />
     <link rel="prev" title="Automatically Register All Models In Admin" href="admin_auto_register_models.html" /> 
 </head>
 
@@ -50,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> django-tips
+            <a href="index.html" class="icon icon-home"> Django Tips
           
 
           
@@ -81,10 +81,24 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom admin actions for individual &amp; bulk objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin_list_display_foreignkey.html">Retrieve foreign key fields in admin list display</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom Admin Actions For Querysets &amp; Individual Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-actions-on-querysets">Custom Actions On Querysets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkeys To Its Change View In Admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_list_display_foreignkey.html">Allow ForeignKey Fields In Admin List Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_bottlenecks.html">Finding High-impact Performance Bottlenecks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_gotcha_initial.html">Dynamic Initial Values In Forms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_management_commands.html">Management commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_postman_csrf_token.html">Automatically Set CSRF Token in Postman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_profiling.html">Profiling slowest parts of dango</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="orm_log_sql.html">Log SQL Queries To Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orm_optimizations.html">ORM Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix A</a></li>
 </ul>
 
             
@@ -99,7 +113,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">django-tips</a>
+          <a href="index.html">Django Tips</a>
         
       </nav>
 
@@ -130,7 +144,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Custom admin actions for individual &amp; bulk objects</li>
+      <li>Custom Admin Actions For Querysets &amp; Individual Objects</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,19 +163,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="custom-admin-actions-for-individual-bulk-objects">
-<h1>Custom admin actions for individual &amp; bulk objects<a class="headerlink" href="#custom-admin-actions-for-individual-bulk-objects" title="Permalink to this headline">¶</a></h1>
-<p>In the earlier chapters, we have re-registered django auth user model using a proxy model.</p>
-<p>Django provides admin actions which work on a queryset level. For example, we can select a bunch of users and delete them.</p>
-<p>We can also write custom admin actions to perform other operations. For example, we can write a custom admin action to activate selected users.</p>
+  <div class="section" id="custom-admin-actions-for-querysets-individual-objects">
+<h1>Custom Admin Actions For Querysets &amp; Individual Objects<a class="headerlink" href="#custom-admin-actions-for-querysets-individual-objects" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="custom-actions-on-querysets">
+<h2>Custom Actions On Querysets<a class="headerlink" href="#custom-actions-on-querysets" title="Permalink to this headline">¶</a></h2>
+<p>Django provides admin actions which work on a queryset level. By default, django provides delete action in the admin.</p>
+<p>In our books admin, we can select a bunch of books and delete them.</p>
+<img alt="_images/django-admin-custom-actions1.png" class="align-center" src="_images/django-admin-custom-actions1.png" />
+<p>Django provides an option to hook user defined actions to run additional actions on selected items. Let us write write a custom admin action to mark selected books as available.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_books_available</span><span class="p">(</span><span class="n">modeladmin</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+    <span class="n">queryset</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">is_available</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">make_books_available</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s2">&quot;Mark selected books as available&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">BookAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_books_available</span><span class="p">,)</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/django-admin-custom-actions2.png" class="align-center" src="_images/django-admin-custom-actions2.png" />
 <p>These custom admin actions are efficient when we are taking an action on bulk items. For taking a specific action on single item, using custom actions will be inefficient.</p>
 <p>For example, to delete a single user, we need to follow these steps.</p>
 <blockquote>
-<div>First, we have to select that user record.
-Next, we have to click on the action dropdown
-Next, we have to select delete action
-Next, we have to click Go button.
-In the next page we have to confirm that we have to delete.</div></blockquote>
+<div><p>First, we have to select that user record.</p>
+<p>Next, we have to click on the action dropdown</p>
+<p>Next, we have to select delete action</p>
+<p>Next, we have to click Go button.</p>
+<p>In the next page we have to confirm that we have to delete.</p>
+</div></blockquote>
 <p>Just to delete a single record, we have to perform 5 clicks. That’s too many clicks for a single action.</p>
 <p>To simplify the process, we can have delete button at row level. This can be achieved by writing a function which will insert delete button for every record.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
@@ -190,6 +219,7 @@ In the next page we have to confirm that we have to delete.</div></blockquote>
 </div>
 <p>In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.</p>
 </div>
+</div>
 
 
            </div>
@@ -199,7 +229,7 @@ In the next page we have to confirm that we have to delete.</div></blockquote>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="admin_hyperlink_foreignkey.html" class="btn btn-neutral float-right" title="Hyperlink Foreignkey Fields To Its Change View In Admin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="admin_hyperlink_foreignkey.html" class="btn btn-neutral float-right" title="Hyperlink Foreignkeys To Its Change View In Admin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="admin_auto_register_models.html" class="btn btn-neutral float-left" title="Automatically Register All Models In Admin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

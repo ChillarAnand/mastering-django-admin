@@ -1,5 +1,16 @@
-Automatically Set CSRF Token in Postman
-----------------------------------------
+Dealing With CSRF Token Outside Of Django
+==========================================
+
+
+Ajax
+-----
+
+
+When making ajax calls from browser, we need to set CSRF token.
+
+
+Postman
+-------
 
 Django has inbuilt CSRF protection mechanism for requests via unsafe methods to prevent Cross Site Request Forgeries. When CSRF protection is enabled on AJAX POST methods, X-CSRFToken header should be sent in the request.
 
@@ -27,8 +38,8 @@ Conclusion
 In this article we have seen how to set and renew csrftoken automatically in Postman. We can follow similar techniques on other API clients like CURL or httpie to set csrf token.
 
 
-
-Django Tips & Tricks #7 - Django Auth Plugin For HTTPie
+Shell
+------
 
 HTTPie is an alternative to curl for interacting with web services from CLI. It provides a simple and intuitive interface and it is handy to send arbitrary HTTP requests while testing/debugging APIs.
 

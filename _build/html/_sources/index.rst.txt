@@ -3,15 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+
 Welcome to Django Tips Book!
 ==============================
 
 
+
 Admin
-------
 
 .. toctree::
    :maxdepth: 2
+
+   preface.rst
 
    admin_auto_register_models
 
@@ -20,8 +23,6 @@ Admin
    admin_hyperlink_foreignkey
 
    admin_list_display_foreignkey.rst
-
-   misc_auto_csrftoken.rst
 
    misc_bottlenecks.rst
 
@@ -35,8 +36,16 @@ Admin
 
    misc_profiling.rst
 
-   misc_shell_aliases.rst
+
+
+ORM
+
+
+.. toctree::
+   :maxdepth: 2
 
    orm_log_sql.rst
 
    orm_optimizations.rst
+
+   appendix.rst

@@ -3,23 +3,39 @@
 \contentsline {section}{\numberline {1.1}Why this book?}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Who should read this book?}{1}{section.1.2}
 \contentsline {section}{\numberline {1.3}Acknowlodgements}{1}{section.1.3}
-\contentsline {chapter}{\numberline {2}Automatically Register All Models In Admin}{3}{chapter.2}
+\contentsline {chapter}{\numberline {2}Auto Register All Models In Admin}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Manual Registration}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Auto Registration}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Auto Registration With Fields}{5}{section.2.3}
 \contentsline {chapter}{\numberline {3}Custom Admin Actions For Querysets \& Individual Objects}{7}{chapter.3}
 \contentsline {section}{\numberline {3.1}Custom Actions On Querysets}{7}{section.3.1}
+\contentsline {section}{\numberline {3.2}Custom Actions On Individual Objects}{8}{section.3.2}
 \contentsline {chapter}{\numberline {4}Hyperlink Foreignkeys To Its Change View In Admin}{11}{chapter.4}
 \contentsline {chapter}{\numberline {5}Allow ForeignKey Fields In Admin List Display}{15}{chapter.5}
-\contentsline {chapter}{\numberline {6}Finding High-impact Performance Bottlenecks}{19}{chapter.6}
-\contentsline {chapter}{\numberline {7}Dynamic Initial Values In Forms}{21}{chapter.7}
-\contentsline {chapter}{\numberline {8}Management commands}{25}{chapter.8}
-\contentsline {chapter}{\numberline {9}Automatically Set CSRF Token in Postman}{27}{chapter.9}
-\contentsline {chapter}{\numberline {10}Profiling slowest parts of dango}{29}{chapter.10}
-\contentsline {chapter}{\numberline {11}Log SQL Queries To Console}{31}{chapter.11}
-\contentsline {section}{\numberline {11.1}Using debug-toolbar}{31}{section.11.1}
-\contentsline {section}{\numberline {11.2}Using django-extensions}{31}{section.11.2}
-\contentsline {chapter}{\numberline {12}ORM Gotchas}{35}{chapter.12}
-\contentsline {section}{\numberline {12.1}Caching}{35}{section.12.1}
-\contentsline {section}{\numberline {12.2}Eager evaluation}{35}{section.12.2}
-\contentsline {section}{\numberline {12.3}Lazy evaluation}{35}{section.12.3}
-\contentsline {chapter}{\numberline {13}Appendix A}{37}{chapter.13}
-\contentsline {section}{\numberline {13.1}Shell}{37}{section.13.1}
-\contentsline {section}{\numberline {13.2}iPython}{38}{section.13.2}
+\contentsline {chapter}{\numberline {6}Django Migrations}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}Safe/Unsafe Migrations}{19}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}test}{19}{subsection.6.1.1}
+\contentsline {section}{\numberline {6.2}Schema/Data Migrations}{19}{section.6.2}
+\contentsline {chapter}{\numberline {7}Log SQL Queries To Console}{21}{chapter.7}
+\contentsline {section}{\numberline {7.1}Using debug-toolbar}{21}{section.7.1}
+\contentsline {section}{\numberline {7.2}Using django-extensions}{21}{section.7.2}
+\contentsline {chapter}{\numberline {8}ORM Gotchas}{25}{chapter.8}
+\contentsline {section}{\numberline {8.1}Caching}{25}{section.8.1}
+\contentsline {section}{\numberline {8.2}Eager evaluation}{25}{section.8.2}
+\contentsline {section}{\numberline {8.3}Lazy evaluation}{25}{section.8.3}
+\contentsline {chapter}{\numberline {9}Form with multiple submit buttons}{27}{chapter.9}
+\contentsline {chapter}{\numberline {10}Dealing With CSRF Token Outside Of Django}{29}{chapter.10}
+\contentsline {section}{\numberline {10.1}Ajax}{29}{section.10.1}
+\contentsline {section}{\numberline {10.2}Postman}{29}{section.10.2}
+\contentsline {section}{\numberline {10.3}Shell}{30}{section.10.3}
+\contentsline {chapter}{\numberline {11}Laziness \& Caching}{33}{chapter.11}
+\contentsline {chapter}{\numberline {12}Dynamic Initial Values In Forms}{35}{chapter.12}
+\contentsline {chapter}{\numberline {13}Management commands}{39}{chapter.13}
+\contentsline {chapter}{\numberline {14}Profiling \& Optimizing Dango}{41}{chapter.14}
+\contentsline {section}{\numberline {14.1}What to Optimize?}{41}{section.14.1}
+\contentsline {section}{\numberline {14.2}Benchmark}{41}{section.14.2}
+\contentsline {section}{\numberline {14.3}Pinpointing The Cause}{42}{section.14.3}
+\contentsline {section}{\numberline {14.4}Optimizing For Performance}{42}{section.14.4}
+\contentsline {chapter}{\numberline {15}Appendix A}{43}{chapter.15}
+\contentsline {section}{\numberline {15.1}Shell}{43}{section.15.1}
+\contentsline {section}{\numberline {15.2}iPython}{44}{section.15.2}

@@ -22,20 +22,24 @@ Welcome to Django Tips Book!
 
    admin_list_display_foreignkey.rst
 
-   misc_bottlenecks.rst
+   orm_migrations.rst
+
+   orm_log_sql.rst
+
+   orm_optimizations.rst
+
+   forms_multi_submit.rst
+
+   misc_csrf_token.rst
 
    misc_deployment.rst
+
+   misc_eager_lazy.rst
 
    misc_gotcha_initial.rst
 
    misc_management_commands.rst
 
-   misc_postman_csrf_token.rst
-
    misc_profiling.rst
-
-   orm_log_sql.rst
-
-   orm_optimizations.rst
 
    appendix.rst

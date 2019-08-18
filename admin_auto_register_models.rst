@@ -1,47 +1,69 @@
-Automatically Register All Models In Admin
--------------------------------------------
-
-Inbuilt admin interface is one the most powerful & popular feature of Django. Once we create the models, we need to register them with admin, so that it can read metadata and populate interface for it.
-
-If the django project has too many models or if it has a legacy database, then adding all those models to admin becomes a tedious task. To automate this process, we can programatically fetch all the models in the project and register them with admin.
+Auto Register All Models In Admin
+==================================
 
 
-.. code-block:: python
-
-    from django.apps import apps
-
-
-    models = apps.get_models()
-
-    for model in models:
-        admin.site.register(model)
+Manual Registration
+--------------------
 
 
-This works well if we are just auto registering all the models. However if we register some models with admin using custom admin classes and they try to auto register all models in admin.py files in our apps, there will be conflicts as Django doesn't allow registering the same model twice.
+Inbuilt admin interface is one the most powerful & popular feature of Django. Once we create the models, we need to register them with admin, so that it can read schema and populate interface for it.
+
+Let us register Book model in the admin interface.
 
 
 .. code-block:: python
+
+    # file: library/book/admin.py
 
     from django.apps import apps
 
     from book.models import Book
 
+
     class BookAdmin(admin.ModelAdmin):
         list_display = ('id', 'name', 'author')
 
+
     admin.site.register(Book, BookAdmin)
+
+
+Now, we can see the book model in admin.
+
+
+.. image:: images/admin-auto-register1.png
+   :align: center
+
+
+If the django project has too many models to be registered in admin or if it has a legacy database where all tables need to be registered in admin, then adding all those models to admin becomes a tedious task.
+
+
+Auto Registration
+------------------
+
+
+To automate this process, we can programatically fetch all the models in the project and register them with admin. Also, we need to ignore models which are already registered with admin as django doesn't allow regsitering same model twice.
+
+
+.. code-block:: python
+
+    from django.apps import apps
 
 
     models = apps.get_models()
 
     for model in models:
-        admin.site.register(model)
+        try:
+            admin.site.register(model)
+        except admin.sites.AlreadyRegistered:
+            pass
 
 
-So, we need to make sure this auto registration runs after all `admin.py` files are loaded and it should ignore models which are already registered. We can safely hook it in AppConfig.
+This code snippet should run after all `admin.py` files are loaded so that auto registration happends after all manually added models are registered. Django provides AppConfig.ready() to perform any initialization tasks which can be used to hook this code.
 
 
 .. code-block:: python
+
+    # file: library/book/apps.py
 
     from django.apps import apps, AppConfig
     from django.contrib import admin
@@ -58,18 +80,20 @@ So, we need to make sure this auto registration runs after all `admin.py` files 
                     pass
 
 
-Now all models will get registed automatically. If we go to a model page in admin, it will just show objects like this.
+In the admin, we can see manually registered models and automatically registered models. If we open admin page for any auto registered model, it will show something like this.
 
 
-.. image:: _images/django-admin-auto.png
+.. image:: images/admin-auto-register2.png
    :align: center
 
 
-This view is not informative for the users who want to see the data. It will be more informative if we can show all the fields of the model in admin.
+This view is not at all useful for the users who want to see the data. It will be more informative if we can show all the fields of the model in admin.
 
-To achieve that, we can create a ListAdminMixin, which will populate list_display with all the fields in the model. We can create a new admin class which will subclass ListAdminMixin & ModelAdmin.
 
-We can use this new admin class when we are registering the model so that all the fields in the model will show up in the admin.
+Auto Registration With Fields
+------------------------------
+
+To achieve that, we can create an admin class to populate model fields in `list_display`. While registering, we can use this admin class to register the model.
 
 
 .. code-block:: python
@@ -78,26 +102,28 @@ We can use this new admin class when we are registering the model so that all th
     from django.contrib import admin
 
 
-    class ListAdminMixin(object):
+    class ListModelAdmin(admin.ModelAdmin):
         def __init__(self, model, admin_site):
-            self.list_display = [field.name for field in model._meta.fields if field.name != "id"]
-            super(ListAdminMixin, self).__init__(model, admin_site)
+            self.list_display = [field.name for field in model._meta.fields]
+            super().__init__(model, admin_site)
 
 
-    class CustomApp(AppConfig):
+    class BookAppConfig(AppConfig):
 
         def ready(self):
             models = apps.get_models()
             for model in models:
-                admin_class = type('AdminClass', (ListAdminMixin, admin.ModelAdmin), {})
                 try:
-                    admin.site.register(model, admin_class)
+                    admin.site.register(model, ListModelAdmin)
                 except admin.sites.AlreadyRegistered:
                     pass
 
 
-Now whenever we create a new model or add a new field to an existing model, it will get reflected in the admin automatically.
+Now, if we look at Author admin page, it will be shown with all relevant fields.
 
 
-.. image:: _images/django-admin-auto-2.png
+.. image:: images/admin-auto-register3.png
    :align: center
+
+
+Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.

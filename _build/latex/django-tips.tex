@@ -69,7 +69,7 @@
 
 
 \title{Django Tips}
-\date{Aug 15, 2019}
+\date{Aug 17, 2019}
 \release{}
 \author{ChillarAnand}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -114,44 +114,59 @@ Haki Banita
 \sphinxurl{https://hakibenita.com/}
 
 
-\chapter{Automatically Register All Models In Admin}
-\label{\detokenize{admin_auto_register_models:automatically-register-all-models-in-admin}}\label{\detokenize{admin_auto_register_models::doc}}
-Inbuilt admin interface is one the most powerful \& popular feature of Django. Once we create the models, we need to register them with admin, so that it can read metadata and populate interface for it.
+\chapter{Auto Register All Models In Admin}
+\label{\detokenize{admin_auto_register_models:auto-register-all-models-in-admin}}\label{\detokenize{admin_auto_register_models::doc}}
 
-If the django project has too many models or if it has a legacy database, then adding all those models to admin becomes a tedious task. To automate this process, we can programatically fetch all the models in the project and register them with admin.
+\section{Manual Registration}
+\label{\detokenize{admin_auto_register_models:manual-registration}}
+Inbuilt admin interface is one the most powerful \& popular feature of Django. Once we create the models, we need to register them with admin, so that it can read schema and populate interface for it.
 
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{django.apps} \PYG{k+kn}{import} \PYG{n}{apps}
-
-
-\PYG{n}{models} \PYG{o}{=} \PYG{n}{apps}\PYG{o}{.}\PYG{n}{get\PYGZus{}models}\PYG{p}{(}\PYG{p}{)}
-
-\PYG{k}{for} \PYG{n}{model} \PYG{o+ow}{in} \PYG{n}{models}\PYG{p}{:}
-    \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
-\end{sphinxVerbatim}
-
-This works well if we are just auto registering all the models. However if we register some models with admin using custom admin classes and they try to auto register all models in admin.py files in our apps, there will be conflicts as Django doesn’t allow registering the same model twice.
+Let us register Book model in the admin interface.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} file: library/book/admin.py}
+
 \PYG{k+kn}{from} \PYG{n+nn}{django.apps} \PYG{k+kn}{import} \PYG{n}{apps}
 
 \PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{Book}
 
+
 \PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
 
+
 \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+Now, we can see the book model in admin.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-auto-register1}.png}\hspace*{\fill}}
+
+If the django project has too many models to be registered in admin or if it has a legacy database where all tables need to be registered in admin, then adding all those models to admin becomes a tedious task.
+
+
+\section{Auto Registration}
+\label{\detokenize{admin_auto_register_models:auto-registration}}
+To automate this process, we can programatically fetch all the models in the project and register them with admin. Also, we need to ignore models which are already registered with admin as django doesn’t allow regsitering same model twice.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.apps} \PYG{k+kn}{import} \PYG{n}{apps}
 
 
 \PYG{n}{models} \PYG{o}{=} \PYG{n}{apps}\PYG{o}{.}\PYG{n}{get\PYGZus{}models}\PYG{p}{(}\PYG{p}{)}
 
 \PYG{k}{for} \PYG{n}{model} \PYG{o+ow}{in} \PYG{n}{models}\PYG{p}{:}
-    \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
+    \PYG{k}{try}\PYG{p}{:}
+        \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
+    \PYG{k}{except} \PYG{n}{admin}\PYG{o}{.}\PYG{n}{sites}\PYG{o}{.}\PYG{n}{AlreadyRegistered}\PYG{p}{:}
+        \PYG{k}{pass}
 \end{sphinxVerbatim}
 
-So, we need to make sure this auto registration runs after all \sphinxtitleref{admin.py} files are loaded and it should ignore models which are already registered. We can safely hook it in AppConfig.
+This code snippet should run after all \sphinxtitleref{admin.py} files are loaded so that auto registration happends after all manually added models are registered. Django provides AppConfig.ready() to perform any initialization tasks which can be used to hook this code.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} file: library/book/apps.py}
+
 \PYG{k+kn}{from} \PYG{n+nn}{django.apps} \PYG{k+kn}{import} \PYG{n}{apps}\PYG{p}{,} \PYG{n}{AppConfig}
 \PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
 
@@ -167,42 +182,44 @@ So, we need to make sure this auto registration runs after all \sphinxtitleref{a
                 \PYG{k}{pass}
 \end{sphinxVerbatim}
 
-Now all models will get registed automatically. If we go to a model page in admin, it will just show objects like this.
+In the admin, we can see manually registered models and automatically registered models. If we open admin page for any auto registered model, it will show something like this.
 
-\noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-auto}.png}\hspace*{\fill}}
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-auto-register2}.png}\hspace*{\fill}}
 
-This view is not informative for the users who want to see the data. It will be more informative if we can show all the fields of the model in admin.
+This view is not at all useful for the users who want to see the data. It will be more informative if we can show all the fields of the model in admin.
 
-To achieve that, we can create a ListAdminMixin, which will populate list\_display with all the fields in the model. We can create a new admin class which will subclass ListAdminMixin \& ModelAdmin.
 
-We can use this new admin class when we are registering the model so that all the fields in the model will show up in the admin.
+\section{Auto Registration With Fields}
+\label{\detokenize{admin_auto_register_models:auto-registration-with-fields}}
+To achieve that, we can create an admin class to populate model fields in \sphinxtitleref{list\_display}. While registering, we can use this admin class to register the model.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k+kn}{from} \PYG{n+nn}{django.apps} \PYG{k+kn}{import} \PYG{n}{apps}\PYG{p}{,} \PYG{n}{AppConfig}
 \PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
 
 
-\PYG{k}{class} \PYG{n+nc}{ListAdminMixin}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
+\PYG{k}{class} \PYG{n+nc}{ListModelAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
     \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{model}\PYG{p}{,} \PYG{n}{admin\PYGZus{}site}\PYG{p}{)}\PYG{p}{:}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{[}\PYG{n}{field}\PYG{o}{.}\PYG{n}{name} \PYG{k}{for} \PYG{n}{field} \PYG{o+ow}{in} \PYG{n}{model}\PYG{o}{.}\PYG{n}{\PYGZus{}meta}\PYG{o}{.}\PYG{n}{fields} \PYG{k}{if} \PYG{n}{field}\PYG{o}{.}\PYG{n}{name} \PYG{o}{!=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{id}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}
-        \PYG{n+nb}{super}\PYG{p}{(}\PYG{n}{ListAdminMixin}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{model}\PYG{p}{,} \PYG{n}{admin\PYGZus{}site}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{[}\PYG{n}{field}\PYG{o}{.}\PYG{n}{name} \PYG{k}{for} \PYG{n}{field} \PYG{o+ow}{in} \PYG{n}{model}\PYG{o}{.}\PYG{n}{\PYGZus{}meta}\PYG{o}{.}\PYG{n}{fields}\PYG{p}{]}
+        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{model}\PYG{p}{,} \PYG{n}{admin\PYGZus{}site}\PYG{p}{)}
 
 
-\PYG{k}{class} \PYG{n+nc}{CustomApp}\PYG{p}{(}\PYG{n}{AppConfig}\PYG{p}{)}\PYG{p}{:}
+\PYG{k}{class} \PYG{n+nc}{BookAppConfig}\PYG{p}{(}\PYG{n}{AppConfig}\PYG{p}{)}\PYG{p}{:}
 
     \PYG{k}{def} \PYG{n+nf}{ready}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{models} \PYG{o}{=} \PYG{n}{apps}\PYG{o}{.}\PYG{n}{get\PYGZus{}models}\PYG{p}{(}\PYG{p}{)}
         \PYG{k}{for} \PYG{n}{model} \PYG{o+ow}{in} \PYG{n}{models}\PYG{p}{:}
-            \PYG{n}{admin\PYGZus{}class} \PYG{o}{=} \PYG{n+nb}{type}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{AdminClass}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{(}\PYG{n}{ListAdminMixin}\PYG{p}{,} \PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
             \PYG{k}{try}\PYG{p}{:}
-                \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{model}\PYG{p}{,} \PYG{n}{admin\PYGZus{}class}\PYG{p}{)}
+                \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{model}\PYG{p}{,} \PYG{n}{ListModelAdmin}\PYG{p}{)}
             \PYG{k}{except} \PYG{n}{admin}\PYG{o}{.}\PYG{n}{sites}\PYG{o}{.}\PYG{n}{AlreadyRegistered}\PYG{p}{:}
                 \PYG{k}{pass}
 \end{sphinxVerbatim}
 
-Now whenever we create a new model or add a new field to an existing model, it will get reflected in the admin automatically.
+Now, if we look at Author admin page, it will be shown with all relevant fields.
 
-\noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-auto-2}.png}\hspace*{\fill}}
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-auto-register3}.png}\hspace*{\fill}}
+
+Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.
 
 
 \chapter{Custom Admin Actions For Querysets \& Individual Objects}
@@ -214,71 +231,79 @@ Django provides admin actions which work on a queryset level. By default, django
 
 In our books admin, we can select a bunch of books and delete them.
 
-\noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-custom-actions1}.png}\hspace*{\fill}}
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-custom-actions1}.png}\hspace*{\fill}}
 
 Django provides an option to hook user defined actions to run additional actions on selected items. Let us write write a custom admin action to mark selected books as available.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k}{def} \PYG{n+nf}{make\PYGZus{}books\PYGZus{}available}\PYG{p}{(}\PYG{n}{modeladmin}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{queryset}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{queryset}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{is\PYGZus{}available}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-\PYG{n}{make\PYGZus{}books\PYGZus{}available}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Mark selected books as available}\PYG{l+s+s2}{\PYGZdq{}}
-
-
 \PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{actions} \PYG{o}{=} \PYG{p}{(}\PYG{n}{make\PYGZus{}books\PYGZus{}available}\PYG{p}{,}\PYG{p}{)}
+    \PYG{n}{actions} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{make\PYGZus{}books\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
     \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{make\PYGZus{}books\PYGZus{}available}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{modeladmin}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{queryset}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{queryset}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{is\PYGZus{}available}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{make\PYGZus{}books\PYGZus{}available}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Mark selected books as available}\PYG{l+s+s2}{\PYGZdq{}}
 \end{sphinxVerbatim}
 
-\noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-custom-actions2}.png}\hspace*{\fill}}
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-custom-actions2}.png}\hspace*{\fill}}
 
-These custom admin actions are efficient when we are taking an action on bulk items. For taking a specific action on single item, using custom actions will be inefficient.
 
-For example, to delete a single user, we need to follow these steps.
-\begin{quote}
+\section{Custom Actions On Individual Objects}
+\label{\detokenize{admin_custom_admin_actions:custom-actions-on-individual-objects}}
+Custom admin actions are inefficient when taking action on an individual object. For example, to delete a single user, we need to follow these steps.
+\begin{enumerate}
+\def\theenumi{\arabic{enumi}}
+\def\labelenumi{\theenumi .}
+\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
+\item {} 
+Select the checkbox of the object.
 
-First, we have to select that user record.
+\item {} 
+Click on the action dropdown.
 
-Next, we have to click on the action dropdown
+\item {} 
+Select “Delete selected” action.
 
-Next, we have to select delete action
+\item {} 
+Click on Go button.
 
-Next, we have to click Go button.
+\item {} 
+Confirm that the objects needs to be deleted.
 
-In the next page we have to confirm that we have to delete.
-\end{quote}
+\end{enumerate}
 
 Just to delete a single record, we have to perform 5 clicks. That’s too many clicks for a single action.
 
 To simplify the process, we can have delete button at row level. This can be achieved by writing a function which will insert delete button for every record.
 
+ModelAdmin instance provides a set of named URLs for CRUD operations. To get object url for a page, URL name will be \sphinxtitleref{\{\{ app\_label \}\}\_\{\{ model\_name \}\}\_\{\{ page \}\}}.
+
+For example, to get delete URL of a book object, we can call \sphinxtitleref{reverse(“admin:book\_book\_delete”, args={[}book\_id{]})}. We can add a delete button with this link and add it to list\_display so that delete button is available for individual objects.
+
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+\PYG{k+kn}{from} \PYG{n+nn}{django.utils.html} \PYG{k+kn}{import} \PYG{n}{format\PYGZus{}html}
 
-\PYG{k+kn}{from} \PYG{n+nn}{.} \PYG{k+kn}{import} \PYG{n}{models}
-
-
-\PYG{k}{class} \PYG{n+nc}{ResourceAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-\PYG{k}{def} \PYG{n+nf}{delete}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
-\PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}input type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{button}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Delete}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ onclick=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{location.href=}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{/delete/}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{obj}\PYG{o}{.}\PYG{n}{pk}\PYG{p}{)}
-
-    \PYG{n}{delete}\PYG{o}{.}\PYG{n}{allow\PYGZus{}tags} \PYG{o}{=} \PYG{n+nb+bp}{True}
-    \PYG{n}{delete}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Delete object}\PYG{l+s+s1}{\PYGZsq{}}
-
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}  \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}type}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{url}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{delete}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{Book}
 
 
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Book}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{delete}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{delete}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{view\PYGZus{}name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{admin:\PYGZob{}\PYGZcb{}\PYGZus{}\PYGZob{}\PYGZcb{}\PYGZus{}delete}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{obj}\PYG{o}{.}\PYG{n}{\PYGZus{}meta}\PYG{o}{.}\PYG{n}{app\PYGZus{}label}\PYG{p}{,} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{\PYGZus{}meta}\PYG{o}{.}\PYG{n}{model\PYGZus{}name}\PYG{p}{)}
+        \PYG{n}{link} \PYG{o}{=} \PYG{n}{reverse}\PYG{p}{(}\PYG{n}{view\PYGZus{}name}\PYG{p}{,} \PYG{n}{args}\PYG{o}{=}\PYG{p}{[}\PYG{n}{book}\PYG{o}{.}\PYG{n}{pk}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{html} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}input type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{button}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ onclick=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{location.href=}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZob{}\PYGZcb{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Delete}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{link}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{format\PYGZus{}html}\PYG{p}{(}\PYG{n}{html}\PYG{p}{)}
 \end{sphinxVerbatim}
 
-Now we have an admin with delete button for the records.
+Now in the admin interface, we have delete button for individual objects.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-custom-actions3}.png}\hspace*{\fill}}
 
 To delete an object, just click on delete button and then confirm to delete it. Now, we are deleting objects with just 2 clicks.
 
-We can also have buttons with custom actions. For example, we can add a button which will toggle the active status of an user.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-
-\end{sphinxVerbatim}
+In the above example, we have used an inbuilt model admin delete view. We can also write custom view and link those views for custom actions on individual objects. For example, we can add a button which will mark the book status to available.
 
 In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.
 
@@ -313,7 +338,7 @@ We can register these models with admin interface as follows.
 \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
 \end{sphinxVerbatim}
 
-Once they are registed, admin page shows Book model like this.
+Once they are registered, admin page shows Book model like this.
 
 \noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-fk-link-1}.png}\hspace*{\fill}}
 
@@ -425,251 +450,22 @@ By sublcassing RelatedFieldAdmin, we can directly use foreignkey fields in list 
 However, this will lead to N+1 problem. We will discuss more about this and how to fix this in orm optimizations chapter.
 
 
-\chapter{Finding High-impact Performance Bottlenecks}
-\label{\detokenize{misc_bottlenecks:finding-high-impact-performance-bottlenecks}}\label{\detokenize{misc_bottlenecks::doc}}
-When optimizing performance of web application, a common mistake is to start with optimizing the slowest page(or API). In addition to considering response time, we should also consider the traffic it is receving to priorotize the order of optimization.
+\chapter{Django Migrations}
+\label{\detokenize{orm_migrations:django-migrations}}\label{\detokenize{orm_migrations::doc}}
 
-In this article we will profile a django webapp, find high-impact performance bottlenecks and then start optimization them to yield better performance.
-Profiling
+\section{Safe/Unsafe Migrations}
+\label{\detokenize{orm_migrations:safe-unsafe-migrations}}
 
-django-silk is an open source profiling tool which intercepts and stores HTTP requests data. Install it with pip.
+\subsection{test}
+\label{\detokenize{orm_migrations:test}}
 
-pip install django-silk
+\section{Schema/Data Migrations}
+\label{\detokenize{orm_migrations:schema-data-migrations}}
+Mixing schema and data migrations
 
-Add silk to installed apps and include silk middleware in django settings.
-\begin{description}
-\item[{MIDDLEWARE = {[}}] \leavevmode
-…
-‘silk.middleware.SilkyMiddleware’,
-…
+set constrainsts
 
-\end{description}
-
-{]}
-\begin{description}
-\item[{INSTALLED\_APPS = (}] \leavevmode
-…
-‘silk’
-
-\end{description}
-
-)
-
-Run migrations so that Silk can create required database tables to store profile data.
-
-\$ python manage.py makemigrations
-\$ python manage.py migrate
-\$ python manage.py collectstatic
-
-Include silk urls in root urlconf to view the profile data.
-
-urlpatterns += {[}url(r’\textasciicircum{}silk/’, include(‘silk.urls’, namespace=’silk’)){]}
-
-On silk requests page(\sphinxurl{http://host/silk/requests/}), we can see all requests and sort them by overall time or time spent in database.
-
-High Impact Bottlenecks
-
-Silk creates silk\_request table which contains information about the requests processed by django.
-
-\$ pgcli
-
-library\textgreater{} d silk\_request;
-
-…
-
-We can group these requests data by path, calculate number of requests, average time taken and impact factor of each path. Since we are considering response time and traffic, impact factor will be product of average response time and number of requests for that path.
-\begin{description}
-\item[{library\textgreater{} SELECT}] \leavevmode\begin{quote}
-
-s.*, round((s.avg\_time * s.count)/max(s.avg\_time*s.count) over ()::NUMERIC,2) as impact
-\end{quote}
-\begin{description}
-\item[{FROM}] \leavevmode
-(select path, round(avg(time\_taken)::numeric,2) as avg\_time, count(path) as count from silk\_request group by PATH)
-s
-
-\end{description}
-
-ORDER BY impact DESC;
-
-\end{description}
-
-…
-
-We can see /point/book/book/ has highest impact even though it is neighter most visited nor slowest view. Optimizing this view first yields in overall better performance of webapp.
-Conclusion
-
-In this article, we learnt how to profile django webapp and identify bottlenecks to improve performance. In the next article, we wil learn how to optimize these bottlenecks by taking an in-depth look at them.
-
-paas
-
-iaas
-
-ec2
-
-home
-
-
-\chapter{Dynamic Initial Values In Forms}
-\label{\detokenize{misc_gotcha_initial:dynamic-initial-values-in-forms}}\label{\detokenize{misc_gotcha_initial::doc}}
-Django form fields accept initial argument. So You can set a default value for a field.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{SampleForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}     \PYG{n}{name} \PYG{o}{=} \PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{initial}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{avil page}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f} \PYG{o}{=} \PYG{n}{SampleForm}\PYG{p}{(}\PYG{p}{)}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
-\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+sa}{u}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{avil page}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-Sometimes it is required to override init method in forms and set field initial arguments.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{11}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{12}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{AdvancedForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{fields}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{initial} \PYG{o}{=}  \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZsq{}}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n}{name}\PYG{o}{=}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{13}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f2} \PYG{o}{=} \PYG{n}{AdvancedForm}\PYG{p}{(}\PYG{p}{)}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{14}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f2}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
-\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{14}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-Now let’s pass some initial data to form and see what happens.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{11}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{12}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{AdvancedForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{fields}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{initial} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZsq{}}  \PYG{c+c1}{\PYGZsh{} don\PYGZsq{}t try this at home}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n}{name}\PYG{o}{=}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{19}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f3} \PYG{o}{=} \PYG{n}{AdvancedForm}\PYG{p}{(}\PYG{n}{initial}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{precedence}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f3}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
-\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{precedence}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-If You look at the value of input field, it’s is NOT the overrided. It still has form initial value!
-
-If You look into source code of django forms to find what is happening, You will find this.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{field}\PYG{o}{.}\PYG{n}{bound\PYGZus{}data}\PYG{p}{(}
-       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{data}\PYG{p}{,}
-       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{form}\PYG{o}{.}\PYG{n}{initial}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{field}\PYG{o}{.}\PYG{n}{initial}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} precedence matters!!!!}
-\PYG{p}{)}
-\end{sphinxVerbatim}
-
-So form’s initial value has precedence over fields initial values.
-
-So You have to override form’s initial value instead of fields’s initial value to make it work as expected.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{21}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{22}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{AdvancedForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{initial}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZsq{}}  \PYG{c+c1}{\PYGZsh{} aha!!!!}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n}{name}\PYG{o}{=}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
-   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{23}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f4} \PYG{o}{=} \PYG{n}{AdvancedForm}\PYG{p}{(}\PYG{n}{initial}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{precedence}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
-
-\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{24}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f4}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
-\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{24}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-Management command
-intial value
-
-models initial value
-dict=\{\}
-
-
-\chapter{Management commands}
-\label{\detokenize{misc_management_commands:management-commands}}\label{\detokenize{misc_management_commands::doc}}
-ram
-.iterator()
-
-cpu
-cron job
-frequent restarts
-
-
-\chapter{Automatically Set CSRF Token in Postman}
-\label{\detokenize{misc_postman_csrf_token:automatically-set-csrf-token-in-postman}}\label{\detokenize{misc_postman_csrf_token::doc}}
-Django has inbuilt CSRF protection mechanism for requests via unsafe methods to prevent Cross Site Request Forgeries. When CSRF protection is enabled on AJAX POST methods, X-CSRFToken header should be sent in the request.
-
-Postman is one of the widely used tool for testing APIs. In this article, we will see how to set csrf token and update it automatically in Postman.
-CSRF Token In Postman
-
-Django sets csrftoken cookie on login. After logging in, we can see the csrf token from cookies in the Postman.
-
-We can grab this token and set it in headers manually.
-
-But this token has to be manually changed when it expires. This process becomes tedious to do it on an expiration basis.
-
-Instead, we can use Postman scripting feature to extract token from cookie and set it to an environment variable. In Test section of postman, add these lines.
-
-var xsrfCookie = postman.getResponseCookie(“csrftoken”);
-postman.setEnvironmentVariable(‘csrftoken’, xsrfCookie.value);
-
-This extracts csrf token and sets it to an evironment variable called csrftoken in the current environment.
-
-Now in our requests, we can use this variable to set the header.
-
-When the token expires, we just need to login again and csrf token gets updated automatically.
-Conclusion
-
-In this article we have seen how to set and renew csrftoken automatically in Postman. We can follow similar techniques on other API clients like CURL or httpie to set csrf token.
-
-Django Tips \& Tricks \#7 - Django Auth Plugin For HTTPie
-
-HTTPie is an alternative to curl for interacting with web services from CLI. It provides a simple and intuitive interface and it is handy to send arbitrary HTTP requests while testing/debugging APIs.
-
-When working with web applications that require authentication, using httpie is difficult as authentication mechanism will be different for different applications. httpie has in built support for basic \& digest authentication.
-
-To authenticate with Django apps, a user needs to make a GET request to login page. Django sends login form with a CSRF token. User can submit this form with valid credentials and a session will be initiated.
-
-Establish session manually is boring and it gets tedious when working with multiple apps in multiple environments(development, staging, production).
-
-I have written a plugin called httpie-django-auth which automates django authentication. It can be installed with pip
-
-pip install httpie-django-auth
-
-By default, it uses /admin/login to login. If you need to use some other URL for logging, set HTTPIE\_DJANGO\_AUTH\_URL environment variable.
-
-export HTTPIE\_DJANGO\_AUTH\_URL=’/accounts/login/’
-
-Now you can send authenticated requests to any URL as
-
-http :8000/profile -A=django \textendash{}auth=’username:password’
-
-
-\chapter{Profiling slowest parts of dango}
-\label{\detokenize{misc_profiling:profiling-slowest-parts-of-dango}}\label{\detokenize{misc_profiling::doc}}
-./manage.py runcprofileserver
+split migrations
 
 
 \chapter{Log SQL Queries To Console}
@@ -796,6 +592,252 @@ values\_list()
 
 enable query logging
 
+
+\chapter{Form with multiple submit buttons}
+\label{\detokenize{forms_multi_submit:form-with-multiple-submit-buttons}}\label{\detokenize{forms_multi_submit::doc}}
+submit1
+
+submit2
+
+
+\chapter{Dealing With CSRF Token Outside Of Django}
+\label{\detokenize{misc_csrf_token:dealing-with-csrf-token-outside-of-django}}\label{\detokenize{misc_csrf_token::doc}}
+
+\section{Ajax}
+\label{\detokenize{misc_csrf_token:ajax}}
+When making ajax calls from browser, we need to set CSRF token.
+
+
+\section{Postman}
+\label{\detokenize{misc_csrf_token:postman}}
+Django has inbuilt CSRF protection mechanism for requests via unsafe methods to prevent Cross Site Request Forgeries. When CSRF protection is enabled on AJAX POST methods, X-CSRFToken header should be sent in the request.
+
+Postman is one of the widely used tool for testing APIs. In this article, we will see how to set csrf token and update it automatically in Postman.
+CSRF Token In Postman
+
+Django sets csrftoken cookie on login. After logging in, we can see the csrf token from cookies in the Postman.
+
+We can grab this token and set it in headers manually.
+
+But this token has to be manually changed when it expires. This process becomes tedious to do it on an expiration basis.
+
+Instead, we can use Postman scripting feature to extract token from cookie and set it to an environment variable. In Test section of postman, add these lines.
+
+var xsrfCookie = postman.getResponseCookie(“csrftoken”);
+postman.setEnvironmentVariable(‘csrftoken’, xsrfCookie.value);
+
+This extracts csrf token and sets it to an evironment variable called csrftoken in the current environment.
+
+Now in our requests, we can use this variable to set the header.
+
+When the token expires, we just need to login again and csrf token gets updated automatically.
+Conclusion
+
+In this article we have seen how to set and renew csrftoken automatically in Postman. We can follow similar techniques on other API clients like CURL or httpie to set csrf token.
+
+
+\section{Shell}
+\label{\detokenize{misc_csrf_token:shell}}
+HTTPie is an alternative to curl for interacting with web services from CLI. It provides a simple and intuitive interface and it is handy to send arbitrary HTTP requests while testing/debugging APIs.
+
+When working with web applications that require authentication, using httpie is difficult as authentication mechanism will be different for different applications. httpie has in built support for basic \& digest authentication.
+
+To authenticate with Django apps, a user needs to make a GET request to login page. Django sends login form with a CSRF token. User can submit this form with valid credentials and a session will be initiated.
+
+Establish session manually is boring and it gets tedious when working with multiple apps in multiple environments(development, staging, production).
+
+I have written a plugin called httpie-django-auth which automates django authentication. It can be installed with pip
+
+pip install httpie-django-auth
+
+By default, it uses /admin/login to login. If you need to use some other URL for logging, set HTTPIE\_DJANGO\_AUTH\_URL environment variable.
+
+export HTTPIE\_DJANGO\_AUTH\_URL=’/accounts/login/’
+
+Now you can send authenticated requests to any URL as
+
+http :8000/profile -A=django \textendash{}auth=’username:password’
+
+paas
+
+iaas
+
+ec2
+
+home
+
+
+\chapter{Laziness \& Caching}
+\label{\detokenize{misc_eager_lazy:laziness-caching}}\label{\detokenize{misc_eager_lazy::doc}}
+
+\chapter{Dynamic Initial Values In Forms}
+\label{\detokenize{misc_gotcha_initial:dynamic-initial-values-in-forms}}\label{\detokenize{misc_gotcha_initial::doc}}
+Django form fields accept initial argument. So You can set a default value for a field.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{SampleForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}     \PYG{n}{name} \PYG{o}{=} \PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{initial}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{avil page}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f} \PYG{o}{=} \PYG{n}{SampleForm}\PYG{p}{(}\PYG{p}{)}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+sa}{u}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{avil page}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+Sometimes it is required to override init method in forms and set field initial arguments.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{11}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{12}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{AdvancedForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{fields}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{initial} \PYG{o}{=}  \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZsq{}}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n}{name}\PYG{o}{=}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{13}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f2} \PYG{o}{=} \PYG{n}{AdvancedForm}\PYG{p}{(}\PYG{p}{)}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{14}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f2}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{14}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+Now let’s pass some initial data to form and see what happens.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{11}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{12}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{AdvancedForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{fields}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{initial} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZsq{}}  \PYG{c+c1}{\PYGZsh{} don\PYGZsq{}t try this at home}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n}{name}\PYG{o}{=}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{19}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f3} \PYG{o}{=} \PYG{n}{AdvancedForm}\PYG{p}{(}\PYG{n}{initial}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{precedence}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f3}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{precedence}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+If You look at the value of input field, it’s is NOT the overrided. It still has form initial value!
+
+If You look into source code of django forms to find what is happening, You will find this.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{field}\PYG{o}{.}\PYG{n}{bound\PYGZus{}data}\PYG{p}{(}
+       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{data}\PYG{p}{,}
+       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{form}\PYG{o}{.}\PYG{n}{initial}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{field}\PYG{o}{.}\PYG{n}{initial}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} precedence matters!!!!}
+\PYG{p}{)}
+\end{sphinxVerbatim}
+
+So form’s initial value has precedence over fields initial values.
+
+So You have to override form’s initial value instead of fields’s initial value to make it work as expected.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{21}\PYG{p}{]}\PYG{p}{:} \PYG{k+kn}{from} \PYG{n+nn}{django} \PYG{k+kn}{import} \PYG{n}{forms}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{22}\PYG{p}{]}\PYG{p}{:} \PYG{k}{class} \PYG{n+nc}{AdvancedForm}\PYG{p}{(}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{Form}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{initial}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZsq{}}  \PYG{c+c1}{\PYGZsh{} aha!!!!}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}        \PYG{n}{name}\PYG{o}{=}\PYG{n}{forms}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
+   \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{:}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{23}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f4} \PYG{o}{=} \PYG{n}{AdvancedForm}\PYG{p}{(}\PYG{n}{initial}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{precedence}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+
+\PYG{n}{In} \PYG{p}{[}\PYG{l+m+mi}{24}\PYG{p}{]}\PYG{p}{:} \PYG{n}{f4}\PYG{o}{.}\PYG{n}{as\PYGZus{}p}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{Out}\PYG{p}{[}\PYG{l+m+mi}{24}\PYG{p}{]}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}p\PYGZgt{}Name: \PYGZlt{}input maxlength=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{10}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ name=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ type=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ value=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{override}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ /\PYGZgt{}\PYGZlt{}/p\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+Management command
+intial value
+
+models initial value
+dict=\{\}
+
+
+\chapter{Management commands}
+\label{\detokenize{misc_management_commands:management-commands}}\label{\detokenize{misc_management_commands::doc}}
+ram
+.iterator()
+
+cpu
+cron job
+frequent restarts
+
+
+\chapter{Profiling \& Optimizing Dango}
+\label{\detokenize{misc_profiling:profiling-optimizing-dango}}\label{\detokenize{misc_profiling::doc}}
+
+\section{What to Optimize?}
+\label{\detokenize{misc_profiling:what-to-optimize}}
+When optimizing performance of web application, a common mistake is to start with optimizing the slowest page(or API) or going after micro optimizations which are not worth the effort.
+
+In addition to considering response time, we should also consider the traffic it is receving to priorotize the order of optimization.
+
+
+\section{Benchmark}
+\label{\detokenize{misc_profiling:benchmark}}
+Let us profile our library django application and find performance bottlenecks.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+pip install django\PYGZhy{}silk
+\end{sphinxVerbatim}
+
+Add silk to installed apps and include silk middleware in django settings.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{MIDDLEWARE} \PYG{o}{=} \PYG{p}{[}
+    \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+    \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{silk.middleware.SilkyMiddleware}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
+    \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+\PYG{p}{]}
+
+\PYG{n}{INSTALLED\PYGZus{}APPS} \PYG{o}{=} \PYG{p}{(}
+    \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+    \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{silk}\PYG{l+s+s1}{\PYGZsq{}}
+\PYG{p}{)}
+\end{sphinxVerbatim}
+
+Run migrations so that Silk can create required database tables to store profile data.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} python manage.py makemigrations
+\PYGZdl{} python manage.py migrate
+\PYGZdl{} python manage.py collectstatic
+\end{sphinxVerbatim}
+
+Include silk urls in root urlconf to view the profile data.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{urlpatterns} \PYG{o}{+}\PYG{o}{=} \PYG{p}{[}\PYG{n}{url}\PYG{p}{(}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZca{}silk/}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{include}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{silk.urls}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{namespace}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{silk}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}
+\end{sphinxVerbatim}
+
+On silk requests page(\sphinxurl{http://host/silk/requests/}), we can see all requests and sort them by overall time or time spent in database.
+
+Silk creates silk\_request table which contains information about the requests processed by django.
+
+In this article, we learnt how to profile django webapp and identify bottlenecks to improve performance. In the next article, we wil learn how to optimize these bottlenecks by taking an in-depth look at them.
+
+
+\section{Pinpointing The Cause}
+\label{\detokenize{misc_profiling:pinpointing-the-cause}}
+./manage.py runcprofileserver
+
+
+\section{Optimizing For Performance}
+\label{\detokenize{misc_profiling:optimizing-for-performance}}
 
 \chapter{Appendix A}
 \label{\detokenize{appendix:appendix-a}}\label{\detokenize{appendix::doc}}

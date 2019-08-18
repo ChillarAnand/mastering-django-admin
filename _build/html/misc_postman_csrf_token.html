@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Automatically Set CSRF Token in Postman &mdash; django-tips  documentation</title>
+  <title>Automatically Set CSRF Token in Postman &mdash; Django Tips  documentation</title>
   
 
   
@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiling slowest parts of dango" href="misc_profiling.html" />
+    <link rel="prev" title="Management commands" href="misc_management_commands.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -48,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> django-tips
+            <a href="index.html" class="icon icon-home"> Django Tips
           
 
           
@@ -78,11 +80,22 @@
               
             
             
-              <ul>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admin_auto_register_models.html">Automatically Register All Models In Admin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin_custom_admin_actions.html">Custom admin actions for individual &amp; bulk objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkey Fields To Its Change View In Admin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin_list_display_foreignkey.html">Retrieve foreign key fields in admin list display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_custom_admin_actions.html">Custom Admin Actions For Querysets &amp; Individual Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_hyperlink_foreignkey.html">Hyperlink Foreignkeys To Its Change View In Admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_list_display_foreignkey.html">Allow ForeignKey Fields In Admin List Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_bottlenecks.html">Finding High-impact Performance Bottlenecks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_gotcha_initial.html">Dynamic Initial Values In Forms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_management_commands.html">Management commands</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Automatically Set CSRF Token in Postman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc_profiling.html">Profiling slowest parts of dango</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="orm_log_sql.html">Log SQL Queries To Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orm_optimizations.html">ORM Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix A</a></li>
 </ul>
 
             
@@ -97,7 +110,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">django-tips</a>
+          <a href="index.html">Django Tips</a>
         
       </nav>
 
@@ -150,27 +163,30 @@
   <div class="section" id="automatically-set-csrf-token-in-postman">
 <h1>Automatically Set CSRF Token in Postman<a class="headerlink" href="#automatically-set-csrf-token-in-postman" title="Permalink to this headline">¶</a></h1>
 <p>Django has inbuilt CSRF protection mechanism for requests via unsafe methods to prevent Cross Site Request Forgeries. When CSRF protection is enabled on AJAX POST methods, X-CSRFToken header should be sent in the request.</p>
-<p>Postman is one of the widely used tool for testing APIs. In this article, we will see how to set csrf token and update it automatically in Postman.</p>
-<p>CSRF Token In Postman
-Django sets csrftoken cookie on login. After logging in, we can see the csrf token from cookies in the Postman.</p>
+<p>Postman is one of the widely used tool for testing APIs. In this article, we will see how to set csrf token and update it automatically in Postman.
+CSRF Token In Postman</p>
+<p>Django sets csrftoken cookie on login. After logging in, we can see the csrf token from cookies in the Postman.</p>
 <p>We can grab this token and set it in headers manually.</p>
 <p>But this token has to be manually changed when it expires. This process becomes tedious to do it on an expiration basis.</p>
 <p>Instead, we can use Postman scripting feature to extract token from cookie and set it to an environment variable. In Test section of postman, add these lines.</p>
 <p>var xsrfCookie = postman.getResponseCookie(“csrftoken”);
-postman.setEnvironmentVariable(‘csrftoken’, xsrfCookie.value);
-This extracts csrf token and sets it to an evironment variable called csrftoken in the current environment.</p>
+postman.setEnvironmentVariable(‘csrftoken’, xsrfCookie.value);</p>
+<p>This extracts csrf token and sets it to an evironment variable called csrftoken in the current environment.</p>
 <p>Now in our requests, we can use this variable to set the header.</p>
-<p>When the token expires, we just need to login again and csrf token gets updated automatically.</p>
-<p>Conclusion
-In this article we have seen how to set and renew csrftoken automatically in Postman. We can follow similar techniques on other API clients like CURL or httpie to set csrf token.</p>
-<p>api django django-tips-tricks python
-Previous post Next post</p>
-<blockquote>
-<div>Written by</div></blockquote>
-<p>Chillar Anand
-Musings about programming, careers &amp; life.
-Comments</p>
-<p>Contents © 2019 Chillar Anand - Powered by Nikola</p>
+<p>When the token expires, we just need to login again and csrf token gets updated automatically.
+Conclusion</p>
+<p>In this article we have seen how to set and renew csrftoken automatically in Postman. We can follow similar techniques on other API clients like CURL or httpie to set csrf token.</p>
+<p>Django Tips &amp; Tricks #7 - Django Auth Plugin For HTTPie</p>
+<p>HTTPie is an alternative to curl for interacting with web services from CLI. It provides a simple and intuitive interface and it is handy to send arbitrary HTTP requests while testing/debugging APIs.</p>
+<p>When working with web applications that require authentication, using httpie is difficult as authentication mechanism will be different for different applications. httpie has in built support for basic &amp; digest authentication.</p>
+<p>To authenticate with Django apps, a user needs to make a GET request to login page. Django sends login form with a CSRF token. User can submit this form with valid credentials and a session will be initiated.</p>
+<p>Establish session manually is boring and it gets tedious when working with multiple apps in multiple environments(development, staging, production).</p>
+<p>I have written a plugin called httpie-django-auth which automates django authentication. It can be installed with pip</p>
+<p>pip install httpie-django-auth</p>
+<p>By default, it uses /admin/login to login. If you need to use some other URL for logging, set HTTPIE_DJANGO_AUTH_URL environment variable.</p>
+<p>export HTTPIE_DJANGO_AUTH_URL=’/accounts/login/’</p>
+<p>Now you can send authenticated requests to any URL as</p>
+<p>http :8000/profile -A=django –auth=’username:password’</p>
 </div>
 
 
@@ -178,6 +194,15 @@ Comments</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="misc_profiling.html" class="btn btn-neutral float-right" title="Profiling slowest parts of dango" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="misc_management_commands.html" class="btn btn-neutral float-left" title="Management commands" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
