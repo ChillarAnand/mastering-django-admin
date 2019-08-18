@@ -1,5 +1,16 @@
-Useful Shell Aliases For Python/Django Developers
--------------------------------------------------
+Appendix A
+============
+
+
+Shell
+------
+
+zsh/fish
+
+aliases
+
+auto completion
+
 
 Developers and hackers prefer using terminal and spend a lot of time on it. Instead of typing long commands over and over, they can be aliased to shortnames. The shell builtin alias allows users to set aliases.
 
@@ -33,11 +44,10 @@ alias dld="python manage.py loaddata"
 alias dt="python manage.py test"
 Just add the above aliases to your ~/.bashrc or ~/.zshrc. That's it. Hpy alsng!
 
-command-line django django-tips-tricks python
-Previous post Next post
-        Written by
-Chillar Anand
-Musings about programming, careers & life.
-Comments
 
-Contents © 2019 Chillar Anand - Powered by Nikola
+iPython
+--------
+
+init file
+
+auto reload

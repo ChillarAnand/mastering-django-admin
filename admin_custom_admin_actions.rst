@@ -1,13 +1,37 @@
-Custom admin actions for individual & bulk objects
-----------------------------------------------------
-
-In the earlier chapters, we have re-registered django auth user model using a proxy model.
-
-Django provides admin actions which work on a queryset level. For example, we can select a bunch of users and delete them.
+Custom Admin Actions For Querysets & Individual Objects
+========================================================
 
 
+Custom Actions On Querysets
+----------------------------
 
-We can also write custom admin actions to perform other operations. For example, we can write a custom admin action to activate selected users.
+
+Django provides admin actions which work on a queryset level. By default, django provides delete action in the admin.
+
+In our books admin, we can select a bunch of books and delete them.
+
+
+.. image:: _images/django-admin-custom-actions1.png
+   :align: center
+
+
+Django provides an option to hook user defined actions to run additional actions on selected items. Let us write write a custom admin action to mark selected books as available.
+
+
+.. code-block:: python
+
+    def make_books_available(modeladmin, request, queryset):
+        queryset.update(is_available=True)
+    make_books_available.short_description = "Mark selected books as available"
+
+
+    class BookAdmin(admin.ModelAdmin):
+        actions = (make_books_available,)
+        list_display = ('id', 'name', 'author')
+
+
+.. image:: _images/django-admin-custom-actions2.png
+   :align: center
 
 
 These custom admin actions are efficient when we are taking an action on bulk items. For taking a specific action on single item, using custom actions will be inefficient.
