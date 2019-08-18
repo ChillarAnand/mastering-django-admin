@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  17 AUG 2019 11:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  19 AUG 2019 09:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -10,8 +10,8 @@ Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 Document Class: sphinxmanual 2018/12/22 v1.8.3 Document class (Sphinx manual)
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count80
 \c@chapter=\count81
@@ -730,12 +730,12 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 * \topmargin=-37.0pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=11.0pt
+* \topskip=12.0pt
 * \footskip=18.06749pt
-* \marginparwidth=113.0pt
+* \marginparwidth=95.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -803,19 +803,19 @@ LaTeX Font Info:    Try loading font information for T1+phv on input line 81.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 81.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 81.
-LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10.95> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <12> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 81.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10.95> not available
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <12> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 81.
-LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <17.28> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 81.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <17.28> not available
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 81.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 81.
 <<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
 LaTeX Font Info:    Try loading font information for U+msa on input line 81.
@@ -828,7 +828,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 81.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 81.
  [1
 
@@ -836,11 +836,11 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 
 
 ]
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 83.
 
 (./django-tips.toc
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
  [1
 
@@ -856,7 +856,7 @@ Chapter 1.
 ]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
+ Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
@@ -868,9 +868,9 @@ LaTeX Font Info:    Try loading font information for T1+pcr on input line 126.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10.95> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 127.
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/pcr/b/n' tried instead on input line 129.
 LaTeX Font Info:    Try loading font information for TS1+pcr on input line 135.
 
@@ -878,269 +878,313 @@ LaTeX Font Info:    Try loading font information for TS1+pcr on input line 135.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-<admin-auto-register1.png, id=235, 623.32875pt x 220.825pt>
+<admin-auto-register1.png, id=240, 623.32875pt x 220.825pt>
 File: admin-auto-register1.png Graphic file (type png)
 <use admin-auto-register1.png>
 Package pdftex.def Info: admin-auto-register1.png  used on input line 143.
 (pdftex.def)             Requested size: 346.89626pt x 122.89627pt.
  [3] [4 <./admin-auto-register1.png>]
-<admin-auto-register2.png, id=251, 623.32875pt x 220.825pt>
+<admin-auto-register2.png, id=256, 623.32875pt x 220.825pt>
 File: admin-auto-register2.png Graphic file (type png)
 <use admin-auto-register2.png>
 Package pdftex.def Info: admin-auto-register2.png  used on input line 187.
 (pdftex.def)             Requested size: 346.89626pt x 122.89627pt.
-
-Overfull \vbox (0.73994pt too high) detected at line 216
- []
-
-[5 <./admin-auto-register2.png>]
-<admin-auto-register3.png, id=257, 504.88625pt x 219.82124pt>
+ [5 <./admin-auto-register2.png>]
+<admin-auto-register3.png, id=262, 504.88625pt x 219.82124pt>
 File: admin-auto-register3.png Graphic file (type png)
 <use admin-auto-register3.png>
 Package pdftex.def Info: admin-auto-register3.png  used on input line 220.
 (pdftex.def)             Requested size: 346.89626pt x 151.03616pt.
- [6 <./admin-auto-register3.png>]
+ [6] [7 <./admin-auto-register3.png>] [8
+
+]
 Chapter 3.
-<admin-custom-actions1.png, id=265, 623.32875pt x 246.9225pt>
+<admin-custom-actions1.png, id=278, 623.32875pt x 246.9225pt>
 File: admin-custom-actions1.png Graphic file (type png)
 <use admin-custom-actions1.png>
 Package pdftex.def Info: admin-custom-actions1.png  used on input line 234.
 (pdftex.def)             Requested size: 346.89626pt x 137.42036pt.
-
-Overfull \vbox (13.48254pt too high) detected at line 246
- []
-
-[7
-
- <./admin-custom-actions1.png>]
-<admin-custom-actions2.png, id=271, 623.32875pt x 246.9225pt>
+[9 <./admin-custom-actions1.png>]
+<admin-custom-actions2.png, id=285, 623.32875pt x 246.9225pt>
 File: admin-custom-actions2.png Graphic file (type png)
 <use admin-custom-actions2.png>
 Package pdftex.def Info: admin-custom-actions2.png  used on input line 248.
 (pdftex.def)             Requested size: 346.89626pt x 137.42036pt.
- [8 <./admin-custom-actions2.png>]
-LaTeX Font Info:    Font shape `TS1/pcr/bx/n' in size <10> not available
+ [10 <./admin-custom-actions2.png>]
+LaTeX Font Info:    Font shape `TS1/pcr/bx/n' in size <10.95> not available
 (Font)              Font shape `TS1/pcr/b/n' tried instead on input line 296.
-<admin-custom-actions3.png, id=282, 625.33624pt x 247.92625pt>
+<admin-custom-actions3.png, id=296, 625.33624pt x 247.92625pt>
 File: admin-custom-actions3.png Graphic file (type png)
 <use admin-custom-actions3.png>
 Package pdftex.def Info: admin-custom-actions3.png  used on input line 302.
 (pdftex.def)             Requested size: 346.89626pt x 137.53638pt.
- [9 <./admin-custom-actions3.png>] [10]
+ [11]
+[12 <./admin-custom-actions3.png>]
 Chapter 4.
-<django-admin-fk-link-1.png, id=293, 595.22375pt x 325.215pt>
+<django-admin-fk-link-1.png, id=306, 595.22375pt x 325.215pt>
 File: django-admin-fk-link-1.png Graphic file (type png)
 <use django-admin-fk-link-1.png>
 Package pdftex.def Info: django-admin-fk-link-1.png  used on input line 343.
 (pdftex.def)             Requested size: 346.89626pt x 189.53294pt.
-[11
+[13
 
-] [12 <./django-admin-fk-link-1.png>] [13] [14
+]
+Overfull \vbox (16.56651pt too high) detected at line 366
+ []
+
+[14 <./django-admin-fk-link-1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1--375
+[][][]$\T1/ptm/m/n/12 https : / / docs . djangoproject . com / en / dev / ref /
+ models / instances /
+ []
+
+[15] [16
 
 ]
 Chapter 5.
-[15] [16] [17] [18
+[17] [18] [19] [20
 
 ]
 Chapter 6.
-[19] [20
+[21] [22
 
 ]
 Chapter 7.
-
-Underfull \hbox (badness 10000) in paragraph at lines 497--507
-[]\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qpassword^^Q,
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 491--493
+[]\T1/ptm/m/n/12 In [42]: User.objects.filter(is_staff=True) Out[42]: SE-LECT
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qlast_login^^Q,
+[]\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qpassword^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qis_superuser^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qlast_login^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qusername^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qis_superuser^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qfirst_name^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qusername^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qlast_name^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qfirst_name^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qemail^^Q, ^^Pauth_user^^Q.^^Qis_staff^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qlast_name^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 497--507
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qis_active^^Q,
- []
-
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 529--536
-[]\T1/ptm/m/n/10.95 Repeated 1 times. SE-LECT ^^Pdjango_session^^Q.^^Qsession_k
-ey^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qemail^^Q,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 529--536
-\T1/ptm/m/n/10.95 ^^Pdjango_session^^Q.^^Qsession_data^^Q, ^^Pdjango_session^^Q
-.^^Qexpire_date^^Q
+Underfull \hbox (badness 10000) in paragraph at lines 497--507
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qis_staff^^Q,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 497--507
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qis_active^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 529--536
-\T1/ptm/m/n/10.95 FROM ^^Pdjango_session^^Q WHERE (^^Pdjango_session^^Q.^^Qsess
-ion_key^^Q
+[]\T1/ptm/m/n/12 Repeated 1 times. SE-LECT ^^Pdjango_session^^Q.^^Qsession_key^
+^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 529--536
-\T1/ptm/m/n/10.95 = `dummy_key AND ^^Pdjango_session^^Q.^^Qexpire_date^^Q > `20
-18-05-
+\T1/ptm/m/n/12 ^^Pdjango_session^^Q.^^Qsession_data^^Q, ^^Pdjango_session^^Q.^^
+Qexpire_date^^Q
  []
 
 
-Underfull \hbox (badness 5189) in paragraph at lines 544--547
-[]\T1/ptm/m/n/10.95 `level': `DE-BUG', `han-dlers':
+Underfull \hbox (badness 10000) in paragraph at lines 529--536
+\T1/ptm/m/n/12 31T09:38:56.369469+00:00'::timestamptz) This pack-age pro-vides
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 557--560
+[]\T1/ptm/m/n/12 (0.001) SE-LECT ^^Pdjango_admin_log^^Q.^^Qid^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-[]\T1/ptm/m/n/10.95 (0.001) SE-LECT ^^Pdjango_admin_log^^Q.^^Qid^^Q,
+\T1/ptm/m/n/12 ^^Pdjango_admin_log^^Q.^^Qaction_time^^Q, ^^Pdjango_admin_log^^Q
+.^^Quser_id^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pdjango_admin_log^^Q.^^Qaction_time^^Q, ^^Pdjango_admin_log
-^^Q.^^Quser_id^^Q,
+\T1/ptm/m/n/12 ^^Pdjango_admin_log^^Q.^^Qcontent_type_id^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pdjango_admin_log^^Q.^^Qcontent_type_id^^Q, ^^Pdjango_admin
-_log^^Q.^^Qobject_id^^Q,
+\T1/ptm/m/n/12 ^^Pdjango_admin_log^^Q.^^Qobject_id^^Q, ^^Pdjango_admin_log^^Q.^
+^Qobject_repr^^Q,
+ []
+
+
+Overfull \hbox (22.43665pt too wide) in paragraph at lines 557--560
+\T1/ptm/m/n/12 ^^Pdjango_admin_log^^Q.^^Qaction_flag^^Q, ^^Pdjango_admin_log^^Q
+.^^Qchange_message^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pdjango_admin_log^^Q.^^Qobject_repr^^Q, ^^Pdjango_admin_log
-^^Q.^^Qaction_flag^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qid^^Q, ^^Pauth_user^^Q.^^Qpassword^^Q, ^^Paut
+h_user^^Q.^^Qlast_login^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pdjango_admin_log^^Q.^^Qchange_message^^Q, ^^Pauth_user^^Q.
-^^Qid^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qis_superuser^^Q, ^^Pauth_user^^Q.^^Qusername^
+^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qemail^^Q, ^^Pauth_user^^Q.^^Qis_staff^^Q, 
-^^Pauth_user^^Q.^^Qis_active^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qfirst_name^^Q, ^^Pauth_user^^Q.^^Qlast_name^^
+Q,
+ []
+
+
+Underfull \hbox (badness 6016) in paragraph at lines 557--560
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qemail^^Q, ^^Pauth_user^^Q.^^Qis_staff^^Q, ^^P
+auth_user^^Q.^^Qis_active^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pauth_user^^Q.^^Qdate_joined^^Q, ^^Pdjango_content_type^^Q.
-^^Qid^^Q,
+\T1/ptm/m/n/12 ^^Pauth_user^^Q.^^Qdate_joined^^Q, ^^Pdjango_content_type^^Q.^^Q
+id^^Q,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pdjango_content_type^^Q.^^Qapp_label^^Q, ^^Pdjango_content_
-type^^Q.^^Qmodel^^Q
+\T1/ptm/m/n/12 ^^Pdjango_content_type^^Q.^^Qapp_label^^Q, ^^Pdjango_content_typ
+e^^Q.^^Qmodel^^Q
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 FROM ^^Pdjango_admin_log^^Q IN-NER JOIN ^^Pauth_user^^Q ON
+\T1/ptm/m/n/12 FROM ^^Pdjango_admin_log^^Q IN-NER JOIN ^^Pauth_user^^Q
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 557--560
-\T1/ptm/m/n/10.95 ^^Pdjango_content_type^^Q ON (^^Pdjango_admin_log^^Q.^^Qconte
-nt_type_id^^Q =
+\T1/ptm/m/n/12 ON (^^Pdjango_admin_log^^Q.^^Quser_id^^Q = ^^Pauth_user^^Q.^^Qid
+^^Q)
  []
 
-[22] [23] [24
 
-]
-Chapter 8.
+Underfull \hbox (badness 10000) in paragraph at lines 557--560
+\T1/ptm/m/n/12 LEFT OUTER JOIN ^^Pdjango_content_type^^Q ON
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 557--560
+\T1/ptm/m/n/12 WHERE ^^Pdjango_admin_log^^Q.^^Quser_id^^Q = 4 OR-DER BY
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 557--560
+\T1/ptm/m/n/12 ^^Pdjango_admin_log^^Q.^^Qaction_time^^Q DESC LIMIT 10; args=(4,
+)
+ []
+
 [25] [26
 
 ]
-Chapter 9.
+Chapter 8.
 [27] [28
 
 ]
-Chapter 10.
+Chapter 9.
+[29] [30
 
-Underfull \hbox (badness 10000) in paragraph at lines 626--628
-[]\T1/ptm/m/n/10.95 var xs-r-f-Cookie = post-man.getResponseCookie(^^Pcsrftoken
-^^Q); post-
+]
+Chapter 10.
+[31]
+Underfull \hbox (badness 5203) in paragraph at lines 626--628
+[]\T1/ptm/m/n/12 var xs-r-f-Cookie = post-man.getResponseCookie(^^Pcsrftoken^^Q
+); post-
  []
 
-[29] [30] [31] [32
+[32] [33] [34
 
 ]
 Chapter 11.
-[33] [34
+[35] [36
 
 ]
 Chapter 12.
-[35]
-LaTeX Font Info:    Font shape `TS1/pcr/m/it' in size <10> not available
+
+Overfull \vbox (14.53358pt too high) detected at line 708
+ []
+
+[37]
+LaTeX Font Info:    Font shape `TS1/pcr/m/it' in size <10.95> not available
 (Font)              Font shape `TS1/pcr/m/sl' tried instead on input line 719.
- [36] [37] [38
+ [38] [39] [40
 
 ]
 Chapter 13.
-[39] [40
+[41] [42
 
 ]
 Chapter 14.
-[41] [42]
+[43] [44] [45] [46
+
+]
 Chapter 15.
 
-Underfull \hbox (badness 10000) in paragraph at lines 860--864
-[]\T1/ptm/m/n/10.95 alias py='python' alias ipy='ipython' alias py3='python3' a
-lias
+Underfull \hbox (badness 6157) in paragraph at lines 867--871
+[]\T1/ptm/m/n/12 alias py='python' alias ipy='ipython' alias py3='python3' alia
+s
  []
 
-[43
 
-] (./django-tips.ind) 
+Underfull \hbox (badness 5288) in paragraph at lines 879--891
+[]\T1/ptm/m/n/12 alias dj=^^Qpython man-age.py^^Q alias drs=^^Qpython man-age.p
+y run-
+ []
+
+[47] (./django-tips.ind) 
 AED: lastpage setting LastPage
-[44]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 896.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 896.
+[48]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 903.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 903.
  (./django-tips.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 896.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 896.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 903.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 903.
 Package rerunfilecheck Info: File `django-tips.out' has not changed.
-(rerunfilecheck)             Checksum: B04FD608351DFDA26AC312FB3516DDB6;6410.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 896.
+(rerunfilecheck)             Checksum: 41887FC09508EBD889A0633B21C9E94D;6451.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 903.
  ) 
 Here is how much of TeX's memory you used:
- 13545 strings out of 492649
- 191423 string characters out of 6129622
- 321531 words of memory out of 5000000
+ 13546 strings out of 492649
+ 191403 string characters out of 6129622
+ 317551 words of memory out of 5000000
  17013 multiletter control sequences out of 15000+600000
- 54999 words of font info for 87 fonts, out of 8000000 for 9000
+ 54583 words of font info for 85 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,12n,51p,1299b,529s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,48p,1299b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texli
@@ -1151,10 +1195,10 @@ s/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.p
 fb>
-Output written on django-tips.pdf (48 pages, 483110 bytes).
+Output written on django-tips.pdf (52 pages, 484884 bytes).
 PDF statistics:
- 496 PDF objects out of 1000 (max. 8388607)
- 414 compressed objects within 5 object streams
- 94 named destinations out of 1000 (max. 500000)
- 368 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 520 PDF objects out of 1000 (max. 8388607)
+ 434 compressed objects within 5 object streams
+ 99 named destinations out of 1000 (max. 500000)
+ 376 words of extra memory for PDF output out of 10000 (max. 10000000)
 
