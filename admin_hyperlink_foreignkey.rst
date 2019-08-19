@@ -33,10 +33,10 @@ We can register these models with admin interface as follows.
     admin.site.register(Book, BookAdmin)
 
 
-Once they are registed, admin page shows Book model like this.
+Once they are registered, admin page shows Book model like this.
 
 
-.. image:: _images/django-admin-fk-link-1.png
+.. image:: images/django-admin-fk-link-1.png
    :alt: hyperlink foreign key fields django
    :align: center
 

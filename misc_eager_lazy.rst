@@ -1,2 +1,2 @@
-Lazy & Eager Loading of objects
-================================
+Laziness & Caching
+==================

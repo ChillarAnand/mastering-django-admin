@@ -11,7 +11,7 @@ Django provides admin actions which work on a queryset level. By default, django
 In our books admin, we can select a bunch of books and delete them.
 
 
-.. image:: _images/django-admin-custom-actions1.png
+.. image:: images/admin-custom-actions1.png
    :align: center
 
 
@@ -20,66 +20,72 @@ Django provides an option to hook user defined actions to run additional actions
 
 .. code-block:: python
 
-    def make_books_available(modeladmin, request, queryset):
-        queryset.update(is_available=True)
-    make_books_available.short_description = "Mark selected books as available"
 
 
     class BookAdmin(admin.ModelAdmin):
-        actions = (make_books_available,)
+        actions = ('make_books_available',)
         list_display = ('id', 'name', 'author')
 
+        def make_books_available(self, modeladmin, request, queryset):
+            queryset.update(is_available=True)
+        make_books_available.short_description = "Mark selected books as available"
 
-.. image:: _images/django-admin-custom-actions2.png
+.. image:: images/admin-custom-actions2.png
    :align: center
 
 
-These custom admin actions are efficient when we are taking an action on bulk items. For taking a specific action on single item, using custom actions will be inefficient.
+Custom Actions On Individual Objects
+-------------------------------------
 
-For example, to delete a single user, we need to follow these steps.
+Custom admin actions are inefficient when taking action on an individual object. For example, to delete a single user, we need to follow these steps.
 
-    First, we have to select that user record.
+    #. Select the checkbox of the object.
 
-    Next, we have to click on the action dropdown
+    #. Click on the action dropdown.
 
-    Next, we have to select delete action
+    #. Select "Delete selected" action.
 
-    Next, we have to click Go button.
+    #. Click on Go button.
 
-    In the next page we have to confirm that we have to delete.
+    #. Confirm that the objects needs to be deleted.
+
 
 Just to delete a single record, we have to perform 5 clicks. That's too many clicks for a single action.
 
 To simplify the process, we can have delete button at row level. This can be achieved by writing a function which will insert delete button for every record.
 
+ModelAdmin instance provides a set of named URLs for CRUD operations. To get object url for a page, URL name will be `{{ app_label }}_{{ model_name }}_{{ page }}`.
+
+For example, to get delete URL of a book object, we can call `reverse("admin:book_book_delete", args=[book_id])`. We can add a delete button with this link and add it to list_display so that delete button is available for individual objects.
+
 
 .. code-block:: python
 
     from django.contrib import admin
+    from django.utils.html import format_html
 
-    from . import models
-
-
-    class ResourceAdmin(admin.ModelAdmin):
-    def delete(self, obj):
-    return '<input type="button" value="Delete" onclick="location.href=\'%s/delete/\'" />'.format(obj.pk)
-
-        delete.allow_tags = True
-        delete.short_description = 'Delete object'
-
-        list_display = ('book',  'book_type', 'url', 'delete')
+    from book.models import Book
 
 
-    admin.site.register(models.Book)
+    class BookAdmin(admin.ModelAdmin):
+        list_display = ('id', 'name', 'author', 'is_available', 'delete')
 
-Now we have an admin with delete button for the records.
+        def delete(self, obj):
+            view_name = "admin:{}_{}_delete".format(obj._meta.app_label, obj._meta.model_name)
+            link = reverse(view_name, args=[book.pk])
+            html = '<input type="button" onclick="location.href=\'{}\'" value="Delete" />'.format(link)
+            return format_html(html)
+
+
+Now in the admin interface, we have delete button for individual objects.
+
+
+.. image:: images/admin-custom-actions3.png
+   :align: center
 
 
 To delete an object, just click on delete button and then confirm to delete it. Now, we are deleting objects with just 2 clicks.
 
-We can also have buttons with custom actions. For example, we can add a button which will toggle the active status of an user.
-
-.. code-block:: python
-
+In the above example, we have used an inbuilt model admin delete view. We can also write custom view and link those views for custom actions on individual objects. For example, we can add a button which will mark the book status to available.
 
 In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.

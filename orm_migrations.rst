@@ -1,6 +1,16 @@
-Migrations
-==========
+Django Migrations
+==================
 
+
+Safe/Unsafe Migrations
+-----------------------
+
+test
+********
+
+
+Schema/Data Migrations
+-----------------------
 
 Mixing schema and data migrations
 

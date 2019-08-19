@@ -1,17 +1,22 @@
 Log SQL Queries To Console
----------------------------
+============================
 
 
 Django ORM makes easy to interact with database. To understand what is happening behing the scenes or to see SQL performance, we can log all the SQL queries that be being executed. In this article, we will see various ways to achieve this.
 
-Using debug-toolbar
-Django debug toolbar provides panels to show debug information about requests. It has SQL panel which shows all executed SQL queries and time taken for them.
 
+Using debug-toolbar
+---------------------
+
+Django debug toolbar provides panels to show debug information about requests. It has SQL panel which shows all executed SQL queries and time taken for them.
 
 
 When building REST APIs or micro services where django templating engine is not used, this method won't work. In these situations, we have to log SQL queries to console.
 
 Using django-extensions
+---------------------------
+
+
 Django-extensions provides lot of utilities for productive development. For runserver_plus and shell_plus commands, it accepts and optional --print-sql argument, which prints all the SQL queries that are being executed.
 
 ./manage.py runserver_plus --print-sql
@@ -72,12 +77,3 @@ In runserver console, we can see all SQL queries that are being executed.
 (0.001) SELECT "django_admin_log"."id", "django_admin_log"."action_time", "django_admin_log"."user_id", "django_admin_log"."content_type_id", "django_admin_log"."object_id", "django_admin_log"."object_repr", "django_admin_log"."action_flag", "django_admin_log"."change_message", "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined", "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_admin_log" INNER JOIN "auth_user" ON ("django_admin_log"."user_id" = "auth_user"."id") LEFT OUTER JOIN "django_content_type" ON ("django_admin_log"."content_type_id" = "django_content_type"."id") WHERE "django_admin_log"."user_id" = 4 ORDER BY "django_admin_log"."action_time" DESC LIMIT 10; args=(4,)
 [2018/06/03 15:06:59] HTTP GET /admin/ 200 [1.69, 127.0.0.1:47734]
 These are few ways to log all SQL queries to console. We can also write a custom middleware for better logging of these queries and get some insights.
-
-django django-tips-tricks python
-Previous post Next post
-        Written by
-Chillar Anand
-Musings about programming, careers & life.
-Comments
-
-Contents © 2019 Chillar Anand - Powered by Nikola
