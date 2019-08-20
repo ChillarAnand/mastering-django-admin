@@ -12,31 +12,3 @@
 \contentsline {section}{\numberline {3.2}Custom Actions On Individual Objects}{10}{section.3.2}
 \contentsline {chapter}{\numberline {4}Hyperlink Foreignkeys To Its Change View In Admin}{13}{chapter.4}
 \contentsline {chapter}{\numberline {5}Allow ForeignKey Fields In Admin List Display}{17}{chapter.5}
-\contentsline {chapter}{\numberline {6}Django Migrations}{21}{chapter.6}
-\contentsline {section}{\numberline {6.1}Safe/Unsafe Migrations}{21}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}test}{21}{subsection.6.1.1}
-\contentsline {section}{\numberline {6.2}Schema/Data Migrations}{21}{section.6.2}
-\contentsline {chapter}{\numberline {7}Log SQL Queries To Console}{23}{chapter.7}
-\contentsline {section}{\numberline {7.1}Using debug-toolbar}{23}{section.7.1}
-\contentsline {section}{\numberline {7.2}Using django-extensions}{23}{section.7.2}
-\contentsline {chapter}{\numberline {8}ORM Gotchas}{27}{chapter.8}
-\contentsline {section}{\numberline {8.1}Caching}{27}{section.8.1}
-\contentsline {section}{\numberline {8.2}Eager evaluation}{27}{section.8.2}
-\contentsline {section}{\numberline {8.3}Lazy evaluation}{27}{section.8.3}
-\contentsline {chapter}{\numberline {9}Form with multiple submit buttons}{29}{chapter.9}
-\contentsline {chapter}{\numberline {10}Dealing With CSRF Token Outside Of Django}{31}{chapter.10}
-\contentsline {section}{\numberline {10.1}Ajax}{31}{section.10.1}
-\contentsline {section}{\numberline {10.2}Postman}{31}{section.10.2}
-\contentsline {section}{\numberline {10.3}Shell}{32}{section.10.3}
-\contentsline {chapter}{\numberline {11}Laziness \& Caching}{35}{chapter.11}
-\contentsline {chapter}{\numberline {12}Dynamic Initial Values In Forms}{37}{chapter.12}
-\contentsline {chapter}{\numberline {13}Management commands}{41}{chapter.13}
-\contentsline {chapter}{\numberline {14}Profiling \& Optimizing Dango}{43}{chapter.14}
-\contentsline {section}{\numberline {14.1}What to Optimize?}{43}{section.14.1}
-\contentsline {section}{\numberline {14.2}Metrics}{43}{section.14.2}
-\contentsline {section}{\numberline {14.3}Aggregration}{44}{section.14.3}
-\contentsline {section}{\numberline {14.4}Profiling}{45}{section.14.4}
-\contentsline {section}{\numberline {14.5}Optimizing For Performance}{45}{section.14.5}
-\contentsline {chapter}{\numberline {15}Appendix A}{47}{chapter.15}
-\contentsline {section}{\numberline {15.1}Shell}{47}{section.15.1}
-\contentsline {section}{\numberline {15.2}iPython}{48}{section.15.2}
