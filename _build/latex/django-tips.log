@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  20 AUG 2019 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  22 AUG 2019 18:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -842,17 +842,16 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (./django-tips.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
-)
+ [1
+
+])
 \tf@toc=\write6
 \openout6 = `django-tips.toc'.
 
- [1
-
-] [2
-
-]
+ [2]
 Chapter 1.
 [1
+
 
 ]
 
@@ -865,104 +864,124 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
 Chapter 2.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 126.
+[3] [4
+
+]
+Chapter 3.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 133.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10.95> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 127.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 134.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 129.
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 135.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 136.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 142.
 
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-<admin-auto-register1.png, id=104, 623.32875pt x 220.825pt>
+<admin-auto-register1.png, id=181, 623.32875pt x 220.825pt>
 File: admin-auto-register1.png Graphic file (type png)
 <use admin-auto-register1.png>
-Package pdftex.def Info: admin-auto-register1.png  used on input line 143.
+Package pdftex.def Info: admin-auto-register1.png  used on input line 150.
 (pdftex.def)             Requested size: 346.89626pt x 122.89627pt.
- [3] [4 <./admin-auto-register1.png>]
-<admin-auto-register2.png, id=120, 623.32875pt x 220.825pt>
+ [5] [6 <./admin-auto-register1.png>]
+<admin-auto-register2.png, id=196, 623.32875pt x 220.825pt>
 File: admin-auto-register2.png Graphic file (type png)
 <use admin-auto-register2.png>
-Package pdftex.def Info: admin-auto-register2.png  used on input line 187.
+Package pdftex.def Info: admin-auto-register2.png  used on input line 194.
 (pdftex.def)             Requested size: 346.89626pt x 122.89627pt.
- [5 <./admin-auto-register2.png>]
-<admin-auto-register3.png, id=126, 504.88625pt x 219.82124pt>
+ [7 <./admin-auto-register2.png>]
+<admin-auto-register3.png, id=202, 504.88625pt x 219.82124pt>
 File: admin-auto-register3.png Graphic file (type png)
 <use admin-auto-register3.png>
-Package pdftex.def Info: admin-auto-register3.png  used on input line 220.
+Package pdftex.def Info: admin-auto-register3.png  used on input line 227.
 (pdftex.def)             Requested size: 346.89626pt x 151.03616pt.
- [6] [7 <./admin-auto-register3.png>] [8
+ [8] [9 <./admin-auto-register3.png>] [10
 
 ]
-Chapter 3.
-<admin-custom-actions1.png, id=142, 623.32875pt x 246.9225pt>
+Chapter 4.
+[11] [12] [13] [14
+
+]
+Chapter 5.
+<admin-custom-actions1.png, id=235, 623.32875pt x 246.9225pt>
 File: admin-custom-actions1.png Graphic file (type png)
 <use admin-custom-actions1.png>
-Package pdftex.def Info: admin-custom-actions1.png  used on input line 234.
+Package pdftex.def Info: admin-custom-actions1.png  used on input line 317.
 (pdftex.def)             Requested size: 346.89626pt x 137.42036pt.
-[9 <./admin-custom-actions1.png>]
-<admin-custom-actions2.png, id=149, 623.32875pt x 246.9225pt>
+[15 <./admin-custom-actions1.png>]
+<admin-custom-actions2.png, id=242, 623.32875pt x 246.9225pt>
 File: admin-custom-actions2.png Graphic file (type png)
 <use admin-custom-actions2.png>
-Package pdftex.def Info: admin-custom-actions2.png  used on input line 248.
+Package pdftex.def Info: admin-custom-actions2.png  used on input line 331.
 (pdftex.def)             Requested size: 346.89626pt x 137.42036pt.
- [10 <./admin-custom-actions2.png>]
+ [16 <./admin-custom-actions2.png>]
 LaTeX Font Info:    Font shape `TS1/pcr/bx/n' in size <10.95> not available
-(Font)              Font shape `TS1/pcr/b/n' tried instead on input line 296.
-<admin-custom-actions3.png, id=161, 625.33624pt x 247.92625pt>
+(Font)              Font shape `TS1/pcr/b/n' tried instead on input line 379.
+<admin-custom-actions3.png, id=253, 625.33624pt x 247.92625pt>
 File: admin-custom-actions3.png Graphic file (type png)
 <use admin-custom-actions3.png>
-Package pdftex.def Info: admin-custom-actions3.png  used on input line 302.
+Package pdftex.def Info: admin-custom-actions3.png  used on input line 385.
 (pdftex.def)             Requested size: 346.89626pt x 137.53638pt.
- [11]
-[12 <./admin-custom-actions3.png>]
-Chapter 4.
-<django-admin-fk-link-1.png, id=171, 595.22375pt x 325.215pt>
+ [17]
+[18 <./admin-custom-actions3.png>]
+Chapter 6.
+<django-admin-fk-link-1.png, id=263, 595.22375pt x 325.215pt>
 File: django-admin-fk-link-1.png Graphic file (type png)
 <use django-admin-fk-link-1.png>
-Package pdftex.def Info: django-admin-fk-link-1.png  used on input line 343.
+Package pdftex.def Info: django-admin-fk-link-1.png  used on input line 426.
 (pdftex.def)             Requested size: 346.89626pt x 189.53294pt.
-[13
+[19
 
 ]
-Overfull \vbox (16.56651pt too high) detected at line 366
+Overfull \vbox (16.56651pt too high) detected at line 449
  []
 
-[14 <./django-admin-fk-link-1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1--375
+[20 <./django-admin-fk-link-1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1--458
 [][][]$\T1/ptm/m/n/12 https : / / docs . djangoproject . com / en / dev / ref /
  models / instances /
  []
 
-[15] [16
+[21] [22
 
 ]
-Chapter 5.
-[17] [18] (./django-tips.ind) 
+Chapter 7.
+[23] [24]
+Chapter 8.
+[25
+
+] [26
+
+]
+Chapter 9.
+[27] [28]
+Chapter 10.
+(./django-tips.ind) 
 AED: lastpage setting LastPage
-[19]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 456.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 456.
+[29
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 581.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 581.
  (./django-tips.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 456.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 456.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 581.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 581.
 Package rerunfilecheck Info: File `django-tips.out' has not changed.
-(rerunfilecheck)             Checksum: 16B80A58544066F95E53252EFB61A92C;2648.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 456.
+(rerunfilecheck)             Checksum: 0BBF4CE218D74CB7023DB03602C5B56D;4504.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 581.
  ) 
 Here is how much of TeX's memory you used:
- 13414 strings out of 492649
- 189197 string characters out of 6129622
- 315832 words of memory out of 5000000
- 16941 multiletter control sequences out of 15000+600000
- 50891 words of font info for 82 fonts, out of 8000000 for 9000
+ 13495 strings out of 492649
+ 190696 string characters out of 6129622
+ 317059 words of memory out of 5000000
+ 16987 multiletter control sequences out of 15000+600000
+ 54271 words of font info for 84 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,12n,45p,580b,488s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,49p,580b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texli
@@ -973,10 +992,10 @@ s/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.p
 fb>
-Output written on django-tips.pdf (23 pages, 448932 bytes).
+Output written on django-tips.pdf (33 pages, 462132 bytes).
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
- 192 compressed objects within 2 object streams
- 42 named destinations out of 1000 (max. 500000)
- 160 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 380 PDF objects out of 1000 (max. 8388607)
+ 314 compressed objects within 4 object streams
+ 75 named destinations out of 1000 (max. 500000)
+ 264 words of extra memory for PDF output out of 10000 (max. 10000000)
 
