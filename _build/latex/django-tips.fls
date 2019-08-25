@@ -249,7 +249,6 @@ INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam1
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
-OUTPUT django-tips.toc
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
@@ -258,6 +257,7 @@ INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm
+OUTPUT django-tips.toc
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1pcr.fd
 INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1pcr.fd
@@ -297,14 +297,14 @@ INPUT ./admin-auto-register3.png
 INPUT ./admin-auto-register3.png
 INPUT admin-auto-register3.png
 INPUT ./admin-auto-register3.png
-INPUT admin-custom-actions1.png
-INPUT ./admin-custom-actions1.png
-INPUT ./admin-custom-actions1.png
-INPUT admin-custom-actions1.png
-INPUT ./admin-custom-actions1.png
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
+INPUT admin-custom-actions1.png
+INPUT ./admin-custom-actions1.png
+INPUT ./admin-custom-actions1.png
+INPUT admin-custom-actions1.png
+INPUT ./admin-custom-actions1.png
 INPUT admin-custom-actions2.png
 INPUT ./admin-custom-actions2.png
 INPUT ./admin-custom-actions2.png
@@ -322,6 +322,8 @@ INPUT ./django-admin-fk-link-1.png
 INPUT ./django-admin-fk-link-1.png
 INPUT django-admin-fk-link-1.png
 INPUT ./django-admin-fk-link-1.png
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/helvetic/phvr8t.tfm
 INPUT django-tips.ind
 INPUT django-tips.ind
 INPUT django-tips.aux

@@ -69,7 +69,7 @@
 
 
 \title{Mastering Django Admin}
-\date{Aug 20, 2019}
+\date{Aug 22, 2019}
 \release{}
 \author{ChillarAnand}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -112,6 +112,13 @@ Andrew Godwin, \sphinxurl{http://www.aeracode.org/}
 Haki Banita
 
 \sphinxurl{https://hakibenita.com/}
+
+
+\chapter{The Million Dollar Admin}
+\label{\detokenize{admin_million_dollars:the-million-dollar-admin}}\label{\detokenize{admin_million_dollars::doc}}
+\sphinxurl{https://github.com/sshwsfc/xadmin}
+
+\sphinxurl{https://jacobian.org/2016/may/26/so-you-want-a-new-admin/}
 
 
 \chapter{Auto Register All Models In Admin}
@@ -220,6 +227,82 @@ Now, if we look at Author admin page, it will be shown with all relevant fields.
 \noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-auto-register3}.png}\hspace*{\fill}}
 
 Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.
+
+
+\chapter{Allow ForeignKey Fields In Admin List Display}
+\label{\detokenize{admin_list_display_foreignkey:allow-foreignkey-fields-in-admin-list-display}}\label{\detokenize{admin_list_display_foreignkey::doc}}
+Django admin has \sphinxtitleref{ModelAdmin} class which provides options and functionality for the models in admin interface. It has options like \sphinxtitleref{list\_display}, \sphinxtitleref{list\_filter}, \sphinxtitleref{search\_fields} to specify fields for corresponding actions.
+
+\sphinxtitleref{search\_fields}, \sphinxtitleref{list\_filter} and other options allow to include a ForeignKey or ManyToMany field with lookup API follow notation. For example, to search by book name in Bestselleradmin, we can specify \sphinxtitleref{book\_\_name} in search fields.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{BestSeller}
+
+
+\PYG{k}{class} \PYG{n+nc}{BestSellerAdmin}\PYG{p}{(}\PYG{n}{RelatedFieldAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}\PYGZus{}name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Bestseller}\PYG{p}{,} \PYG{n}{BestsellerAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+However Django doesn’t allow the same follow notation in \sphinxtitleref{list\_display}. To include ForeignKey field or ManyToMany field in the list display, we have to write a custom method and add this method in list display.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{BestSeller}
+
+
+\PYG{k}{class} \PYG{n+nc}{BestSellerAdmin}\PYG{p}{(}\PYG{n}{RelatedFieldAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}\PYGZus{}name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{author}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{return} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{book}\PYG{o}{.}\PYG{n}{author}
+    \PYG{n}{author}\PYG{o}{.}\PYG{n}{description} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Author}\PYG{l+s+s1}{\PYGZsq{}}
+
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Bestseller}\PYG{p}{,} \PYG{n}{BestsellerAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+This way of adding foreignkeys in list\_display becomes tedious when there are lots of models with foreignkey fields.
+
+We can write a custom admin class to dynamically set the methods as attributes so that we can use the ForeignKey fields in list\_display.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}related\PYGZus{}field}\PYG{p}{(}\PYG{n}{name}\PYG{p}{,} \PYG{n}{admin\PYGZus{}order\PYGZus{}field}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{short\PYGZus{}description}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{related\PYGZus{}names} \PYG{o}{=} \PYG{n}{name}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZus{}\PYGZus{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{dynamic\PYGZus{}attribute}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{related\PYGZus{}name} \PYG{o+ow}{in} \PYG{n}{related\PYGZus{}names}\PYG{p}{:}
+            \PYG{n}{obj} \PYG{o}{=} \PYG{n+nb}{getattr}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{related\PYGZus{}name}\PYG{p}{)}
+            \PYG{k}{return} \PYG{n}{obj}
+
+    \PYG{n}{dynamic\PYGZus{}attribute}\PYG{o}{.}\PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o}{=} \PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o+ow}{or} \PYG{n}{name}
+    \PYG{n}{dynamic\PYGZus{}attribute}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{n}{short\PYGZus{}description} \PYG{o+ow}{or} \PYG{n}{related\PYGZus{}names}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{replace}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZus{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ }\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{dynamic\PYGZus{}attribute}
+
+
+\PYG{k}{class} \PYG{n+nc}{RelatedFieldAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}getattr\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{attr}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{if} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZus{}\PYGZus{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{in} \PYG{n}{attr}\PYG{p}{:}
+            \PYG{k}{return} \PYG{n}{get\PYGZus{}related\PYGZus{}field}\PYG{p}{(}\PYG{n}{attr}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} not dynamic lookup, default behaviour}
+        \PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}getattribute\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{attr}\PYG{p}{)}
+
+
+\PYG{k}{class} \PYG{n+nc}{BestSellerAdmin}\PYG{p}{(}\PYG{n}{RelatedFieldAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}\PYGZus{}author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+By sublcassing RelatedFieldAdmin, we can directly use foreignkey fields in list display.
+
+However, this will lead to N+1 problem. We will discuss more about this and how to fix this in orm optimizations chapter.
 
 
 \chapter{Custom Admin Actions For Querysets \& Individual Objects}
@@ -374,80 +457,122 @@ Custom hyper links
 \sphinxurl{https://docs.djangoproject.com/en/dev/ref/models/instances/\#get-absolute-url}
 
 
-\chapter{Allow ForeignKey Fields In Admin List Display}
-\label{\detokenize{admin_list_display_foreignkey:allow-foreignkey-fields-in-admin-list-display}}\label{\detokenize{admin_list_display_foreignkey::doc}}
-Django admin has \sphinxtitleref{ModelAdmin} class which provides options and functionality for the models in admin interface. It has options like \sphinxtitleref{list\_display}, \sphinxtitleref{list\_filter}, \sphinxtitleref{search\_fields} to specify fields for corresponding actions.
+\chapter{Better Defaults}
+\label{\detokenize{admin_better_defaults:better-defaults}}\label{\detokenize{admin_better_defaults::doc}}
 
-\sphinxtitleref{search\_fields}, \sphinxtitleref{list\_filter} and other options allow to include a ForeignKey or ManyToMany field with lookup API follow notation. For example, to search by book name in Bestselleradmin, we can specify \sphinxtitleref{book\_\_name} in search fields.
+\section{Set ordering for custom fields}
+\label{\detokenize{admin_better_defaults:set-ordering-for-custom-fields}}
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{number\PYGZus{}of\PYGZus{}orders}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{order\PYGZus{}\PYGZus{}count}
+\PYG{n}{number\PYGZus{}of\PYGZus{}orders}\PYG{o}{.}\PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{order\PYGZus{}\PYGZus{}count}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+
+\section{Auto completion}
+\label{\detokenize{admin_better_defaults:auto-completion}}
+
+\section{JSON Editor}
+\label{\detokenize{admin_better_defaults:json-editor}}
+Viewing and editing JSON field in admin interface will be very difficult with default text editor interface.
+
+We can use 3rd packages like django-json-widget which provide JSON widget, with which viewing and editing JSON data becomes much intuitive.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
-
-\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{BestSeller}
-
-
-\PYG{k}{class} \PYG{n+nc}{BestSellerAdmin}\PYG{p}{(}\PYG{n}{RelatedFieldAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}\PYGZus{}name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib.postgres} \PYG{k+kn}{import} \PYG{n}{fields}
+\PYG{k+kn}{from} \PYG{n+nn}{django\PYGZus{}json\PYGZus{}widget.widgets} \PYG{k+kn}{import} \PYG{n}{JSONEditorWidget}
+\PYG{k+kn}{from} \PYG{n+nn}{.models} \PYG{k+kn}{import} \PYG{n}{YourModel}
 
 
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Bestseller}\PYG{p}{,} \PYG{n}{BestsellerAdmin}\PYG{p}{)}
+\PYG{n+nd}{@admin.register}\PYG{p}{(}\PYG{n}{YourModel}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{YourModelAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{formfield\PYGZus{}overrides} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{n}{fields}\PYG{o}{.}\PYG{n}{JSONField}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{widget}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{JSONEditorWidget}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{p}{\PYGZcb{}}
 \end{sphinxVerbatim}
 
-However Django doesn’t allow the same follow notation in \sphinxtitleref{list\_display}. To include ForeignKey field or ManyToMany field in the list display, we have to write a custom method and add this method in list display.
+\sphinxurl{https://github.com/crucialfelix/django-ajax-selects}
 
+
+\section{Sorting Models By Frequency}
+\label{\detokenize{admin_better_defaults:sorting-models-by-frequency}}
+\sphinxurl{https://github.com/mishbahr/django-modeladmin-reorder}
+
+
+\chapter{Admin Cosmotics}
+\label{\detokenize{admin_cosmotics:admin-cosmotics}}\label{\detokenize{admin_cosmotics::doc}}
+
+\section{Customize Header/Title}
+\label{\detokenize{admin_cosmotics:customize-header-title}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
-
-\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{BestSeller}
-
-
-\PYG{k}{class} \PYG{n+nc}{BestSellerAdmin}\PYG{p}{(}\PYG{n}{RelatedFieldAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
-    \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}\PYGZus{}name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
-
-    \PYG{k}{def} \PYG{n+nf}{author}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
-        \PYG{k}{return} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{book}\PYG{o}{.}\PYG{n}{author}
-    \PYG{n}{author}\PYG{o}{.}\PYG{n}{description} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Author}\PYG{l+s+s1}{\PYGZsq{}}
-
-
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Bestseller}\PYG{p}{,} \PYG{n}{BestsellerAdmin}\PYG{p}{)}
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{site\PYGZus{}header} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{My administration}\PYG{l+s+s1}{\PYGZsq{}}
 \end{sphinxVerbatim}
 
-This way of adding foreignkeys in list\_display becomes tedious when there are lots of models with foreignkey fields.
 
-We can write a custom admin class to dynamically set the methods as attributes so that we can use the ForeignKey fields in list\_display.
-
+\section{Plural names}
+\label{\detokenize{admin_cosmotics:plural-names}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}related\PYGZus{}field}\PYG{p}{(}\PYG{n}{name}\PYG{p}{,} \PYG{n}{admin\PYGZus{}order\PYGZus{}field}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{short\PYGZus{}description}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{related\PYGZus{}names} \PYG{o}{=} \PYG{n}{name}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZus{}\PYGZus{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
-
-    \PYG{k}{def} \PYG{n+nf}{dynamic\PYGZus{}attribute}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
-        \PYG{k}{for} \PYG{n}{related\PYGZus{}name} \PYG{o+ow}{in} \PYG{n}{related\PYGZus{}names}\PYG{p}{:}
-            \PYG{n}{obj} \PYG{o}{=} \PYG{n+nb}{getattr}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{related\PYGZus{}name}\PYG{p}{)}
-            \PYG{k}{return} \PYG{n}{obj}
-
-    \PYG{n}{dynamic\PYGZus{}attribute}\PYG{o}{.}\PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o}{=} \PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o+ow}{or} \PYG{n}{name}
-    \PYG{n}{dynamic\PYGZus{}attribute}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{n}{short\PYGZus{}description} \PYG{o+ow}{or} \PYG{n}{related\PYGZus{}names}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{replace}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZus{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ }\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
-    \PYG{k}{return} \PYG{n}{dynamic\PYGZus{}attribute}
-
-
-\PYG{k}{class} \PYG{n+nc}{RelatedFieldAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}getattr\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{attr}\PYG{p}{)}\PYG{p}{:}
-        \PYG{k}{if} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZus{}\PYGZus{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{in} \PYG{n}{attr}\PYG{p}{:}
-            \PYG{k}{return} \PYG{n}{get\PYGZus{}related\PYGZus{}field}\PYG{p}{(}\PYG{n}{attr}\PYG{p}{)}
-
-        \PYG{c+c1}{\PYGZsh{} not dynamic lookup, default behaviour}
-        \PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}getattribute\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{attr}\PYG{p}{)}
-
-
-\PYG{k}{class} \PYG{n+nc}{BestSellerAdmin}\PYG{p}{(}\PYG{n}{RelatedFieldAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{book\PYGZus{}\PYGZus{}author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{Category}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{class} \PYG{n+nc}{Meta}\PYG{p}{:}
+        \PYG{n}{verbose\PYGZus{}name\PYGZus{}plural} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{categories}\PYG{l+s+s2}{\PYGZdq{}}
 \end{sphinxVerbatim}
 
-By sublcassing RelatedFieldAdmin, we can directly use foreignkey fields in list display.
 
-However, this will lead to N+1 problem. We will discuss more about this and how to fix this in orm optimizations chapter.
+\chapter{Securing Django Admin}
+\label{\detokenize{admin_secure:securing-django-admin}}\label{\detokenize{admin_secure::doc}}
+
+\section{Securing Server}
+\label{\detokenize{admin_secure:securing-server}}
+
+\subsection{VPN}
+\label{\detokenize{admin_secure:vpn}}
+
+\subsection{FIREWALL}
+\label{\detokenize{admin_secure:firewall}}
+80/443
+
+
+\subsection{https}
+\label{\detokenize{admin_secure:https}}
+
+\section{Securing Django}
+\label{\detokenize{admin_secure:securing-django}}
+python manage.py check \textendash{}deploy
+
+
+\subsection{allowed hosts}
+\label{\detokenize{admin_secure:allowed-hosts}}
+
+\subsection{Disable DEBUG}
+\label{\detokenize{admin_secure:disable-debug}}
+
+\subsection{Change default url}
+\label{\detokenize{admin_secure:change-default-url}}
+
+\subsection{Ensuring proper ACL}
+\label{\detokenize{admin_secure:ensuring-proper-acl}}
+
+\subsection{Honeypot}
+\label{\detokenize{admin_secure:honeypot}}
+\sphinxurl{https://github.com/dmpayton/django-admin-honeypot}
+
+
+\subsection{2FA}
+\label{\detokenize{admin_secure:fa}}
+\sphinxurl{https://github.com/Bouke/django-two-factor-auth}
+
+
+\subsection{ENVironment}
+\label{\detokenize{admin_secure:environment}}
+\sphinxurl{https://github.com/dizballanze/django-admin-env-notice}
+
+
+\chapter{Notes}
+\label{\detokenize{notes:notes}}\label{\detokenize{notes::doc}}
+\sphinxurl{https://djangosnippets.org/snippets/2217/}
+
+image widget
 
 
 
