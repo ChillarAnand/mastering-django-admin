@@ -143,7 +143,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'django-tips.tex', 'Django Tips',
+    (master_doc, 'django-tips.tex', 'Mastering Django Admin',
      'ChillarAnand', 'manual'),
 ]
 

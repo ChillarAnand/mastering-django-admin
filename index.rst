@@ -4,8 +4,8 @@
    contain the root `toctree` directive.
 
 
-Welcome to Django Tips Book!
-==============================
+Welcome to Mastering Django Admin Book!
+========================================
 
 
 
@@ -21,25 +21,3 @@ Welcome to Django Tips Book!
    admin_hyperlink_foreignkey
 
    admin_list_display_foreignkey.rst
-
-   orm_migrations.rst
-
-   orm_log_sql.rst
-
-   orm_optimizations.rst
-
-   forms_multi_submit.rst
-
-   misc_csrf_token.rst
-
-   misc_deployment.rst
-
-   misc_eager_lazy.rst
-
-   misc_gotcha_initial.rst
-
-   misc_management_commands.rst
-
-   misc_profiling.rst
-
-   appendix.rst
