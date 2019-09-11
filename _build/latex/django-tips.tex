@@ -219,11 +219,21 @@ self.list\_display\_links = (None, )
 \end{sphinxVerbatim}
 
 
+\section{Allow editing in list view}
+\label{\detokenize{admin_better_defaults:allow-editing-in-list-view}}
+When a model is heavily used to update the content, it makes to sense to allow bulk edits on the models.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}editable} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+
 \section{Fetch only required fields}
 \label{\detokenize{admin_better_defaults:fetch-only-required-fields}}
 When a model is registered in admin, django tries to fetch all the fields of the table in the query. If there are any joins involved, it fetch fields of the joined tables also. This will slow down the query when the table size is big or number of results per page is more.
 
-To make queries faster, we can limit the queryset to fetch only the required fields.
+To make queries faster, we can limit the queryset to fetch only required fields.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
@@ -236,6 +246,12 @@ To make queries faster, we can limit the queryset to fetch only the required fie
 \PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
 \end{sphinxVerbatim}
 
+
+\section{Save as}
+\label{\detokenize{admin_better_defaults:save-as}}
+
+\section{radio fields}
+\label{\detokenize{admin_better_defaults:radio-fields}}
 
 \chapter{Auto Register All Models In Admin}
 \label{\detokenize{admin_auto_register_models:auto-register-all-models-in-admin}}\label{\detokenize{admin_auto_register_models::doc}}
