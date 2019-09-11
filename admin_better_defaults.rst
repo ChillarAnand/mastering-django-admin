@@ -64,3 +64,64 @@ Read-only fields
 form help text
 
 https://docs.djangoproject.com/en/dev/ref/models/fields/#help-text
+
+
+
+Customize Header/Title
+-----------------------
+
+
+.. code-block:: python
+
+    admin.site.site_header = 'My administration'
+
+
+
+Plural names
+--------------
+
+.. code-block:: python
+
+
+    class Category(models.Model):
+        class Meta:
+            verbose_name_plural = "categories"
+
+
+Disable links
+----------------
+
+
+        self.list_display_links = (None, )
+
+
+
+Disable full count
+-------------------
+
+
+.. code-block:: python
+
+    show_full_result_count = False
+
+
+Fetch only required fields
+---------------------------
+
+
+When a model is registered in admin, django tries to fetch all the fields of the table in the query. If there are any joins involved, it fetch fields of the joined tables also. This will slow down the query when the table size is big or number of results per page is more.
+
+To make queries faster, we can limit the queryset to fetch only required fields.
+
+
+.. code-block:: python
+
+
+    class BookAdmin(admin.ModelAdmin):
+        def get_queryset(self, request):
+            qs = super().get_queryset(request)
+            qs = qs.only('id', 'name')
+            return qs
+
+
+    admin.site.register(Book, BookAdmin)
