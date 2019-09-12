@@ -28,7 +28,6 @@ Welcome to Mastering Django Admin Book!
 
    admin_custom_admin_actions
 
-
    admin_secure.rst
 
-   notes.rst
+   final.rst
