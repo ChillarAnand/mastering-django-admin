@@ -69,7 +69,7 @@
 
 
 \title{Mastering Django Admin}
-\date{Aug 22, 2019}
+\date{Sep 11, 2019}
 \release{}
 \author{ChillarAnand}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -116,9 +116,125 @@ Haki Banita
 
 \chapter{The Million Dollar Admin}
 \label{\detokenize{admin_million_dollars:the-million-dollar-admin}}\label{\detokenize{admin_million_dollars::doc}}
+not to use for external applications
+
+Not good ux
+
+Django admin was first released in 2005 and it has gone through a lot of changes since then.
+
+mental models
+
+Revamp
+
+reduce cost of maintainance and development
+
+people come to django becase of admin
+
 \sphinxurl{https://github.com/sshwsfc/xadmin}
 
 \sphinxurl{https://jacobian.org/2016/may/26/so-you-want-a-new-admin/}
+
+
+\chapter{Better Defaults}
+\label{\detokenize{admin_better_defaults:better-defaults}}\label{\detokenize{admin_better_defaults::doc}}
+
+\section{Set ordering for custom fields}
+\label{\detokenize{admin_better_defaults:set-ordering-for-custom-fields}}
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{number\PYGZus{}of\PYGZus{}orders}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{order\PYGZus{}\PYGZus{}count}
+\PYG{n}{number\PYGZus{}of\PYGZus{}orders}\PYG{o}{.}\PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{order\PYGZus{}\PYGZus{}count}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+
+\section{Auto completion}
+\label{\detokenize{admin_better_defaults:auto-completion}}
+
+\section{JSON Editor}
+\label{\detokenize{admin_better_defaults:json-editor}}
+Viewing and editing JSON field in admin interface will be very difficult with default text editor interface.
+
+We can use 3rd packages like django-json-widget which provide JSON widget, with which viewing and editing JSON data becomes much intuitive.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib.postgres} \PYG{k+kn}{import} \PYG{n}{fields}
+\PYG{k+kn}{from} \PYG{n+nn}{django\PYGZus{}json\PYGZus{}widget.widgets} \PYG{k+kn}{import} \PYG{n}{JSONEditorWidget}
+\PYG{k+kn}{from} \PYG{n+nn}{.models} \PYG{k+kn}{import} \PYG{n}{YourModel}
+
+
+\PYG{n+nd}{@admin.register}\PYG{p}{(}\PYG{n}{YourModel}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{YourModelAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{formfield\PYGZus{}overrides} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{n}{fields}\PYG{o}{.}\PYG{n}{JSONField}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{widget}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{JSONEditorWidget}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{p}{\PYGZcb{}}
+\end{sphinxVerbatim}
+
+\sphinxurl{https://github.com/crucialfelix/django-ajax-selects}
+
+
+\section{Sorting Models By Frequency}
+\label{\detokenize{admin_better_defaults:sorting-models-by-frequency}}
+\sphinxurl{https://github.com/mishbahr/django-modeladmin-reorder}
+
+
+\section{Read-only fields}
+\label{\detokenize{admin_better_defaults:read-only-fields}}\begin{quote}
+
+readonly\_fields=(‘first’,)
+\end{quote}
+
+form help text
+
+\sphinxurl{https://docs.djangoproject.com/en/dev/ref/models/fields/\#help-text}
+
+
+\section{Customize Header/Title}
+\label{\detokenize{admin_better_defaults:customize-header-title}}
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{site\PYGZus{}header} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{My administration}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+
+\section{Plural names}
+\label{\detokenize{admin_better_defaults:plural-names}}
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Category}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{class} \PYG{n+nc}{Meta}\PYG{p}{:}
+        \PYG{n}{verbose\PYGZus{}name\PYGZus{}plural} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{categories}\PYG{l+s+s2}{\PYGZdq{}}
+\end{sphinxVerbatim}
+
+
+\section{Disable links}
+\label{\detokenize{admin_better_defaults:disable-links}}\begin{quote}
+
+self.list\_display\_links = (None, )
+\end{quote}
+
+
+\section{Disable full count}
+\label{\detokenize{admin_better_defaults:disable-full-count}}
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{show\PYGZus{}full\PYGZus{}result\PYGZus{}count} \PYG{o}{=} \PYG{n+nb+bp}{False}
+\end{sphinxVerbatim}
+
+
+\section{Fetch only required fields}
+\label{\detokenize{admin_better_defaults:fetch-only-required-fields}}
+When a model is registered in admin, django tries to fetch all the fields of the table in the query. If there are any joins involved, it fetch fields of the joined tables also. This will slow down the query when the table size is big or number of results per page is more.
+
+To make queries faster, we can limit the queryset to fetch only the required fields.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}queryset}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{qs} \PYG{o}{=} \PYG{n+nb}{super}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{get\PYGZus{}queryset}\PYG{p}{(}\PYG{n}{request}\PYG{p}{)}
+        \PYG{n}{qs} \PYG{o}{=} \PYG{n}{qs}\PYG{o}{.}\PYG{n}{only}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{qs}
+
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
 
 
 \chapter{Auto Register All Models In Admin}
@@ -229,6 +345,9 @@ Now, if we look at Author admin page, it will be shown with all relevant fields.
 Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.
 
 
+\chapter{Advanced Filtering}
+\label{\detokenize{admin_filter:advanced-filtering}}\label{\detokenize{admin_filter::doc}}
+
 \chapter{Allow ForeignKey Fields In Admin List Display}
 \label{\detokenize{admin_list_display_foreignkey:allow-foreignkey-fields-in-admin-list-display}}\label{\detokenize{admin_list_display_foreignkey::doc}}
 Django admin has \sphinxtitleref{ModelAdmin} class which provides options and functionality for the models in admin interface. It has options like \sphinxtitleref{list\_display}, \sphinxtitleref{list\_filter}, \sphinxtitleref{search\_fields} to specify fields for corresponding actions.
@@ -303,6 +422,72 @@ We can write a custom admin class to dynamically set the methods as attributes s
 By sublcassing RelatedFieldAdmin, we can directly use foreignkey fields in list display.
 
 However, this will lead to N+1 problem. We will discuss more about this and how to fix this in orm optimizations chapter.
+
+
+\chapter{Hyperlink Foreignkeys To Its Change View In Admin}
+\label{\detokenize{admin_hyperlink_foreignkey:hyperlink-foreignkeys-to-its-change-view-in-admin}}\label{\detokenize{admin_hyperlink_foreignkey::doc}}
+Consider Book model which has Author as foreignkey.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.db} \PYG{k+kn}{import} \PYG{n}{models}
+
+
+\PYG{k}{class} \PYG{n+nc}{Author}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{Book}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{title} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)}
+    \PYG{n}{author} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{ForeignKey}\PYG{p}{(}\PYG{n}{Author}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+We can register these models with admin interface as follows.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+
+\PYG{k+kn}{from} \PYG{n+nn}{.models} \PYG{k+kn}{import} \PYG{n}{Author}\PYG{p}{,} \PYG{n}{Book}
+
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Author}\PYG{p}{)}
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+Once they are registered, admin page shows Book model like this.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-fk-link-1}.png}\hspace*{\fill}}
+
+While browsing books, we can see book name and author name. Here, book name field is liked to book change view. But author field is shown as plain text.
+
+If we have to modify author name, we have to go back to authors admin page, search for relevant author and then change name.
+
+This becomes tedious if users spend lot of time in admin for tasks like this. Instead, if author field is hyperlinked to author change view, we can directly go to that page and change the name.
+
+Django provides an option to access admin views by its URL reversing system. For example, we can get change view of author model in book app using reverse(“admin:book\_author\_change”, args=id). Now we can use this url to hyperlink author field in book admin.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+\PYG{k+kn}{from} \PYG{n+nn}{django.utils.safestring} \PYG{k+kn}{import} \PYG{n}{mark\PYGZus{}safe}
+
+
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author\PYGZus{}link}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{author\PYGZus{}link}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{book}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{url} \PYG{o}{=} \PYG{n}{reverse}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{admin:book\PYGZus{}author\PYGZus{}change}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{args}\PYG{o}{=}\PYG{p}{[}\PYG{n}{book}\PYG{o}{.}\PYG{n}{author}\PYG{o}{.}\PYG{n}{id}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{link} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}a href=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{\PYGZgt{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZlt{}/a\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o}{\PYGZpc{}} \PYG{p}{(}\PYG{n}{url}\PYG{p}{,} \PYG{n}{book}\PYG{o}{.}\PYG{n}{author}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{mark\PYGZus{}safe}\PYG{p}{(}\PYG{n}{link}\PYG{p}{)}
+    \PYG{n}{author\PYGZus{}link}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Author}\PYG{l+s+s1}{\PYGZsq{}}
+\end{sphinxVerbatim}
+
+Now in the book admin view, author field will be hyperlinked to its change view and we can visit just by clicking it.
+
+Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity of users in admin.
+
+Custom hyper links
+
+\sphinxurl{https://docs.djangoproject.com/en/dev/ref/models/instances/\#get-absolute-url}
 
 
 \chapter{Custom Admin Actions For Querysets \& Individual Objects}
@@ -391,134 +576,6 @@ In the above example, we have used an inbuilt model admin delete view. We can al
 In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.
 
 
-\chapter{Hyperlink Foreignkeys To Its Change View In Admin}
-\label{\detokenize{admin_hyperlink_foreignkey:hyperlink-foreignkeys-to-its-change-view-in-admin}}\label{\detokenize{admin_hyperlink_foreignkey::doc}}
-Consider Book model which has Author as foreignkey.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{django.db} \PYG{k+kn}{import} \PYG{n}{models}
-
-
-\PYG{k}{class} \PYG{n+nc}{Author}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{name} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)}
-
-\PYG{k}{class} \PYG{n+nc}{Book}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{title} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{CharField}\PYG{p}{(}\PYG{n}{max\PYGZus{}length}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)}
-    \PYG{n}{author} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{ForeignKey}\PYG{p}{(}\PYG{n}{Author}\PYG{p}{)}
-\end{sphinxVerbatim}
-
-We can register these models with admin interface as follows.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
-
-\PYG{k+kn}{from} \PYG{n+nn}{.models} \PYG{k+kn}{import} \PYG{n}{Author}\PYG{p}{,} \PYG{n}{Book}
-
-\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
-
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Author}\PYG{p}{)}
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
-\end{sphinxVerbatim}
-
-Once they are registered, admin page shows Book model like this.
-
-\noindent{\hspace*{\fill}\sphinxincludegraphics{{django-admin-fk-link-1}.png}\hspace*{\fill}}
-
-While browsing books, we can see book name and author name. Here, book name field is liked to book change view. But author field is shown as plain text.
-
-If we have to modify author name, we have to go back to authors admin page, search for relevant author and then change name.
-
-This becomes tedious if users spend lot of time in admin for tasks like this. Instead, if author field is hyperlinked to author change view, we can directly go to that page and change the name.
-
-Django provides an option to access admin views by its URL reversing system. For example, we can get change view of author model in book app using reverse(“admin:book\_author\_change”, args=id). Now we can use this url to hyperlink author field in book admin.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
-\PYG{k+kn}{from} \PYG{n+nn}{django.utils.safestring} \PYG{k+kn}{import} \PYG{n}{mark\PYGZus{}safe}
-
-
-\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author\PYGZus{}link}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{p}{)}
-
-    \PYG{k}{def} \PYG{n+nf}{author\PYGZus{}link}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{book}\PYG{p}{)}\PYG{p}{:}
-        \PYG{n}{url} \PYG{o}{=} \PYG{n}{reverse}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{admin:book\PYGZus{}author\PYGZus{}change}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{args}\PYG{o}{=}\PYG{p}{[}\PYG{n}{book}\PYG{o}{.}\PYG{n}{author}\PYG{o}{.}\PYG{n}{id}\PYG{p}{]}\PYG{p}{)}
-        \PYG{n}{link} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}a href=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{\PYGZgt{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZlt{}/a\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o}{\PYGZpc{}} \PYG{p}{(}\PYG{n}{url}\PYG{p}{,} \PYG{n}{book}\PYG{o}{.}\PYG{n}{author}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
-        \PYG{k}{return} \PYG{n}{mark\PYGZus{}safe}\PYG{p}{(}\PYG{n}{link}\PYG{p}{)}
-    \PYG{n}{author\PYGZus{}link}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Author}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-Now in the book admin view, author field will be hyperlinked to its change view and we can visit just by clicking it.
-
-Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity of users in admin.
-
-Custom hyper links
-
-\sphinxurl{https://docs.djangoproject.com/en/dev/ref/models/instances/\#get-absolute-url}
-
-
-\chapter{Better Defaults}
-\label{\detokenize{admin_better_defaults:better-defaults}}\label{\detokenize{admin_better_defaults::doc}}
-
-\section{Set ordering for custom fields}
-\label{\detokenize{admin_better_defaults:set-ordering-for-custom-fields}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k}{def} \PYG{n+nf}{number\PYGZus{}of\PYGZus{}orders}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
-    \PYG{k}{return} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{order\PYGZus{}\PYGZus{}count}
-\PYG{n}{number\PYGZus{}of\PYGZus{}orders}\PYG{o}{.}\PYG{n}{admin\PYGZus{}order\PYGZus{}field} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{order\PYGZus{}\PYGZus{}count}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-
-\section{Auto completion}
-\label{\detokenize{admin_better_defaults:auto-completion}}
-
-\section{JSON Editor}
-\label{\detokenize{admin_better_defaults:json-editor}}
-Viewing and editing JSON field in admin interface will be very difficult with default text editor interface.
-
-We can use 3rd packages like django-json-widget which provide JSON widget, with which viewing and editing JSON data becomes much intuitive.
-
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
-\PYG{k+kn}{from} \PYG{n+nn}{django.contrib.postgres} \PYG{k+kn}{import} \PYG{n}{fields}
-\PYG{k+kn}{from} \PYG{n+nn}{django\PYGZus{}json\PYGZus{}widget.widgets} \PYG{k+kn}{import} \PYG{n}{JSONEditorWidget}
-\PYG{k+kn}{from} \PYG{n+nn}{.models} \PYG{k+kn}{import} \PYG{n}{YourModel}
-
-
-\PYG{n+nd}{@admin.register}\PYG{p}{(}\PYG{n}{YourModel}\PYG{p}{)}
-\PYG{k}{class} \PYG{n+nc}{YourModelAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{formfield\PYGZus{}overrides} \PYG{o}{=} \PYG{p}{\PYGZob{}}
-        \PYG{n}{fields}\PYG{o}{.}\PYG{n}{JSONField}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{widget}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{JSONEditorWidget}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
-    \PYG{p}{\PYGZcb{}}
-\end{sphinxVerbatim}
-
-\sphinxurl{https://github.com/crucialfelix/django-ajax-selects}
-
-
-\section{Sorting Models By Frequency}
-\label{\detokenize{admin_better_defaults:sorting-models-by-frequency}}
-\sphinxurl{https://github.com/mishbahr/django-modeladmin-reorder}
-
-
-\chapter{Admin Cosmotics}
-\label{\detokenize{admin_cosmotics:admin-cosmotics}}\label{\detokenize{admin_cosmotics::doc}}
-
-\section{Customize Header/Title}
-\label{\detokenize{admin_cosmotics:customize-header-title}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{site\PYGZus{}header} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{My administration}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
-
-
-\section{Plural names}
-\label{\detokenize{admin_cosmotics:plural-names}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k}{class} \PYG{n+nc}{Category}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
-    \PYG{k}{class} \PYG{n+nc}{Meta}\PYG{p}{:}
-        \PYG{n}{verbose\PYGZus{}name\PYGZus{}plural} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{categories}\PYG{l+s+s2}{\PYGZdq{}}
-\end{sphinxVerbatim}
-
-
 \chapter{Securing Django Admin}
 \label{\detokenize{admin_secure:securing-django-admin}}\label{\detokenize{admin_secure::doc}}
 
@@ -573,6 +630,8 @@ python manage.py check \textendash{}deploy
 \sphinxurl{https://djangosnippets.org/snippets/2217/}
 
 image widget
+
+\sphinxurl{https://django-simple-history.readthedocs.io/en/latest/}
 
 
 
