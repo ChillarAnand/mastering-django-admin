@@ -1,2 +1,2 @@
-Advanced Filtering
+Filtering In Admin
 ====================

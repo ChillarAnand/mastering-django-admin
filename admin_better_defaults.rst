@@ -2,6 +2,53 @@ Better Defaults
 =================
 
 
+Use list display
+-----------------
+
+When a model is registered with admin, it just shows the string representation of the model object.
+
+
+.. code-block:: python
+
+    from book.models import Book
+
+    admin.site.register(Book)
+
+
+.. image:: images/admin-defaults-list.png
+   :align: center
+
+
+Django provides ModelAdmin [#f1]_ class which represents a model in admin. It has `list_display` which can be used to display required fields.
+
+.. code-block:: python
+
+    from book.models import Book
+    from django.contrib import admin
+
+    class BookAdmin(admin.ModelAdmin):
+        list_display = ('id', 'name', 'author')
+
+    admin.site.register(Book, BookAdmin)
+
+This will show relevant fields which are added in list_display.
+
+
+.. image:: images/admin-defaults-list2.png
+   :align: center
+
+
+.. [#f1] https://docs.djangoproject.com/en/2.2/ref/contrib/admin/#modeladmin-objects
+
+
+
+
+
+
+.. bibliography:: references.bib
+
+
+
 Set ordering for custom fields
 ---------------------------------
 
@@ -17,6 +64,8 @@ Auto completion
 ---------------
 
 
+
+thumbnails
 
 JSON Editor
 ------------
@@ -145,3 +194,18 @@ Save as
 
 radio fields
 -------------
+
+
+Top/Bottom
+
+Save on top/bottom
+
+
+
+prepopluated fields
+
+
+wsywig
+
+
+date hierarchy

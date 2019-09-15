@@ -1,10 +1,10 @@
 # Fdb version 3
-["makeindex django-tips.idx"] 1565719639 "django-tips.idx" "django-tips.ind" "django-tips" 1568293498
-  "django-tips.idx" 1568293497 0 d41d8cd98f00b204e9800998ecf8427e ""
+["makeindex django-tips.idx"] 1565719639 "django-tips.idx" "django-tips.ind" "django-tips" 1568304717
+  "django-tips.idx" 1568304715 0 d41d8cd98f00b204e9800998ecf8427e ""
   (generated)
-  "django-tips.ind"
   "django-tips.ilg"
-["pdflatex"] 1568293497 "django-tips.tex" "django-tips.pdf" "django-tips" 1568293498
+  "django-tips.ind"
+["pdflatex"] 1568304715 "django-tips.tex" "django-tips.pdf" "django-tips" 1568304717
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrb8c.tfm" 1480098688 1268 8067e4f35cbae42c0f58b48da75bf496 ""
@@ -160,21 +160,23 @@
   "admin-custom-actions1.png" 1565850075 150478 ff91063bace47c449748f8afb0501666 ""
   "admin-custom-actions2.png" 1565850176 150382 2f04225bcaa64bb19c5bd441bc5b9a91 ""
   "admin-custom-actions3.png" 1565876381 66353 125c52f12797d708270dead76aeaed06 ""
+  "admin-defaults-list.png" 1568301117 36877 49dd1528241b3850180314ed0d015ec6 ""
+  "admin-defaults-list2.png" 1568304671 46956 52b6c7aec9f0fe497f195bab23cb11b7 ""
   "django-admin-fk-link-1.png" 1564296850 20151 9d8ae08908b281ac9885a7f242d1aab3 ""
-  "django-tips.aux" 1568293498 10879 5ddacc9d2a8193e58371cccbcc95a2e4 ""
+  "django-tips.aux" 1568304716 11074 8ffb75179a7b1efcd9ec91f767e234ff ""
   "django-tips.ind" 1565719639 0 d41d8cd98f00b204e9800998ecf8427e "makeindex django-tips.idx"
-  "django-tips.out" 1568293498 5570 3b50bcffade6b3719e4937188eaf33ae ""
-  "django-tips.tex" 1568293495 35340 7d8799e877f2391de16491ca6c14267a ""
-  "django-tips.toc" 1568293498 3481 ccc76c1eb62242890e40ac40dd465144 ""
+  "django-tips.out" 1568304716 5715 641c25587b01a86c90a30124809fab7f ""
+  "django-tips.tex" 1568304713 37150 9b9031b8b05b3e2497c8df953c800f1d ""
+  "django-tips.toc" 1568304716 3560 0d03ad0c9fb05a0df838c093eee7465b ""
   "footnotehyper-sphinx.sty" 1551527145 8888 1bbd7bdeae8c8bed1d10d551bddb1cc9 ""
   "sphinx.sty" 1551527145 76220 63a32157b97240a297c69d4d077e82ab ""
-  "sphinxhighlight.sty" 1568293495 8137 38a433148fcb7611515a989ff1750dd5 ""
-  "sphinxmanual.cls" 1551527145 3606 fe67088d27cb5a0826fd3cdce3caff30 ""
+  "sphinxhighlight.sty" 1568304713 8137 b8d4ef963833564f6e4eadc09cd757c4 ""
+  "sphinxmanual.cls" 1568302217 3622 686a4f202ad31ad9dfe0d7d6ebdb7066 ""
   "sphinxmulticell.sty" 1551527145 14618 0defbdc8536ad2e67f1eac6a1431bc55 ""
   (generated)
-  "django-tips.idx"
-  "django-tips.pdf"
-  "django-tips.out"
-  "django-tips.toc"
   "django-tips.log"
+  "django-tips.pdf"
+  "django-tips.idx"
+  "django-tips.toc"
+  "django-tips.out"
   "django-tips.aux"

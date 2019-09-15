@@ -138,6 +138,41 @@ people come to django becase of admin
 \chapter{Better Defaults}
 \label{\detokenize{admin_better_defaults:better-defaults}}\label{\detokenize{admin_better_defaults::doc}}
 
+\section{Use list display}
+\label{\detokenize{admin_better_defaults:use-list-display}}
+When a model is registered with admin, it just shows the string representation of the model object.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{Book}
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-defaults-list}.png}\hspace*{\fill}}
+
+Django provides ModelAdmin %
+\begin{footnote}[1]\sphinxAtStartFootnote
+\sphinxurl{https://docs.djangoproject.com/en/2.2/ref/contrib/admin/\#modeladmin-objects}
+%
+\end{footnote} class which represents a model in admin. It has \sphinxtitleref{list\_display} which can be used to display required fields.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{Book}
+\PYG{k+kn}{from} \PYG{n+nn}{django.contrib} \PYG{k+kn}{import} \PYG{n}{admin}
+
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+This will show relevant fields which are added in list\_display.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-defaults-list2}.png}\hspace*{\fill}}
+
+
+
+
 \section{Set ordering for custom fields}
 \label{\detokenize{admin_better_defaults:set-ordering-for-custom-fields}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -149,6 +184,8 @@ people come to django becase of admin
 
 \section{Auto completion}
 \label{\detokenize{admin_better_defaults:auto-completion}}
+thumbnails
+
 
 \section{JSON Editor}
 \label{\detokenize{admin_better_defaults:json-editor}}
@@ -252,6 +289,16 @@ To make queries faster, we can limit the queryset to fetch only required fields.
 
 \section{radio fields}
 \label{\detokenize{admin_better_defaults:radio-fields}}
+Top/Bottom
+
+Save on top/bottom
+
+prepopluated fields
+
+wsywig
+
+date hierarchy
+
 
 \chapter{Auto Register All Models In Admin}
 \label{\detokenize{admin_auto_register_models:auto-register-all-models-in-admin}}\label{\detokenize{admin_auto_register_models::doc}}
@@ -361,8 +408,8 @@ Now, if we look at Author admin page, it will be shown with all relevant fields.
 Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.
 
 
-\chapter{Advanced Filtering}
-\label{\detokenize{admin_filter:advanced-filtering}}\label{\detokenize{admin_filter::doc}}
+\chapter{Filtering In Admin}
+\label{\detokenize{admin_filter:filtering-in-admin}}\label{\detokenize{admin_filter::doc}}
 
 \chapter{Allow ForeignKey Fields In Admin List Display}
 \label{\detokenize{admin_list_display_foreignkey:allow-foreignkey-fields-in-admin-list-display}}\label{\detokenize{admin_list_display_foreignkey::doc}}
