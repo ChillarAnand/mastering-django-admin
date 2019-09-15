@@ -67,3 +67,7 @@ ENVironment
 -------------
 
 https://github.com/dizballanze/django-admin-env-notice
+
+
+
+https://github.com/treyhunner/django-simple-history

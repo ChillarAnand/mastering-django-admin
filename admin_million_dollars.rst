@@ -17,6 +17,8 @@ reduce cost of maintainance and development
 
 people come to django becase of admin
 
+more visual and responsive
+
 
 https://github.com/sshwsfc/xadmin
 

@@ -18,15 +18,15 @@ Welcome to Mastering Django Admin Book!
 
    admin_better_defaults.rst
 
+   admin_model_relations.rst
+
    admin_auto_register_models
 
    admin_filter.rst
 
-   admin_list_display_foreignkey.rst
-
-   admin_hyperlink_foreignkey
-
    admin_custom_admin_actions
+
+   admin_performance.rst
 
    admin_secure.rst
 

@@ -2,6 +2,18 @@ Custom Admin Actions For Querysets & Individual Objects
 ========================================================
 
 
+Allow editing in list view
+----------------------------
+
+When a model is heavily used to update the content, it makes to sense to allow bulk edits on the models.
+
+.. code-block:: python
+
+    class BookAdmin(admin.ModelAdmin):
+        list_editable = ('author',)
+
+
+
 Custom Actions On Querysets
 ----------------------------
 
