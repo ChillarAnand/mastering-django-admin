@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 SEP 2019 21:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  12 SEP 2019 18:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -966,19 +966,19 @@ AED: lastpage setting LastPage
 [31
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 656.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 656.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 654.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 654.
  (./django-tips.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 656.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 656.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 654.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 654.
 Package rerunfilecheck Info: File `django-tips.out' has not changed.
-(rerunfilecheck)             Checksum: 3C9267F2DB95759B8C4003EB4BFE530B;5537.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 656.
+(rerunfilecheck)             Checksum: 3B50BCFFADE6B3719E4937188EAF33AE;5570.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 654.
  ) 
 Here is how much of TeX's memory you used:
  13518 strings out of 492649
- 191181 string characters out of 6129622
- 317374 words of memory out of 5000000
+ 191187 string characters out of 6129622
+ 317386 words of memory out of 5000000
  17001 multiletter control sequences out of 15000+600000
  54271 words of font info for 84 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
@@ -993,10 +993,10 @@ s/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.p
 fb>
-Output written on django-tips.pdf (35 pages, 465749 bytes).
+Output written on django-tips.pdf (35 pages, 465959 bytes).
 PDF statistics:
- 426 PDF objects out of 1000 (max. 8388607)
- 358 compressed objects within 4 object streams
+ 424 PDF objects out of 1000 (max. 8388607)
+ 356 compressed objects within 4 object streams
  84 named destinations out of 1000 (max. 500000)
  320 words of extra memory for PDF output out of 10000 (max. 10000000)
 
