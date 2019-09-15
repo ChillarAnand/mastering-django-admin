@@ -14,7 +14,10 @@
 \contentsline {section}{\numberline {3.7}Plural names}{7}{section.3.7}
 \contentsline {section}{\numberline {3.8}Disable links}{7}{section.3.8}
 \contentsline {section}{\numberline {3.9}Disable full count}{7}{section.3.9}
-\contentsline {section}{\numberline {3.10}Fetch only required fields}{7}{section.3.10}
+\contentsline {section}{\numberline {3.10}Allow editing in list view}{7}{section.3.10}
+\contentsline {section}{\numberline {3.11}Fetch only required fields}{7}{section.3.11}
+\contentsline {section}{\numberline {3.12}Save as}{8}{section.3.12}
+\contentsline {section}{\numberline {3.13}radio fields}{8}{section.3.13}
 \contentsline {chapter}{\numberline {4}Auto Register All Models In Admin}{9}{chapter.4}
 \contentsline {section}{\numberline {4.1}Manual Registration}{9}{section.4.1}
 \contentsline {section}{\numberline {4.2}Auto Registration}{10}{section.4.2}

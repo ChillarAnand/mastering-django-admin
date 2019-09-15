@@ -105,6 +105,17 @@ Disable full count
     show_full_result_count = False
 
 
+Allow editing in list view
+----------------------------
+
+When a model is heavily used to update the content, it makes to sense to allow bulk edits on the models.
+
+.. code-block:: python
+
+    class BookAdmin(admin.ModelAdmin):
+        list_editable = ('author',)
+
+
 Fetch only required fields
 ---------------------------
 
@@ -125,3 +136,12 @@ To make queries faster, we can limit the queryset to fetch only required fields.
 
 
     admin.site.register(Book, BookAdmin)
+
+
+
+Save as
+-------
+
+
+radio fields
+-------------
