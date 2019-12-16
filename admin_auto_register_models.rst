@@ -1,4 +1,4 @@
-Auto Register All Models In Admin
+Auto Generate Admin Interface
 ==================================
 
 
@@ -128,3 +128,20 @@ Now, if we look at Author admin page, it will be shown with all relevant fields.
 
 
 Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.
+
+
+Admin Generator
+----------------
+
+The above methods will be useful to generate a pre-defined admin interface for all the models. If independent customizations are needed for the models, then we use 3rd party packages like django-admin-generator which can generate a fully functional admin interface by introspecting the models. Once the base admin code is ready, we can use the same for futher customizations.
+
+
+.. code-block:: shell
+
+    $ ./manage.py admin_generator books >> books/admin.py
+
+
+This will generate admin interface for `books` app.
+
+
+.. [#f1] https://github.com/WoLpH/django-admin-generator

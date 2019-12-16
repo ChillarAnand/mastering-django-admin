@@ -69,7 +69,7 @@
 
 
 \title{Mastering Django Admin}
-\date{Sep 17, 2019}
+\date{Dec 15, 2019}
 \release{}
 \author{ChillarAnand}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -91,7 +91,9 @@
 
 \section{Why this book?}
 \label{\detokenize{preface:why-this-book}}
-blog posts
+In this data driven world, internal tools are often overlooked parts in companies. Without efficient tools for analytics and dashboards, cross work between departments becomes a bottleneck as people are handling one-off requests. This becomes a bottleneck and the inter communication efficiency will decrease.
+
+Inbuilt admin interface
 
 
 \section{Who should read this book?}
@@ -116,11 +118,13 @@ Haki Banita
 
 \chapter{The Million Dollar Admin}
 \label{\detokenize{admin_million_dollars:the-million-dollar-admin}}\label{\detokenize{admin_million_dollars::doc}}
-not to use for external applications
+Django admin was first released in 2005 and it has gone through a lot of changes since then. Still the admin interface looks clunky compared to aNot good ux
 
-Not good ux
+Jacob Kaplan-Moss, one of the core-developers of Django estimated that it will cost 1 million dollars to hire a team to rebuild admin interface from scratch.
 
-Django admin was first released in 2005 and it has gone through a lot of changes since then.
+Until we get 1 million dollars to revamp the admin interface, let’s look into alternate solutions.
+
+There are few opensource 3rd party packages like xadmin, django-admin2 which aimed to provide drop-in replacement for django. Even though these packages provide additional features to extend admin interface and provide better UI, they are not well maintained as django itself.
 
 mental models
 
@@ -131,10 +135,6 @@ reduce cost of maintainance and development
 people come to django becase of admin
 
 more visual and responsive
-
-\sphinxurl{https://github.com/sshwsfc/xadmin}
-
-\sphinxurl{https://jacobian.org/2016/may/26/so-you-want-a-new-admin/}
 
 
 \chapter{Better Defaults}
@@ -191,12 +191,22 @@ Django provides ModelAdmin %
 
 \PYG{n+nd}{@admin.register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name\PYGZus{}colored}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{cover}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{cover}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
     \PYG{n}{list\PYGZus{}filter} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
     \PYG{n}{list\PYGZus{}per\PYGZus{}page} \PYG{o}{=} \PYG{l+m+mi}{10}
     \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
     \PYG{n}{date\PYGZus{}hierarchy} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}
     \PYG{n}{readonly\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{created\PYGZus{}at}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{updated\PYGZus{}at}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-defaults-list2}.png}\hspace*{\fill}}
+
+In \sphinxtitleref{list\_display} in addition to columns, we can add custom methods which can be used to show calculated fields. For example, we can change book color based on its availability.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@admin.register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name\PYGZus{}colored}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{cover}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
 
     \PYG{k}{def} \PYG{n+nf}{name\PYGZus{}colored}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
         \PYG{k}{if} \PYG{n}{obj}\PYG{o}{.}\PYG{n}{is\PYGZus{}available}\PYG{p}{:}
@@ -210,29 +220,31 @@ Django provides ModelAdmin %
     \PYG{n}{name\PYGZus{}colored}\PYG{o}{.}\PYG{n}{short\PYGZus{}description} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}
 \end{sphinxVerbatim}
 
-In \sphinxtitleref{list\_display} in addition to columns, we can add custom methods which can be used to show calculated fields. For example, we can change book color based on its availability.
-
 \noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-defaults-list3}.png}\hspace*{\fill}}
 
 
-\section{Use better widgets}
+\section{Use Better Widgets}
 \label{\detokenize{admin_better_defaults:use-better-widgets}}
-Sometimes widgets provided by Django are not handy to the users. In such cases it is better to add tailored widgets based on the field.
+Sometimes widgets provided by Django are not handy to the users. In such cases it is better to add tailored widgets based on the data.
 
 For images, instead of showing a link, we can show thumbnails of images so that users can see the picture in the list view itself.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@admin.register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
-  \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name\PYGZus{}colored}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+  \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name\PYGZus{}colored}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{thumbnail}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
 
   \PYG{k}{def} \PYG{n+nf}{thumbnail}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{width}\PYG{p}{,} \PYG{n}{height} \PYG{o}{=} \PYG{l+m+mi}{200}\PYG{p}{,} \PYG{l+m+mi}{400}
+    \PYG{n}{width}\PYG{p}{,} \PYG{n}{height} \PYG{o}{=} \PYG{l+m+mi}{100}\PYG{p}{,} \PYG{l+m+mi}{200}
     \PYG{n}{html} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZlt{}img src=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{/\PYGZob{}url\PYGZcb{}}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ width=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{\PYGZob{}width\PYGZcb{}}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ height=\PYGZob{}height\PYGZcb{} /\PYGZgt{}}\PYG{l+s+s1}{\PYGZsq{}}
     \PYG{k}{return} \PYG{n}{format\PYGZus{}html}\PYG{p}{(}
         \PYG{n}{html}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{n}{obj}\PYG{o}{.}\PYG{n}{cover}\PYG{o}{.}\PYG{n}{url}\PYG{p}{,} \PYG{n}{width}\PYG{o}{=}\PYG{n}{width}\PYG{p}{,} \PYG{n}{height}\PYG{o}{=}\PYG{n}{height}\PYG{p}{)}
     \PYG{p}{)}
 \end{sphinxVerbatim}
+
+This will show thumbnail for book cover images.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{defaults-widget1}.png}\hspace*{\fill}}
 
 Viewing and editing JSON field in admin interface will be very difficult in the textbox. Instead, we can use JSON Editor widget provided any third-party packages like django-json-widget, with which viewing and editing JSON data becomes much intuitive.
 
@@ -249,56 +261,83 @@ Viewing and editing JSON field in admin interface will be very difficult in the 
     \PYG{p}{\PYGZcb{}}
 \end{sphinxVerbatim}
 
-When a choice field has few options, instead of showing dropdown, show radio buttons to make easy to choose.
+With this, all JSONFields will use JSONEditorWidget, which makes it easy to view and edit json content.
 
-wsywig editor for rich text.
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{defaults-widget3}.png}\hspace*{\fill}}
 
-
-\section{Sorting Models By Frequency}
-\label{\detokenize{admin_better_defaults:sorting-models-by-frequency}}
-\sphinxurl{https://github.com/mishbahr/django-modeladmin-reorder}
+There are a wide variety of third-party packages like django-map-widgets, django-ckeditor, django-widget-tweaks etc which provide additional widgets as well as tweaks to existing widgets.
 
 
-\section{Customize Header/Title}
-\label{\detokenize{admin_better_defaults:customize-header-title}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{site\PYGZus{}header} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{My administration}\PYG{l+s+s1}{\PYGZsq{}}
-\end{sphinxVerbatim}
+\section{Better Defaults For Models}
+\label{\detokenize{admin_better_defaults:better-defaults-for-models}}
+We can set user friendly names instead of default names for django models in admin. We can override this in model meta options.
 
-
-\section{Provide better defaults for model fields}
-\label{\detokenize{admin_better_defaults:provide-better-defaults-for-model-fields}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{Category}\PYG{p}{(}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{name} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}
     \PYG{k}{class} \PYG{n+nc}{Meta}\PYG{p}{:}
-        \PYG{n}{verbose\PYGZus{}name\PYGZus{}plural} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{categories}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{n}{verbose\PYGZus{}name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Book Category}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{n}{verbose\PYGZus{}name\PYGZus{}plural} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Book Categories}\PYG{l+s+s2}{\PYGZdq{}}
 \end{sphinxVerbatim}
 
-Plural name
+Model fields has an option to enter \sphinxtitleref{help\_text} which is useful documentation as well as help text for forms.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Book}\PYG{p}{(}\PYG{n}{TimeAuditModel}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{is\PYGZus{}available} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{BooleanField}\PYG{p}{(}
+        \PYG{n}{help\PYGZus{}text}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Is the book available to buy?}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{p}{)}
+    \PYG{n}{published\PYGZus{}date} \PYG{o}{=} \PYG{n}{models}\PYG{o}{.}\PYG{n}{DateField}\PYG{p}{(}
+        \PYG{n}{help\PYGZus{}text}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{help\PYGZus{}text=}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Please enter the date in \PYGZlt{}em\PYGZgt{}YYYY\PYGZhy{}MM\PYGZhy{}DD\PYGZlt{}/em\PYGZgt{} format.}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{p}{)}
+\end{sphinxVerbatim}
+
+This will be shown in admin as shown below.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{admin-defaults-list4}.png}\hspace*{\fill}}
 
 
 \chapter{Managing Model Relationships}
 \label{\detokenize{admin_model_relations:managing-model-relationships}}\label{\detokenize{admin_model_relations::doc}}
-\sphinxurl{https://djangosnippets.org/snippets/2217/}
+
+\section{Autocompletion For Related Fields}
+\label{\detokenize{admin_model_relations:autocompletion-for-related-fields}}
+Lets us go to BookAdmin and try to add a new book.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{Book}
+
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+By default, this will show a select box with entire authors list. Navigating this select list and finding the required author is difficult.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{model-relations1}.png}\hspace*{\fill}}
+
+To make this easier, we can provide autocomplete option for author field so that users can search and select the required author.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{book.models} \PYG{k+kn}{import} \PYG{n}{Book}
+
+\PYG{k}{class} \PYG{n+nc}{AuthorAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{autocomplete\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
+
+\PYG{n}{admin}\PYG{o}{.}\PYG{n}{site}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{n}{Book}\PYG{p}{,} \PYG{n}{BookAdmin}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+For this, ModelAdmin provides \sphinxtitleref{autocomplete\_fields} option to change to select2 autocomplete input. We should also define \sphinxtitleref{search\_fields} on the related admin so that search is performed on these fields.
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{model-relations2}.png}\hspace*{\fill}}
 
 
-\section{Auto completion}
-\label{\detokenize{admin_model_relations:auto-completion}}\begin{itemize}
-\item {} 
-\sphinxtitleref{autocomplete\_fields}
-\begin{quote}
-
-autocomplete\_fields = {[}‘author’{]}
-\end{quote}
-
-\end{itemize}
-
-for foreignkey fields
-
-
-\section{Hyperlink Foreignkeys To Its Change View In Admin}
-\label{\detokenize{admin_model_relations:hyperlink-foreignkeys-to-its-change-view-in-admin}}
+\section{Hyperlink Related Fields}
+\label{\detokenize{admin_model_relations:hyperlink-related-fields}}
 Consider Book model which has Author as foreignkey.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -441,8 +480,8 @@ However, this will lead to N+1 problem. We will discuss more about this and how 
 \sphinxurl{https://github.com/theatlantic/django-nested-admin}
 
 
-\chapter{Auto Register All Models In Admin}
-\label{\detokenize{admin_auto_register_models:auto-register-all-models-in-admin}}\label{\detokenize{admin_auto_register_models::doc}}
+\chapter{Auto Generate Admin Interface}
+\label{\detokenize{admin_auto_register_models:auto-generate-admin-interface}}\label{\detokenize{admin_auto_register_models::doc}}
 
 \section{Manual Registration}
 \label{\detokenize{admin_auto_register_models:manual-registration}}
@@ -549,11 +588,31 @@ Now, if we look at Author admin page, it will be shown with all relevant fields.
 Since we have auto registration in place, when a new model is added or columns are altered for existing models, admin interface will update accordingly without any code changes.
 
 
+\section{Admin Generator}
+\label{\detokenize{admin_auto_register_models:admin-generator}}
+The above methods will be useful to generate a pre-defined admin interface for all the models. If independent customizations are needed for the models, then we use 3rd party packages like django-admin-generator which can generate a fully functional admin interface by introspecting the models. Once the base admin code is ready, we can use the same for futher customizations.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} ./manage.py admin\PYGZus{}generator books \PYGZgt{}\PYGZgt{} books/admin.py
+\end{sphinxVerbatim}
+
+This will generate admin interface for \sphinxtitleref{books} app.
+
+
 \chapter{Filtering In Admin}
 \label{\detokenize{admin_filter:filtering-in-admin}}\label{\detokenize{admin_filter::doc}}
+Django Admin provies \sphinxtitleref{search\_fields} options on \sphinxtitleref{ModelAdmin}. Setting this will enable a search box in list page to filter items on the model. This can perform lookup on all the fields on the model as well as related model fields.
 
-\chapter{Custom Admin Actions For Querysets \& Individual Objects}
-\label{\detokenize{admin_custom_admin_actions:custom-admin-actions-for-querysets-individual-objects}}\label{\detokenize{admin_custom_admin_actions::doc}}
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author\PYGZus{}\PYGZus{}name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+When the number of items in search\_fields becomes more, query becomes
+
+
+\chapter{Custom Admin Actions}
+\label{\detokenize{admin_custom_admin_actions:custom-admin-actions}}\label{\detokenize{admin_custom_admin_actions::doc}}
 
 \section{Allow editing in list view}
 \label{\detokenize{admin_custom_admin_actions:allow-editing-in-list-view}}

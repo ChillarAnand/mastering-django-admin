@@ -2,22 +2,55 @@ Managing Model Relationships
 =============================
 
 
-https://djangosnippets.org/snippets/2217/
+
+Autocompletion For Related Fields
+---------------------------------
+
+Lets us go to BookAdmin and try to add a new book.
+
+.. code-block:: python
+
+    from book.models import Book
+
+    class BookAdmin(admin.ModelAdmin):
+        list_display = ('id', 'name', 'author')
+
+    admin.site.register(Book, BookAdmin)
 
 
-Auto completion
------------------
-
-* `autocomplete_fields`
+By default, this will show a select box with entire authors list. Navigating this select list and finding the required author is difficult.
 
 
-        autocomplete_fields = ['author']
+.. image:: images/model-relations1.png
+   :align: center
 
-for foreignkey fields
+
+To make this easier, we can provide autocomplete option for author field so that users can search and select the required author.
+
+.. code-block:: python
+
+    from book.models import Book
+
+    class AuthorAdmin(admin.ModelAdmin):
+        search_fields = ('name',)
+
+    class BookAdmin(admin.ModelAdmin):
+        list_display = ('id', 'name', 'author')
+        autocomplete_fields = ('author',)
+
+    admin.site.register(Book, BookAdmin)
 
 
-Hyperlink Foreignkeys To Its Change View In Admin
----------------------------------------------------
+For this, ModelAdmin provides `autocomplete_fields` option to change to select2 autocomplete input. We should also define `search_fields` on the related admin so that search is performed on these fields.
+
+
+.. image:: images/model-relations2.png
+   :align: center
+
+
+
+Hyperlink Related Fields
+------------------------
 
 Consider Book model which has Author as foreignkey.
 

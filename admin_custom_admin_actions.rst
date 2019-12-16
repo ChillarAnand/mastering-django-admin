@@ -1,5 +1,5 @@
-Custom Admin Actions For Querysets & Individual Objects
-========================================================
+Custom Admin Actions
+====================
 
 
 Allow editing in list view
