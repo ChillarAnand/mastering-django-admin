@@ -145,7 +145,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'django-tips.tex', 'Mastering Django Admin',
+    (master_doc, 'mastering-django-admin.tex', 'Mastering Django Admin',
      'ChillarAnand', 'manual'),
 ]
 
@@ -155,7 +155,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'django-tips', 'django-tips book',
+    (master_doc, 'mastering-django-admin', 'django-tips book',
      [author], 1)
 ]
 

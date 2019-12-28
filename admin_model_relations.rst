@@ -52,49 +52,21 @@ For this, ModelAdmin provides `autocomplete_fields` option to change to select2 
 Hyperlink Related Fields
 ------------------------
 
-Consider Book model which has Author as foreignkey.
-
-
-.. code-block:: python
-
-    from django.db import models
-
-
-    class Author(models.Model):
-        name = models.CharField(max_length=100)
-
-    class Book(models.Model):
-        title = models.CharField(max_length=100)
-        author = models.ForeignKey(Author)
-
-
-We can register these models with admin interface as follows.
-
+Lets browse through, BookAdmin and look at some of the books.
 
 .. code-block:: python
 
     from django.contrib import admin
 
-    from .models import Author, Book
+    from .models import Book
 
     class BookAdmin(admin.ModelAdmin):
-        list_display = ('name', 'author', )
+        list_display = ('id', 'name', 'author')
 
-    admin.site.register(Author)
     admin.site.register(Book, BookAdmin)
 
 
-Once they are registered, admin page shows Book model like this.
-
-
-.. image:: images/django-admin-fk-link-1.png
-   :alt: hyperlink foreign key fields django
-   :align: center
-
-
-While browsing books, we can see book name and author name. Here, book name field is liked to book change view. But author field is shown as plain text.
-
-If we have to modify author name, we have to go back to authors admin page, search for relevant author and then change name.
+Here, book name field is liked to book change view. But author field is shown as plain text. If we notice some typo or if we have to modify author details, we have to go back to authors admin page, search for relevant author and then change name.
 
 This becomes tedious if users spend lot of time in admin for tasks like this. Instead, if author field is hyperlinked to author change view, we can directly go to that page and change the name.
 
@@ -119,7 +91,6 @@ Django provides an option to access admin views by its URL reversing system. For
 
 Now in the book admin view, author field will be hyperlinked to its change view and we can visit just by clicking it.
 
-
 Depending on requirements, we can link any field in django to other fields or add custom fields to improve productivity of users in admin.
 
 
@@ -129,8 +100,9 @@ https://docs.djangoproject.com/en/dev/ref/models/instances/#get-absolute-url
 
 
 
-Allow ForeignKey Fields In Admin List Display
----------------------------------------------------
+Related Fields In Admin List
+----------------------------
+
 
 Django admin has `ModelAdmin` class which provides options and functionality for the models in admin interface. It has options like `list_display`, `list_filter`, `search_fields` to specify fields for corresponding actions.
 

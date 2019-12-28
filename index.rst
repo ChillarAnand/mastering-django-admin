@@ -28,6 +28,8 @@ Welcome to Mastering Django Admin Book!
 
    admin_performance.rst
 
+   admin_dashboards.rst
+
    admin_secure.rst
 
    final.rst

@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  21 DEC 2019 10:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  28 DEC 2019 07:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**django-tips.tex
-(./django-tips.tex
+**mastering-django-admin.tex
+(./mastering-django-admin.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (./sphinxmanual.cls
@@ -675,12 +675,12 @@ Package: hypcap 2016/05/16 v1.12 Adjusting the anchors of captions (HO)
 Package: lastpage 2015/03/29 v1.2m Refers to last page's name (HMM; JPG)
 )
 \@indexfile=\write4
-\openout4 = `django-tips.idx'.
+\openout4 = `mastering-django-admin.idx'.
 
 
-Writing index file django-tips.idx
-(./django-tips.aux)
-\openout1 = `django-tips.aux'.
+Writing index file mastering-django-admin.idx
+(./mastering-django-admin.aux)
+\openout1 = `mastering-django-admin.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 78.
 LaTeX Font Info:    ... okay on input line 78.
@@ -790,9 +790,9 @@ LaTeX Info: Redefining \ref on input line 78.
 LaTeX Info: Redefining \pageref on input line 78.
 LaTeX Info: Redefining \nameref on input line 78.
 
-(./django-tips.out) (./django-tips.out)
+(./mastering-django-admin.out) (./mastering-django-admin.out)
 \@outlinefile=\write5
-\openout5 = `django-tips.out'.
+\openout5 = `mastering-django-admin.out'.
 
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
@@ -839,14 +839,14 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 83.
 
-(./django-tips.toc
+(./mastering-django-admin.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
  [1
 
 ])
 \tf@toc=\write6
-\openout6 = `django-tips.toc'.
+\openout6 = `mastering-django-admin.toc'.
 
  [2]
 Chapter 1.
@@ -1015,28 +1015,29 @@ Chapter 9.
 Chapter 10.
 [33] [34]
 Chapter 11.
-(./django-tips.ind) 
+(./mastering-django-admin.ind) 
 AED: lastpage setting LastPage
 [35
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 814.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 814.
- (./django-tips.aux)
+ (./mastering-django-admin.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 814.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 814.
-Package rerunfilecheck Info: File `django-tips.out' has not changed.
+Package rerunfilecheck Info: File `mastering-django-admin.out' has not changed.
+
 (rerunfilecheck)             Checksum: AF46248F4C666BAA389068BE38C1E295;5308.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 814.
  ) 
 Here is how much of TeX's memory you used:
  13604 strings out of 492649
- 192698 string characters out of 6129622
+ 192885 string characters out of 6129622
  317332 words of memory out of 5000000
  17058 multiletter control sequences out of 15000+600000
  61083 words of font info for 94 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,12n,51p,632b,529s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,51p,643b,529s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texli
@@ -1047,7 +1048,7 @@ s/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.p
 fb>
-Output written on django-tips.pdf (39 pages, 1045563 bytes).
+Output written on mastering-django-admin.pdf (39 pages, 1045563 bytes).
 PDF statistics:
  465 PDF objects out of 1000 (max. 8388607)
  378 compressed objects within 4 object streams
