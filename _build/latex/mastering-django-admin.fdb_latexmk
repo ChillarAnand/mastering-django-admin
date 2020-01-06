@@ -1,10 +1,10 @@
 # Fdb version 3
-["makeindex mastering-django-admin.idx"] 1576905692 "mastering-django-admin.idx" "mastering-django-admin.ind" "mastering-django-admin" 1577498241
-  "mastering-django-admin.idx" 1577498239 0 d41d8cd98f00b204e9800998ecf8427e ""
+["makeindex mastering-django-admin.idx"] 1576905692 "mastering-django-admin.idx" "mastering-django-admin.ind" "mastering-django-admin" 1578307721
+  "mastering-django-admin.idx" 1578307719 0 d41d8cd98f00b204e9800998ecf8427e ""
   (generated)
-  "mastering-django-admin.ind"
   "mastering-django-admin.ilg"
-["pdflatex"] 1577498239 "mastering-django-admin.tex" "mastering-django-admin.pdf" "mastering-django-admin" 1577498241
+  "mastering-django-admin.ind"
+["pdflatex"] 1578307719 "mastering-django-admin.tex" "mastering-django-admin.pdf" "mastering-django-admin" 1578307721
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrb8c.tfm" 1480098688 1268 8067e4f35cbae42c0f58b48da75bf496 ""
@@ -169,22 +169,25 @@
   "admin-defaults-list4.png" 1571371657 31648 8f412f2a7c7ae34910f7dcb940edbd4d ""
   "defaults-widget1.png" 1568727893 321919 ef4e1ffacaeb68743e194096d40afd18 ""
   "defaults-widget3.png" 1568734201 52629 fc45f33559118535d3b499ce801d51b0 ""
+  "filter1.png" 1578307154 65779 d12db1f1ad21d4c70e394ef4591d4b9b ""
+  "filter2.png" 1578307330 37123 d69fea102e494db240281e1f8d9af81d ""
+  "filter3.png" 1578307308 53871 fee17ec5175e8f6c0cee58808995cc43 ""
   "footnotehyper-sphinx.sty" 1551527145 8888 1bbd7bdeae8c8bed1d10d551bddb1cc9 ""
-  "mastering-django-admin.aux" 1577498241 10914 2f41f0938caf9ae3e69d9abc2f6efbff ""
+  "mastering-django-admin.aux" 1578307721 11034 555b2bbf4df739be7c7775558333dc4a ""
   "mastering-django-admin.ind" 1576905692 0 d41d8cd98f00b204e9800998ecf8427e "makeindex mastering-django-admin.idx"
-  "mastering-django-admin.out" 1577498241 5308 af46248f4c666baa389068be38c1e295 ""
-  "mastering-django-admin.tex" 1577498235 47488 4d911b78b975b8dc1871bf676012e0cc ""
-  "mastering-django-admin.toc" 1577498241 3513 7fc227f2203745b41c0fd5fc24735ee1 ""
+  "mastering-django-admin.out" 1578307721 5744 9297394caff30087538ee2889cf4de32 ""
+  "mastering-django-admin.tex" 1578307716 51970 eb0f4ebcfa59dd3b608bdfa596a12169 ""
+  "mastering-django-admin.toc" 1578307721 3512 898c6b2a4428620fa543895c9f83d047 ""
   "model-relations1.png" 1576383976 181352 2bcf989f699fe08c28a6fea57f1c64f7 ""
   "model-relations2.png" 1576384051 43698 72aa0300a9743a7fda37bf42fbbc713b ""
   "sphinx.sty" 1551527145 76220 63a32157b97240a297c69d4d077e82ab ""
-  "sphinxhighlight.sty" 1577498235 8137 b8d4ef963833564f6e4eadc09cd757c4 ""
+  "sphinxhighlight.sty" 1578307715 8137 b8d4ef963833564f6e4eadc09cd757c4 ""
   "sphinxmanual.cls" 1568302217 3622 686a4f202ad31ad9dfe0d7d6ebdb7066 ""
   "sphinxmulticell.sty" 1551527145 14618 0defbdc8536ad2e67f1eac6a1431bc55 ""
   (generated)
-  "mastering-django-admin.pdf"
-  "mastering-django-admin.out"
+  "mastering-django-admin.aux"
   "mastering-django-admin.log"
   "mastering-django-admin.toc"
+  "mastering-django-admin.pdf"
   "mastering-django-admin.idx"
-  "mastering-django-admin.aux"
+  "mastering-django-admin.out"

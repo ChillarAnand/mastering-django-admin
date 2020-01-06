@@ -69,7 +69,7 @@
 
 
 \title{Mastering Django Admin}
-\date{Dec 28, 2019}
+\date{Jan 06, 2020}
 \release{}
 \author{ChillarAnand}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -580,14 +580,67 @@ This will generate admin interface for \sphinxtitleref{books} app.
 
 \chapter{Filtering In Admin}
 \label{\detokenize{admin_filter:filtering-in-admin}}\label{\detokenize{admin_filter::doc}}
-Django Admin provies \sphinxtitleref{search\_fields} options on \sphinxtitleref{ModelAdmin}. Setting this will enable a search box in list page to filter items on the model. This can perform lookup on all the fields on the model as well as related model fields.
+
+\section{Using search\_fields}
+\label{\detokenize{admin_filter:using-search-fields}}
+Django Admin provies \sphinxtitleref{search\_fields} option on \sphinxtitleref{ModelAdmin}. Setting this will enable a search box in list page to filter items on the model. This can perform lookup on all the fields on the model as well as related model fields.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{BookAdmin}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{search\PYGZus{}fields} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author\PYGZus{}\PYGZus{}name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
 \end{sphinxVerbatim}
 
-When the number of items in search\_fields becomes more, query becomes
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{filter1}.png}\hspace*{\fill}}
+
+When the number of items in search\_fields becomes increases, query becomes quite slow as it does a case-insensitive search of all the search terms against all the search\_fields. For example a search for \sphinxtitleref{python for data analysis} translates to this SQL caluse.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{WHERE}
+\PYG{p}{(}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}python\PYGZpc{}\PYGZsq{}} \PYG{k}{OR} \PYG{n}{author}\PYG{p}{.}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}python\PYGZpc{}\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{AND} \PYG{p}{(}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}for\PYGZpc{}\PYGZsq{}} \PYG{k}{OR} \PYG{n}{author}\PYG{p}{.}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}for\PYGZpc{}\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{AND} \PYG{p}{(}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}data\PYGZpc{}\PYGZsq{}} \PYG{k}{OR} \PYG{n}{author}\PYG{p}{.}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}data\PYGZpc{}\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{AND} \PYG{p}{(}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}analysis\PYGZpc{}\PYGZsq{}} \PYG{k}{OR} \PYG{n}{author}\PYG{p}{.}\PYG{n}{name} \PYG{k}{ILIKE} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}analysis\PYGZpc{}\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+
+\section{Using list\_filter}
+\label{\detokenize{admin_filter:using-list-filter}}
+Django also provides \sphinxtitleref{list\_filter} option on \sphinxtitleref{ModelAdmin}. We can add required fields to \sphinxtitleref{list\_filter} which generate corresponding filters on the right panel of the admin page with all the possible values.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{BookAdminFilter}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{ModelAdmin}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{list\PYGZus{}display} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{id}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{author}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{cover}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{list\PYGZus{}filter} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{is\PYGZus{}available}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{filter2}.png}\hspace*{\fill}}
+
+
+\section{Using custom filters}
+\label{\detokenize{admin_filter:using-custom-filters}}
+We can also write custom filters so that we can set calculated fields and add filters on top of them.
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{CenturyFilter}\PYG{p}{(}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{SimpleListFilter}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{title} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{century}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{n}{parameter\PYGZus{}name} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{published\PYGZus{}date}\PYG{l+s+s1}{\PYGZsq{}}
+
+    \PYG{k}{def} \PYG{n+nf}{lookups}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{model\PYGZus{}admin}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{(}
+            \PYG{p}{(}\PYG{l+m+mi}{21}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{21st century}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
+            \PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{20th century}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
+        \PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{queryset}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{queryset}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{value} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}
+        \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{value}\PYG{p}{:}
+            \PYG{k}{return} \PYG{n}{queryset}
+        \PYG{n}{start} \PYG{o}{=} \PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{value}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*} \PYG{l+m+mi}{100}
+        \PYG{n}{end} \PYG{o}{=} \PYG{n}{start} \PYG{o}{+} \PYG{l+m+mi}{99}
+        \PYG{k}{return} \PYG{n}{queryset}\PYG{o}{.}\PYG{n}{filter}\PYG{p}{(}\PYG{n}{published\PYGZus{}date\PYGZus{}\PYGZus{}year\PYGZus{}\PYGZus{}gte}\PYG{o}{=}\PYG{n}{start}\PYG{p}{,} \PYG{n}{published\PYGZus{}date\PYGZus{}\PYGZus{}year\PYGZus{}\PYGZus{}lte}\PYG{o}{=}\PYG{n}{end}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\noindent{\hspace*{\fill}\sphinxincludegraphics{{filter3}.png}\hspace*{\fill}}
 
 
 \chapter{Custom Admin Actions}
@@ -753,22 +806,11 @@ To make queries faster, we can limit the queryset to fetch only required fields.
 \chapter{Securing Django Admin}
 \label{\detokenize{admin_secure:securing-django-admin}}\label{\detokenize{admin_secure::doc}}
 
-\section{Securing Server}
-\label{\detokenize{admin_secure:securing-server}}
-
-\subsection{VPN}
-\label{\detokenize{admin_secure:vpn}}
-
-\subsection{FIREWALL}
-\label{\detokenize{admin_secure:firewall}}
-80/443
-
-
-\subsection{https}
-\label{\detokenize{admin_secure:https}}
-
-\section{Securing Django}
+\chapter{Securing Django}
 \label{\detokenize{admin_secure:securing-django}}
+
+\section{Sanity Check}
+\label{\detokenize{admin_secure:sanity-check}}
 python manage.py check \textendash{}deploy
 
 

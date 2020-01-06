@@ -3,23 +3,6 @@ Securing Django Admin
 
 
 
-Securing Server
-=================
-
-
-
-VPN
-----
-
-FIREWALL
------
-80/443
-
-
-
-
-https
------
 
 
 Securing Django
