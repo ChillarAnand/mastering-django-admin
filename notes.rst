@@ -21,3 +21,11 @@ Customize Header/Title
 .. code-block:: python
 
     admin.site.site_header = 'My administration'
+
+
+show filtered page first
+    def get_default_filters(self, request):
+
+
+
+https://docs.djangoproject.com/en/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.readonly_fields

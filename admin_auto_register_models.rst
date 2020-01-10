@@ -133,7 +133,7 @@ Since we have auto registration in place, when a new model is added or columns a
 Admin Generator
 ----------------
 
-The above methods will be useful to generate a pre-defined admin interface for all the models. If independent customizations are needed for the models, then we use 3rd party packages like django-admin-generator which can generate a fully functional admin interface by introspecting the models. Once the base admin code is ready, we can use the same for futher customizations.
+The above methods will be useful to generate a pre-defined admin interface for all the models. If independent customizations are needed for the models, then we use 3rd party packages like django-admin-generator or django-extensions which can generate a fully functional admin interface by introspecting the models. Once the base admin code is ready, we can use the same for futher customizations.
 
 
 .. code-block:: shell
@@ -145,3 +145,5 @@ This will generate admin interface for `books` app.
 
 
 .. [#f1] https://github.com/WoLpH/django-admin-generator
+
+.. [#f2] https://django-extensions.readthedocs.io/en/latest/admin_generator.html

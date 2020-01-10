@@ -4,14 +4,6 @@ Securing Django Admin
 
 
 
-
-Securing Django
-==============
-
-
-Sanity Check
-++++++++++++++++
-
 python manage.py check --deploy
 
 

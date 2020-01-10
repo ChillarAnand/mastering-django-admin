@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Django Tips'
+project = 'Mastering Django Admin'
 copyright = '2019, ChillarAnand'
 author = 'ChillarAnand'
 
@@ -41,6 +41,7 @@ release = ''
 extensions = [
     # 'autodocsumm',
     'sphinxcontrib.bibtex',
+    'sphinx.ext.imgmath',
 ]
 
 
@@ -105,19 +106,27 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'django-tipsdoc'
+htmlhelp_basename = 'mastering-django-admindoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
 
 PREAMBLE = open('preamble.tex').read()
 
+# latex_engine = 'lualatex'
+
+latex_use_xindy = False
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
+    # 'papersize': 'letterpaper',
+
+    # 'papersize': 'a4paper',
     # 'papersize': 'a5paper',
+
     # 'papersize': 'b5paper',
+    # 'papersize': 'b2paper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
@@ -155,7 +164,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mastering-django-admin', 'django-tips book',
+    (master_doc, 'mastering-django-admin', 'mastering-django-admin book',
      [author], 1)
 ]
 
@@ -166,8 +175,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'django-tips', 'django-tips Documentation',
-     author, 'django-tips', 'One line description of project.',
+    (master_doc, 'mastering-django-admin', 'mastering-django-admin Documentation',
+     author, 'mastering-django-admin', 'One line description of project.',
      'Miscellaneous'),
 ]
 

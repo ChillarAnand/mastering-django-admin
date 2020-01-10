@@ -24,9 +24,7 @@ Welcome to Mastering Django Admin Book!
 
    admin_filter.rst
 
-   admin_custom_admin_actions
-
-   admin_performance.rst
+   admin_custom_admin_actions.rst
 
    admin_dashboards.rst
 
