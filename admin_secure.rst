@@ -21,15 +21,16 @@ If you have user groups and permissions, it is important to set permissions on o
 
 
 
-
 2FA
 ----
+
+To make it more secure, we can also enable 2FA
 
 https://github.com/Bouke/django-two-factor-auth
 
 
 
-ENVironment
+Environment
 -------------
 
 https://github.com/dizballanze/django-admin-env-notice
