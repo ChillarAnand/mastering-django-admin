@@ -168,4 +168,33 @@ This will be shown in admin as shown below.
 
 
 
+Navigation Menu Bar
+-------------------
+
+When user visits a specific model from the admin page, to switch to a different model user has to go back to home page and then move to the required model. This is inconvinient if user has to switch between models frequently.
+
+To avoid this, a navigation menu bar can be added at the top as shown below, so that users can switch between models with just 1 click.
+
+.. image:: images/django/admin/defaults/5.png
+   :align: center
+
+
+For this, we need to override `base_site.html` template with the navigation menu bar. Django provides `app_list` in the template context which has information about all apps and their models which can be used to render menu bar.
+
+
+.. code-block:: html
+
+    <ul>
+        {% for app in app_list %}
+        <li><a href="{{ app.app_url }}">{{ app.name }}</a>
+            <ul>
+                {% for model in app.models %}
+                    <li><a href="{{ model.admin_url }}">{{ model.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+
+
 .. [#f1] https://docs.djangoproject.com/en/2.2/ref/contrib/admin/#modeladmin-objects
