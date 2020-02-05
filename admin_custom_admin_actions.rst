@@ -1,17 +1,22 @@
 Custom Admin Actions
 ====================
 
+Bulk Editing In List View
+-------------------------
 
-Allow editing in list view
-----------------------------
+For data cleanup and heavy content updates, bulk editing on a model makes workflow easier. Django provides `list_editable` option to make selected fields editable in the list view itself.
 
-When a model is heavily used to update the content, it makes to sense to allow bulk edits on the models.
 
 .. code-block:: python
 
-    class BookAdmin(admin.ModelAdmin):
-        list_editable = ('author',)
+    class BestSellerAdmin(RelatedFieldAdmin):
+        list_display = ('id', 'book', 'year', 'rank')
+        list_editable = ('book', 'year', 'rank')
 
+This allows to edit the above mentioned fields as shown.
+
+.. image:: images/django/admin/actions/1.png
+           :align: center
 
 
 Custom Actions On Querysets
@@ -23,7 +28,7 @@ Django provides admin actions which work on a queryset level. By default, django
 In our books admin, we can select a bunch of books and delete them.
 
 
-.. image:: images/admin-custom-actions1.png
+.. image:: images/django/admin/actions/4.png
    :align: center
 
 
@@ -99,5 +104,50 @@ Now in the admin interface, we have delete button for individual objects.
 To delete an object, just click on delete button and then confirm to delete it. Now, we are deleting objects with just 2 clicks.
 
 In the above example, we have used an inbuilt model admin delete view. We can also write custom view and link those views for custom actions on individual objects. For example, we can add a button which will mark the book status to available.
+
+
+
+Custom Actions On Change View
+-----------------------------
+
+When users want to conditionaly perform a custom action when an object gets modified, custom action buttons can be provided on the change view. For example, when a best seller is updated, notify the author of the best seller via an email.
+
+We can override `change_form.html` to include a button for custom action.
+
+.. code-block:: html
+
+    {% extends 'admin/change_form.html' %}
+
+    {% block submit_buttons_bottom %}
+        {{ block.super }}
+        <div class="submit-row">
+                <input type="submit" value="Notify Author" name="notify-author">
+        </div>
+    {% endblock %}
+
+
+In the admin view, we have to override `response_change` to handle the submit button press.
+
+
+.. code-block:: python
+
+
+    class BestSellerAdmin(admin.ModelAdmin):
+        change_form_template = "bestseller_changeform.html"
+
+        def response_change(self, request, obj):
+            if "notify-author" in request.POST:
+                send_best_seller_email(obj)
+                self.message_user(request, "Notified author abouthe the best seller")
+                return HttpResponseRedirect(request.path_info)
+            return super().response_change(request, obj)
+
+
+This will show a button on the change form as shown below.
+
+
+.. image:: images/django/admin/actions/3.png
+   :align: center
+
 
 In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.

@@ -75,9 +75,15 @@ Now, we can track all the login attempts on the honeypot admin from the admin pa
 
 To make Admin more secure, we can enable 2 step verification where user has to provide 2 different authentication factors, one is password and the other is OTP generated from user mobile.
 
-For this, we can use `django_otp` package and creating a custom admin config to use a custom admin site.
+For this, we can use `django-otp` [#f4]_ package and create a custom admin config to replace default admin site.
 
-Create 2 files admin.py & apps.py in the project package to use OTPAdminSite as the default admin site.
+.. [#f4] https://pypi.org/project/django-otp/
+
+Install the package with `pip install django-otp`, add `django_otp`, `django_otp.plugins.otp_totp` to installed apps and run `./manage.py migrate`.
+
+In the admin page, under `OTP_TOTP` section add new device so that we can generate OTP for the admin page.
+
+Create 2 files admin.py & apps.py in the project package to create custom admin config for OTPAdminSite and set it as default.
 
 
 .. code-block:: python
@@ -106,15 +112,21 @@ In the `INSTALLED_APPS`, replace admin with custom config.
         'library.apps.LibraryAdminConfig',
     ]
 
+Now the admin login page will show OTP login form.
+
+.. image:: images/secure3.png
+           :align: center
+
+
+Environments
+------------
+
+When the django app is deployed in multiple environments, it is important to distinguish those environments visually so that admin users accidentally don't modify data in production environments. For this we can ovveride the base template with a custom template.
+
+https://github.com/dizballanze/django-admin-env-notice
 
 
 ACL
 ------
 
 If you have user groups and permissions, it is important to set permissions on object level.
-
-
-Environment
------------
-
-https://github.com/dizballanze/django-admin-env-notice
