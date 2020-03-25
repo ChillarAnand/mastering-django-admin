@@ -126,7 +126,23 @@ When the django app is deployed in multiple environments, it is important to dis
 https://github.com/dizballanze/django-admin-env-notice
 
 
-ACL
-------
+
+
+Miscellaneous
+-------------
 
 If you have user groups and permissions, it is important to set permissions on object level.
+
+
+When using `ModelAdmin.get_urls()` to extend urls, Django by default doesn't do any permission checks and the view is accessible to public. Ensure that these views are secure by wrapping them with `admin_view`.
+
+
+.. code-block:: python
+
+    class BookAdmin(admin.ModelAdmin):
+        def get_urls(self):
+            urls = super().get_urls()
+            book_urls = [
+                path('book_char_data/', self.admin_site.admin_view(self.chart_data))
+            ]
+            return book_urls + urls

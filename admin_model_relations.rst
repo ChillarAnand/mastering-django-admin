@@ -185,3 +185,20 @@ However, this will lead to N+1 problem. We will discuss more about this and how 
 
 
 https://github.com/theatlantic/django-nested-admin
+
+
+
+raw_id_fields
+
+https://books.agiliq.com/projects/django-admin-cookbook/en/latest/many_fks.html
+
+
+Tabular and stacked inlines
+
+Filter horizontal and filter vertical
+
+
+Collapsing sections
+
+
+Maps

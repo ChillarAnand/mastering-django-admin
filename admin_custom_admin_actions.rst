@@ -28,7 +28,7 @@ Django provides admin actions which work on a queryset level. By default, django
 In our books admin, we can select a bunch of books and delete them.
 
 
-.. image:: images/django/admin/actions/4.png
+.. image:: images/django/admin/actions/5.png
    :align: center
 
 

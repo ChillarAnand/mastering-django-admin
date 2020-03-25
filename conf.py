@@ -42,6 +42,7 @@ extensions = [
     # 'autodocsumm',
     'sphinxcontrib.bibtex',
     'sphinx.ext.imgmath',
+    'rst2pdf.pdfbuilder',
 ]
 
 
@@ -120,7 +121,7 @@ latex_use_xindy = False
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    # 'papersize': 'letterpaper',
+    'papersize': 'letterpaper',
 
     # 'papersize': 'a4paper',
     # 'papersize': 'a5paper',
@@ -202,3 +203,5 @@ epub_exclude_files = ['search.html']
 autodoc_default_options = {
     'autosummary': False,
 }
+
+pdf_documents = [('index', u'rst2pdf', u'Sample rst2pdf doc', u'Your Name'),]

@@ -108,6 +108,8 @@ This will show thumbnail for book cover images.
 
 Viewing and editing JSON field in admin interface will be very difficult in the textbox. Instead, we can use JSON Editor widget provided any third-party packages like django-json-widget, with which viewing and editing JSON data becomes much intuitive.
 
+CSV and Excel imports and exports
+
 
 .. code-block:: python
 

@@ -169,3 +169,13 @@ A simple filter can be created to filter all the books that were published betwe
 
 
 https://github.com/modlinltd/django-advanced-filters
+
+
+date hierarchy
+
+
+
+https://github.com/silentsokolov/django-admin-rangefilter
+
+
+https://github.com/farhan0581/django-admin-autocomplete-filter

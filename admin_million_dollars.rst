@@ -21,6 +21,7 @@ people come to django becase of admin
 
 more visual and responsive
 
+https://github.com/darklow/django-suit
 
 
 .. [#f1] https://jacobian.org/2016/may/26/so-you-want-a-new-admin/
