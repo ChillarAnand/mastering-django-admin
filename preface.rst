@@ -5,36 +5,23 @@ Preface
 Why this book?
 ----------------
 
-In this data driven world, internal tools are often overlooked parts in companies. Without efficient tools for analytics and dashboards, cross work between departments becomes a bottleneck as people are handling one-off requests. This becomes a bottleneck and the inter communication efficiency will decrease.
+In this data driven world, internal tools are often overlooked parts in companies. Without efficient tools for analytics and dashboards, cross department communications becomes a bottleneck as people spend more time everyday to get some data.
+
+There are several tools built specifically for analytics and dashboards. But if you are using Django, you just use Django admin itself for most of these tasks.
 
 
-Inbuilt admin interface
 
+
+Pre requisites
+--------------
+Readers should be familiar with basics of Django. They should have at least completed the polls tutorial available in the Django documentation.
 
 
 Who should read this book?
 ---------------------------
 
-users
+Anyone who wants to learn how to customize and improve the performance of django admin.
 
 
 Acknowlodgements
 ------------------
-
-
-Krace Kumar
-
-
-Haris Ibrahim
-
-
-Tim Graham,https://techytim.com/
-
-
-Andrew Godwin, http://www.aeracode.org/
-
-
-Haki Banita
-
-
-https://hakibenita.com/

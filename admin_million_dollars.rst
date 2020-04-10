@@ -1,10 +1,11 @@
 The Million Dollar Admin
 ========================
 
-Django admin was first released in 2005 and it has gone through a lot of changes since then. Still the admin interface looks clunky compared to aNot good ux
-
+Django admin was first released in 2005 and it has gone through a lot of changes since then. Still the admin interface looks clunky compared to most modern web interfaces.
 
 Jacob Kaplan-Moss, one of the core-developers of Django estimated that it will cost 1 million dollars to hire a team to rebuild admin interface from scratch.
+
+https://jacobian.org/2016/may/26/so-you-want-a-new-admin/
 
 Until we get 1 million dollars to revamp the admin interface, let's look into alternate solutions.
 

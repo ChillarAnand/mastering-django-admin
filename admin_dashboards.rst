@@ -25,8 +25,22 @@ Create a proxy model for `BorrowedBooks` and register it in the admin so that we
 
 ChangeList view is shown by default when a particular model is opened in admin. We can override this view to show a chart instead of listing all items in a table.
 
-The ModelAdmin class has a method called changelist_view. This method is responsible for rendering the ChangeList page. By overriding this method we can inject chart data into the template context.
+The ModelAdmin class has a method called changelist_view. This method is responsible for rendering the ChangeList page. By overriding this method we can pass chart data to the template.
 
+
+.. code-block:: python
+
+    class BorrowedBookDashboardAdmin(admin.ModelAdmin):
+
+        def changelist_view(self, request, extra_context=None):
+            qs = BorrowedBook.objects.annotate(date=TruncDay("updated_at")).values("date").annotate(
+                count=Count("id")).values_list('date', 'count').order_by('-date')
+            qs = qs.extra(select={'datestr': "to_char(date, 'YYYY-MM-DD')"})
+            extra_context = {
+                'chart_labels': list(chart_data.keys()),
+                'chart_data': list(chart_data.values()),
+            }
+            return super().changelist_view(request, extra_context=extra_context)
 
 
 

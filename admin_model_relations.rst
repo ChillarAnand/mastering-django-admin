@@ -193,6 +193,12 @@ raw_id_fields
 https://books.agiliq.com/projects/django-admin-cookbook/en/latest/many_fks.html
 
 
+inline actions
+
+
+nested admin
+
+
 Tabular and stacked inlines
 
 Filter horizontal and filter vertical
