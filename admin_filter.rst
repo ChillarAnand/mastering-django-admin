@@ -165,17 +165,3 @@ In the admin page, a popup like this will be shown to apply advanced filers.
 
 
 A simple filter can be created to filter all the books that were published between 1980 to 1990 which have a rating more than 3.75 and number of pages is not more than 100. This filter can be named and saved for later use.
-
-
-
-https://github.com/modlinltd/django-advanced-filters
-
-
-date hierarchy
-
-
-
-https://github.com/silentsokolov/django-admin-rangefilter
-
-
-https://github.com/farhan0581/django-admin-autocomplete-filter
