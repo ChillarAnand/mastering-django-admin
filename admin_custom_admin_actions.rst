@@ -38,7 +38,6 @@ Django provides an option to hook user defined actions to run additional actions
 .. code-block:: python
 
 
-
     class BookAdmin(admin.ModelAdmin):
         actions = ('make_books_available',)
         list_display = ('id', 'name', 'author')
@@ -49,6 +48,12 @@ Django provides an option to hook user defined actions to run additional actions
 
 .. image:: images/admin-custom-actions2.png
    :align: center
+
+
+Instead of having custom actions in the drop down, we can put dedicated butons for most frequently used actions to reduce number of clicks needed to perform an action.
+
+
+https://github.com/crccheck/django-object-actions
 
 
 Custom Actions On Individual Objects
@@ -148,6 +153,14 @@ This will show a button on the change form as shown below.
 
 .. image:: images/django/admin/actions/3.png
    :align: center
+
+
+Add confirmation page for potentialy dangerous actions.
+
+
+There is a 3rd party package django-admin-row-actions, which provides a mixin to create custom admin actions.
+
+https://github.com/DjangoAdminHackers/django-admin-row-actions
 
 
 In this chapter, we have seen how to write custom admin actions which work on single item as well as bulk items.
