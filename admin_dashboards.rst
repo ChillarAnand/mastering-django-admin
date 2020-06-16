@@ -27,7 +27,19 @@ ChangeList view is shown by default when a particular model is opened in admin. 
 
 The ModelAdmin class has a method called changelist_view. This method is responsible for rendering the ChangeList page. By overriding this method we can inject chart data into the template context.
 
+.. code-block:: python
 
+    class BorrowedBookAdmin(admin.ModelAdmin):
+
+        def changelist_view(self, request, extra_context=None):
+            data = BorrowedBook.objects.annotate(date=TruncDay("updated_at")).values("date").annotate(
+                count=Count("id")).values_list('date', 'count').order_by('-date')
+            chart_data = {str(k.date()): v for k, v in dict(data).items()}
+            extra_context = {
+                'chart_labels': list(chart_data.keys()),
+                'chart_data': list(chart_data.values()),
+            }
+            return super().changelist_view(request, extra_context=extra_context)
 
 
 
