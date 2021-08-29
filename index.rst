@@ -26,8 +26,6 @@ Welcome to Mastering Django Admin Book!
 
    admin_custom_admin_actions.rst
 
-   admin_dashboards.rst
-
    admin_secure.rst
 
    final.rst
