@@ -5,10 +5,11 @@ Preface
 Why this book?
 ----------------
 
-In this data driven world, internal tools are often overlooked parts in companies. Without efficient tools for analytics and dashboards, cross department communications becomes a bottleneck as people spend more time everyday to get some data.
+In this data driven world, internal tools are often overlooked parts in companies. Without efficient tools for analytics and dashboards, cross department communications & customer communications become a bottleneck as people spend more time everyday to get some data.
 
-There are several tools built specifically for analytics and dashboards. But we are using Django framework, we can just use Django Admin for most of these tasks.
+There are several tools built specifically for analytics and dashboards. But if we are already using Django framework, we can just use Django Admin for most of these tasks.
 
+In this book, we will learn how to customize Django admin for these tasks.
 
 
 Pre requisites
@@ -25,6 +26,7 @@ Anyone who wants to learn how to customize and improve the performance of django
 
 Acknowledgements
 ------------------
+
 
 
 .. [#polls] https://docs.djangoproject.com/en/3.0/intro/tutorial01/
