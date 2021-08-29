@@ -14,6 +14,10 @@ Jacob Kaplan-Moss, one of the core-developers of Django estimated that it will c
 4. Write our own custom admin interface.
 
 
+We can start default admin interface or use any drop-in replacements for the admin. Even with this admin interface, we need to write custom views/reports based on business requirements.
+
+In the next chapter, lets start with customizing admin interface.
+
 
 .. [#million] https://jacobian.org/2016/may/26/so-you-want-a-new-admin/
 
