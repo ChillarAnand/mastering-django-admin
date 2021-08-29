@@ -1,8 +1,6 @@
-Django Tips
+Mastering Django Admin
 ------------
 
-Tips to improve django developers productivity and avoid common pitfalls.
+Practical tips to master Django admin interface.
 
-Read the book at these links.
-
-https://django-tips.readthedocs.io/en/latest/
+https://mastering-django-admin.readthedocs.io/en/latest/
