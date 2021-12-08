@@ -159,7 +159,7 @@ We can write a custom admin class to dynamically set the methods as attributes s
         def dynamic_attribute(obj):
             for related_name in related_names:
                 obj = getattr(obj, related_name)
-                return obj
+            return obj
 
         dynamic_attribute.admin_order_field = admin_order_field or name
         dynamic_attribute.short_description = short_description or related_names[-1].title().replace('_', ' ')
