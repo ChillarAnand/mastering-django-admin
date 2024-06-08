@@ -20,13 +20,13 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Mastering Django Admin'
-copyright = '2019, ChillarAnand'
-author = 'ChillarAnand'
+copyright = '2019, Pandikunta Anand Reddy'
+author = 'Pandikunta Anand Reddy'
 
 # The short X.Y version
-version = ''
+version = '1.1.0'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '1.1.0'
 
 
 # -- General configuration ---------------------------------------------------
