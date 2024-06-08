@@ -44,6 +44,7 @@ extensions = [
     'sphinx.ext.imgmath',
     'rst2pdf.pdfbuilder',
 ]
+bibtex_bibfiles = []
 
 
 # Add any paths that contain templates here, relative to this directory.
